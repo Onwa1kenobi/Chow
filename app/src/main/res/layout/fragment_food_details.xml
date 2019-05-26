@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+                name="viewModel"
+                type="io.julius.chow.main.food.FoodDetailsViewModel"/>
+
+        <variable
+                name="clickListener"
+                type="android.view.View.OnClickListener"/>
+
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:id="@+id/coordinator_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".main.food.FoodDetailsFragment">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <io.julius.chow.util.CustomImageView
+                        android:id="@+id/image_food_banner"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_marginBottom="@dimen/activity_horizontal_margin"
+                        app:layout_constraintBottom_toTopOf="@id/card_food_details"
+                        android:adjustViewBounds="true"
+                        android:layout_alignParentTop="true"
+                        android:contentDescription="@string/content_desc_food_image"
+                        android:scaleType="centerCrop"
+                        app:imageUrl="@{viewModel.order.food.imageUrl}"/>
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/button_back"
+                    android:tint="@android:color/white"
+                    android:padding="@dimen/activity_half_margin"
+                    android:layout_margin="@dimen/activity_horizontal_margin"
+                    android:src="@drawable/ic_arrow_back"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:onClick="@{clickListener::onClick}"
+                    app:layout_constraintTop_toTopOf="@id/image_food_banner"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+            <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card_food_details"
+                    android:layout_width="match_parent"
+                    android:layout_margin="@dimen/activity_horizontal_margin"
+                    app:cardCornerRadius="@dimen/activity_half_margin"
+                    app:cardElevation="@dimen/activity_half_margin"
+                    app:layout_constraintBottom_toTopOf="@id/button_add_order"
+                    android:layout_height="wrap_content"
+                    tools:layout_editor_absoluteX="16dp">
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/label_food_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/activity_horizontal_margin"
+                            android:textColor="@android:color/black"
+                            android:text="@{viewModel.order.food.title}"
+                            android:textStyle="bold"
+                            android:textSize="@dimen/title_text_size"
+                            tools:text="Fibi's Smoothies"/>
+
+                    <androidx.appcompat.widget.AppCompatRatingBar
+                            android:layout_width="wrap_content"
+                            app:rating="@{viewModel.order.food.rating}"
+                            tools:rating="3.5"
+                            style="@style/Widget.AppCompat.RatingBar.Small"
+                            android:layout_height="wrap_content"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/label_food_description"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            app:autoSizeMaxTextSize="@dimen/description_text_size"
+                            app:autoSizeMinTextSize="@dimen/tiny_text_size"
+                            app:autoSizeStepGranularity="1sp"
+                            app:autoSizeTextType="uniform"
+                            android:layout_margin="@dimen/activity_horizontal_margin"
+                            android:text="@{viewModel.order.food.description}"
+                            android:textSize="@dimen/description_text_size"
+                            tools:text="Come and chow sharp cupcakes that will change your settings at a discount now. Stay sharp; lest you carry last."/>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="wrap_content"
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            android:layout_marginBottom="@dimen/activity_horizontal_margin"
+                            android:layout_height="wrap_content">
+
+                        <androidx.appcompat.widget.AppCompatImageButton
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="@dimen/activity_half_margin"
+                                android:layout_margin="@dimen/activity_horizontal_margin"
+                                android:src="@drawable/ic_remove"
+                                android:background="?attr/selectableItemBackgroundBorderless"
+                                android:clickable="true"
+                                android:focusable="true"
+                                android:onClick="@{() -> viewModel.decrementOrder()}"/>
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/label_food_quantity"
+                                android:layout_width="wrap_content"
+                                android:background="@drawable/text_border_background_colored"
+                                android:layout_height="wrap_content"
+                                android:padding="@dimen/activity_half_margin"
+                                android:textColor="@color/colorAccent"
+                                android:text="@{viewModel.orderQuantity.toString()}"
+                                android:textStyle="bold"
+                                android:textSize="@dimen/description_text_size"
+                                tools:text="14"/>
+
+                        <androidx.appcompat.widget.AppCompatImageButton
+                                android:padding="@dimen/activity_half_margin"
+                                android:background="?attr/selectableItemBackgroundBorderless"
+                                android:clickable="true"
+                                android:layout_margin="@dimen/activity_horizontal_margin"
+                                android:focusable="true"
+                                android:onClick="@{() -> viewModel.incrementOrder()}"
+                                android:src="@drawable/ic_add"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.button.MaterialButton
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:text="@string/add_to_order"
+                    android:id="@+id/button_add_order"
+                    android:onClick="@{() -> viewModel.addOrder()}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginTop="@dimen/activity_horizontal_margin"
+                    android:layout_marginBottom="@dimen/activity_horizontal_margin"
+                    android:layout_marginStart="@dimen/activity_double_margin"
+                    android:layout_marginEnd="@dimen/activity_double_margin"
+                    android:layout_marginLeft="@dimen/activity_double_margin"
+                    android:layout_marginRight="@dimen/activity_double_margin"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</layout>

@@ -1,0 +1,51 @@
+<resources>
+    <string name="app_name">Chow</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="action_logout">Logout</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Password</string>
+    <string name="hint_confirm_password">Confirm password</string>
+    <string name="hint_first_name">First name</string>
+    <string name="hint_last_name">Last name</string>
+    <string name="hint_number">Mobile number</string>
+    <string name="hint_delivery_address">Delivery address</string>
+    <string name="signup_text">Create Account</string>
+    <string name="button_login">Login</string>
+    <string name="button_signup">Sign Up</string>
+    <string name="button_cancel">Cancel</string>
+    <string name="text_chow">Chow</string>
+    <string name="login_facebook">Login with Facebook!</string>
+    <string name="login_error_message">An error occurred, Please ensure you have a network connection and try again!
+    </string>
+    <string name="login_error_title">Oops!</string>
+    <string name="login_phone">Sign in with Phone</string>
+    <string name="sign_in_text">To continue with Chow, you have to sign in</string>
+    <string name="terms_and_policy_text">By signing in, you agree to our Terms \nand Privacy Policy</string>
+    <string name="done">Done</string>
+    <string name="name_hint">Name</string>
+    <string name="name_confirmation_text">Your name and address will be attached to your profile, and will be shown to vendors for
+        delivery purposes.
+    </string>
+    <string name="additional_details">Additional Details</string>
+    <string name="restaurants">Restaurants</string>
+    <string name="offers">Offers</string>
+    <string name="profile">Profile</string>
+    <string name="orders">Orders</string>
+    <string name="content_desc_restaurant_image">Restaurant Image</string>
+    <string name="address">Address</string>
+    <string name="call_outlet">Call Outlet</string>
+    <string name="get_directions">Get Directions</string>
+    <string name="menu">Menu</string>
+    <string name="no_offers">We have nothing at this time.</string>
+    <string name="check_back_later">Check back later</string>
+    <string name="content_desc_food_image">Food Image</string>
+    <string name="add_to_order">Add To Order</string>
+    <string name="address_hint">Address</string>
+    <string name="edit">Edit</string>
+    <string name="history">History</string>
+    <string name="details">Details</string>
+    <string name="quantity">quantity</string>
+    <string name="naira_sign">\u20A6</string>
+</resources>

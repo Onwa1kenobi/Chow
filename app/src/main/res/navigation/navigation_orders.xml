@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools" android:id="@+id/navigation_orders"
+            app:startDestination="@id/ordersFragment">
+
+    <fragment android:id="@+id/ordersFragment" android:name="io.julius.chow.main.orders.OrdersFragment"
+              android:label="fragment_orders" tools:layout="@layout/fragment_orders">
+        <action android:id="@+id/action_orders_to_foodDetails"
+                app:destination="@id/foodDetailsFragment"/>
+    </fragment>
+    <fragment android:id="@+id/foodDetailsFragment" android:name="io.julius.chow.main.food.FoodDetailsFragment"
+              android:label="FoodDetailsFragment">
+        <argument android:name="food" app:argType="io.julius.chow.model.Food"/>
+    </fragment>
+</navigation>

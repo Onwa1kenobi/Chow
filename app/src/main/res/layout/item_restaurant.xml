@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+                name="object"
+                type="io.julius.chow.model.Restaurant"/>
+
+        <variable
+                name="adapter"
+                type="io.julius.chow.main.restaurants.RestaurantsAdapter"/>
+
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:onClick="@{() -> adapter.onItemClick(object, imageRestaurant)}"
+            app:cardElevation="@dimen/activity_half_margin"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/activity_half_margin"
+            android:layout_marginBottom="@dimen/activity_half_margin"
+            app:cardCornerRadius="@dimen/activity_half_margin"
+            android:layout_height="wrap_content">
+
+        <io.julius.chow.util.CustomImageView
+                android:id="@+id/image_restaurant"
+                android:layout_width="match_parent"
+                android:transitionName="bell"
+                android:scaleType="centerCrop"
+                android:contentDescription="@string/content_desc_restaurant_image"
+                app:imageUrl="@{object.imageUrl}"
+                android:adjustViewBounds="true"
+                android:src="@color/gray"
+                android:layout_height="wrap_content"/>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</layout>

@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="object"
+            type="io.julius.chow.model.Order" />
+
+        <variable
+            name="adapter"
+            type="io.julius.chow.main.orders.OrderAdapter" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:onClick="@{() -> adapter.onItemClick(object, imageFood)}"
+        android:padding="@dimen/activity_horizontal_margin">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/image_food"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:adjustViewBounds="true"
+            android:padding="@dimen/user_image_boarder"
+            android:scaleType="centerCrop"
+            app:circleImageUrl="@{object.food.imageUrl}"
+            app:layout_constraintBottom_toBottomOf="@id/rating_bar_food"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/label_food_title" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/label_food_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:text="@{object.food.title}"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/description_text_size"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@id/label_food_price"
+            app:layout_constraintStart_toEndOf="@id/image_food"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Fibi's Smoothies" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/label_food_description"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@{object.food.description}"
+            android:textSize="@dimen/small_text_size"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/image_food"
+            app:layout_constraintTop_toBottomOf="@id/label_food_title"
+            tools:text="Come and chow sharp cupcakes that will change your settings at a discount now. Stay sharp; lest you carry last." />
+
+        <androidx.appcompat.widget.AppCompatRatingBar
+            android:id="@+id/rating_bar_food"
+            style="@style/Widget.AppCompat.RatingBar.Small"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            app:layout_constraintStart_toEndOf="@id/image_food"
+            app:layout_constraintTop_toBottomOf="@id/label_food_description"
+            app:rating="@{object.food.rating}"
+            tools:rating="3.5" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/label_currency"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/text_half_margin"
+            android:gravity="top"
+            android:text="@string/naira_sign"
+            android:textColor="@color/green"
+            android:textSize="@dimen/tiny_text_size"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@id/label_food_price"
+            app:layout_constraintTop_toTopOf="@id/label_food_price" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/label_food_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:paddingEnd="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_half_margin"
+            android:text="@{object.liveCost.toString()}"
+            android:textColor="@color/green"
+            android:textSize="@dimen/title_text_size"
+            android:textStyle="bold"
+            app:autoSizeMaxTextSize="@dimen/title_text_size"
+            app:autoSizeMinTextSize="@dimen/tiny_text_size"
+            app:autoSizeStepGranularity="1sp"
+            app:autoSizeTextType="uniform"
+            app:layout_constraintBottom_toBottomOf="@id/label_food_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="12.99" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/activity_half_margin"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="@{() -> adapter.onRemoveOrder(object)}"
+            android:padding="@dimen/activity_half_margin"
+            android:src="@drawable/ic_delete"
+            android:tint="@color/gray"
+            app:layout_constraintBottom_toBottomOf="@id/button_increment"
+            app:layout_constraintStart_toEndOf="@id/image_food"
+            app:layout_constraintTop_toTopOf="@id/button_increment" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/button_decrement"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/text_margin"
+            android:background="@drawable/text_border_background"
+            android:clickable="true"
+            android:drawableStart="@drawable/ic_remove"
+            android:drawableLeft="@drawable/ic_remove"
+            android:enabled="@{object.liveQuantity > 1}"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
+            android:gravity="center"
+            android:onClick="@{() -> adapter.decrementOrderQuantity(object)}"
+            android:padding="@dimen/text_half_margin"
+            app:drawableTint="@android:color/black"
+            app:layout_constraintEnd_toStartOf="@id/button_increment"
+            app:layout_constraintTop_toBottomOf="@id/rating_bar_food" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/button_increment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/text_margin"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:background="@drawable/text_border_background"
+            android:clickable="true"
+            android:drawableStart="@drawable/ic_add"
+            android:drawableLeft="@drawable/ic_add"
+            android:enabled="@{object.liveQuantity > 1}"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
+            android:gravity="center"
+            android:onClick="@{() -> adapter.incrementOrderQuantity(object)}"
+            android:padding="@dimen/text_half_margin"
+            app:drawableTint="@android:color/black"
+            app:layout_constraintEnd_toStartOf="@id/label_quantity"
+            app:layout_constraintTop_toBottomOf="@id/rating_bar_food" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/label_quantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_half_margin"
+            android:text="@string/quantity"
+            android:textSize="@dimen/tiny_text_size"
+            app:layout_constraintBaseline_toBaselineOf="@id/label_order_quantity"
+            app:layout_constraintEnd_toStartOf="@id/label_order_quantity" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/label_order_quantity"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingEnd="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:text="@{object.liveQuantity.toString()}"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/title_text_size"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/button_increment"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/button_increment"
+            tools:text="99" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

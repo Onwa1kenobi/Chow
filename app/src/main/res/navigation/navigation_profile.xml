@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools" android:id="@+id/navigation_profile"
+            app:startDestination="@id/profileFragment">
+
+    <fragment android:id="@+id/profileFragment" android:name="io.julius.chow.main.profile.ProfileFragment"
+              android:label="fragment_profile" tools:layout="@layout/fragment_profile">
+        <action android:id="@+id/action_profile_to_foodDetails"
+                app:destination="@id/foodDetailsFragment"/>
+    </fragment>
+
+    <fragment android:id="@+id/foodDetailsFragment" android:name="io.julius.chow.main.food.FoodDetailsFragment"
+              android:label="FoodDetailsFragment">
+        <argument android:name="food" app:argType="io.julius.chow.model.Food"/>
+    </fragment>
+</navigation>

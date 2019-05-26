@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools" android:id="@+id/auth_navigation_graph"
+            app:startDestination="@id/authFragment">
+
+    <fragment android:id="@+id/signUpDetailsFragment" android:name="io.julius.chow.auth.SignUpDetailsFragment"
+              android:label="fragment_sign_up_details" tools:layout="@layout/fragment_sign_up_details">
+        <action android:id="@+id/action_mainActivity" app:destination="@id/mainActivity"/>
+    </fragment>
+    <fragment android:id="@+id/authFragment" android:name="io.julius.chow.auth.AuthFragment"
+              android:label="AuthFragment">
+        <action android:id="@+id/action_signUpDetailsFragment"
+                app:destination="@id/signUpDetailsFragment"/>
+        <action android:id="@+id/action_authFragment_to_mainActivity" app:destination="@id/mainActivity"/>
+    </fragment>
+    <activity android:id="@+id/mainActivity" android:name="io.julius.chow.main.MainActivity"
+              android:label="activity_main" tools:layout="@layout/activity_main"/>
+</navigation>

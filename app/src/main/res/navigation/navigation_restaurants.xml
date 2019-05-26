@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/navigation_restaurants" app:startDestination="@id/restaurantsFragment">
+
+    <fragment android:id="@+id/restaurantsFragment" android:name="io.julius.chow.main.restaurants.RestaurantsFragment"
+              android:label="RestaurantsFragment">
+        <action android:id="@+id/action_restaurants_to_restaurantDetails"
+                app:destination="@id/restaurantDetailsFragment"/>
+    </fragment>
+
+    <fragment android:id="@+id/restaurantDetailsFragment"
+              android:name="io.julius.chow.main.restaurants.RestaurantDetailsFragment"
+              android:label="RestaurantDetailsFragment">
+        <argument android:name="restaurant" app:argType="io.julius.chow.model.Restaurant"/>
+        <action android:id="@+id/action_restaurantDetails_to_foodDetails"
+                app:destination="@id/foodDetailsFragment"/>
+    </fragment>
+    <fragment android:id="@+id/foodDetailsFragment" android:name="io.julius.chow.main.food.FoodDetailsFragment"
+              android:label="FoodDetailsFragment">
+        <argument android:name="food" app:argType="io.julius.chow.model.Food"/>
+    </fragment>
+</navigation>

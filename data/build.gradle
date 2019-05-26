@@ -1,0 +1,42 @@
+apply plugin: 'kotlin-kapt'
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+android {
+    compileSdkVersion 28
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(':domain')
+
+    // Standard Kotlin library
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+    // Room local storage dependencies
+    api "androidx.room:room-runtime:2.1.0-alpha07"
+    kapt "androidx.room:room-compiler:2.1.0-alpha07"
+    api "androidx.room:room-rxjava2:2.1.0-alpha07"
+
+    // Firebase dependencies
+    api 'com.google.firebase:firebase-auth:16.2.1'
+    implementation 'com.google.android.gms:play-services-auth:16.0.1'
+    implementation 'com.google.firebase:firebase-firestore:18.2.0'
+    implementation 'com.google.firebase:firebase-storage:16.1.0'
+    implementation 'com.google.firebase:firebase-core:16.0.8'
+
+    // RxKotlin
+    implementation "io.reactivex.rxjava2:rxkotlin:2.3.0"
+
+    // Coroutines
+//    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.1"
+//    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.1.1"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.1.1"
+
+    // Others
+    compileOnly "javax.annotation:jsr250-api:1.0"
+    compileOnly "javax.inject:javax.inject:1"
+}
+
+sourceCompatibility = "8"
+targetCompatibility = "8"

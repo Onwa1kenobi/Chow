@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+                name="user"
+                type="io.julius.chow.model.User"/>
+
+        <variable
+                name="clickListener"
+                type="android.view.View.OnClickListener"/>
+
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:id="@+id/coordinator_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".main.profile.ProfileFragment">
+
+        <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/label_user_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/activity_double_margin"
+                    android:textColor="@android:color/black"
+                    android:text="@{user.name}"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/big_title_text_size"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:text="John Doe"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/label_user_phone_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/text_margin"
+                    android:text="@{user.phoneNumber}"
+                    android:textSize="@dimen/description_text_size"
+                    app:layout_constraintTop_toBottomOf="@id/label_user_name"
+                    app:layout_constraintStart_toStartOf="@id/label_user_name"
+                    tools:text="+234 706 742 0774"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/label_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/activity_double_margin"
+                    android:text="@string/address"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/title_text_size"
+                    app:layout_constraintTop_toBottomOf="@id/label_user_phone_number"
+                    app:layout_constraintStart_toStartOf="@id/label_user_phone_number"/>
+
+            <com.google.android.material.button.MaterialButton
+                    android:id="@+id/button_edit_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/activity_double_margin"
+                    android:text="@string/edit"
+                    android:gravity="end|center_vertical"
+                    android:onClick="@{clickListener::onClick}"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBaseline_toBaselineOf="@id/label_address"/>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/icon_home"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/activity_double_margin"
+                    android:src="@drawable/ic_home"
+                    android:padding="@dimen/text_half_margin"
+                    android:tint="@color/blue"
+                    android:background="@color/lightBlue"
+                    app:layout_constraintTop_toBottomOf="@id/label_address"
+                    app:layout_constraintStart_toStartOf="@id/label_address"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/label_user_address"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/activity_double_margin"
+                    android:layout_marginEnd="@dimen/activity_double_margin"
+                    android:layout_marginStart="@dimen/activity_horizontal_margin"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:text="@{user.address}"
+                    tools:text="Plot 42A, Water Estate, Ash Island, Lagos."
+                    android:textSize="@dimen/description_text_size"
+                    app:layout_constraintTop_toTopOf="@id/icon_home"
+                    app:layout_constraintStart_toEndOf="@id/icon_home"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/icon_phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/activity_double_margin"
+                    android:src="@drawable/ic_phone"
+                    android:padding="@dimen/text_half_margin"
+                    android:tint="@color/yellow"
+                    android:background="@color/lightYellow"
+                    app:layout_constraintTop_toBottomOf="@id/icon_home"
+                    app:layout_constraintStart_toStartOf="@id/icon_home"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/label_user_address_phone_number"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/activity_double_margin"
+                    android:layout_marginEnd="@dimen/activity_double_margin"
+                    android:layout_marginStart="@dimen/activity_horizontal_margin"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:text="@{user.phoneNumber}"
+                    tools:text="+234 706 742 0774"
+                    android:textSize="@dimen/description_text_size"
+                    app:layout_constraintTop_toTopOf="@id/icon_phone"
+                    app:layout_constraintStart_toEndOf="@id/icon_phone"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/label_history"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/activity_double_margin"
+                    android:text="@string/history"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/title_text_size"
+                    app:layout_constraintTop_toBottomOf="@id/icon_phone"
+                    app:layout_constraintStart_toStartOf="@id/icon_phone"/>
+
+            <com.google.android.material.button.MaterialButton
+                    android:id="@+id/button_history_details"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/activity_double_margin"
+                    android:text="@string/details"
+                    android:gravity="end|center_vertical"
+                    android:onClick="@{clickListener::onClick}"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBaseline_toBaselineOf="@id/label_history"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</layout>

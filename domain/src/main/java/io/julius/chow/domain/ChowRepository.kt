@@ -1,0 +1,37 @@
+package io.julius.chow.domain
+
+import io.julius.chow.domain.model.FoodModel
+import io.julius.chow.domain.model.OrderModel
+import io.julius.chow.domain.model.RestaurantModel
+import io.julius.chow.domain.model.UserModel
+import io.reactivex.Flowable
+
+/**
+ * Interface defining methods for how the Domain layer communicates with the Data layer.
+ * This is to be implemented by the Data layer, setting the requirements for the
+ * operations that need to be implemented.
+ */
+interface ChowRepository {
+
+    fun isUserLoggedIn() : Result<Boolean>
+
+    suspend fun authenticateUser() : Result<UserModel>
+
+    suspend fun getCurrentUser() : Flowable<Result<UserModel>>
+
+    suspend fun saveUser(userModel: UserModel) : Result<Boolean>
+
+    suspend fun saveUserLocally(userModel: UserModel) : Result<Boolean>
+
+    suspend fun fetchRestaurants() : Flowable<Result<List<RestaurantModel>>>
+
+    suspend fun fetchRestaurantMenu(restaurantId: String) : Flowable<Result<List<FoodModel>>>
+
+    suspend fun getOrders() : Flowable<Result<List<OrderModel>>>
+
+    suspend fun getOrder(id: String) : OrderModel?
+
+    suspend fun saveOrder(orderModel: OrderModel) : Boolean
+
+    suspend fun deleteOrder(orderModel: OrderModel)
+}

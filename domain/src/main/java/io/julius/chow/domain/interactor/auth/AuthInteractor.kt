@@ -7,7 +7,8 @@ import io.julius.chow.domain.interactor.auth.AuthInteractor.Params
 import io.julius.chow.domain.interactor.auth.AuthInteractor.Params.ParamType.AUTHENTICATE_USER
 import io.julius.chow.domain.interactor.auth.AuthInteractor.Params.ParamType.UPDATE_USER_INFO
 import io.julius.chow.domain.model.UserModel
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
@@ -21,7 +22,7 @@ import kotlin.coroutines.CoroutineContext
 class AuthInteractor @Inject constructor(private val chowRepository: ChowRepository) :
     Interactor<Params, Result<Any>>(), CoroutineScope {
 
-//    override val coroutineContext: CoroutineContext = Dispatchers.IO
+    override val coroutineContext: CoroutineContext = Dispatchers.IO
 
 //    private lateinit var job: Job
 
@@ -41,7 +42,7 @@ class AuthInteractor @Inject constructor(private val chowRepository: ChowReposit
 //                            }
                             Result.Success(true)
                         } else {
-                            // User profile was not completely created, return false
+                            // User profile was not completely created, return user object for detail screen
                             Result.Success(result.data)
                         }
                     }

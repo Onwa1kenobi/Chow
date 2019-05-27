@@ -6,8 +6,6 @@ import androidx.recyclerview.widget.DiffUtil
 import io.julius.chow.R
 import io.julius.chow.base.BaseAdapter
 import io.julius.chow.model.Order
-import java.math.RoundingMode
-import java.text.DecimalFormat
 
 class OrderAdapter(private val lifecycleOwner: OrdersFragment) : BaseAdapter<Order>() {
 
@@ -56,9 +54,7 @@ class OrderAdapter(private val lifecycleOwner: OrdersFragment) : BaseAdapter<Ord
             order.quantity += 1
         }
         order.liveQuantity.postValue(order.quantity)
-        order.liveCost.postValue(DecimalFormat("#.##").apply {
-            roundingMode = RoundingMode.CEILING
-        }.format(order.quantity * order.food.price))
+        order.liveCost.postValue(order.quantity * order.food.price)
     }
 
     fun decrementOrderQuantity(order: Order) {
@@ -68,8 +64,6 @@ class OrderAdapter(private val lifecycleOwner: OrdersFragment) : BaseAdapter<Ord
             order.quantity -= 1
         }
         order.liveQuantity.postValue(order.quantity)
-        order.liveCost.postValue(DecimalFormat("#.##").apply {
-            roundingMode = RoundingMode.CEILING
-        }.format(order.quantity * order.food.price))
+        order.liveCost.postValue(order.quantity * order.food.price)
     }
 }

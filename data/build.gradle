@@ -33,6 +33,9 @@ dependencies {
 //    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.1.1"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.1.1"
 
+    // Testing
+    testImplementation 'junit:junit:4.12'
+
     // Others
     compileOnly "javax.annotation:jsr250-api:1.0"
     compileOnly "javax.inject:javax.inject:1"

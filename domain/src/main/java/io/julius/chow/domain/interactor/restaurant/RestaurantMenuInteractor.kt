@@ -4,7 +4,6 @@ import io.julius.chow.domain.ChowRepository
 import io.julius.chow.domain.Result
 import io.julius.chow.domain.interactor.Interactor
 import io.julius.chow.domain.model.FoodModel
-import io.julius.chow.domain.model.RestaurantModel
 import io.reactivex.Flowable
 import javax.inject.Inject
 

@@ -1,9 +1,7 @@
 package io.julius.chow.main.orders
 
 import androidx.recyclerview.widget.DiffUtil
-import io.julius.chow.model.Food
 import io.julius.chow.model.Order
-import io.julius.chow.model.Restaurant
 
 class OrderListDiffCallback(private val oldList: List<Order>, private val newList: List<Order>) :
     DiffUtil.Callback() {

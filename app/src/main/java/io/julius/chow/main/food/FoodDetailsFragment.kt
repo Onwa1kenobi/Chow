@@ -2,7 +2,6 @@ package io.julius.chow.main.food
 
 import android.os.Bundle
 import android.view.View
-import android.widget.RatingBar
 import androidx.core.view.ViewCompat
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs

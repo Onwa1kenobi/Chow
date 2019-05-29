@@ -27,7 +27,7 @@ class FoodDetailsViewModel @Inject constructor(private val saveOrderInteractor: 
     fun decrementOrder() {
         // Set minimum order limit to 1
         if (orderQuantity.value!! > 1) {
-            orderQuantity.postValue(orderQuantity.value!! - 1)
+            orderQuantity.value = orderQuantity.value!! - 1
             order.liveCost.postValue(orderQuantity.value!! * order.food.price)
         }
     }
@@ -35,7 +35,7 @@ class FoodDetailsViewModel @Inject constructor(private val saveOrderInteractor: 
     fun incrementOrder() {
         // Set maximum order limit to 50
         if (orderQuantity.value!! < 50) {
-            orderQuantity.postValue(orderQuantity.value!! + 1)
+            orderQuantity.value = orderQuantity.value!! + 1
             order.liveCost.postValue(orderQuantity.value!! * order.food.price)
         }
     }

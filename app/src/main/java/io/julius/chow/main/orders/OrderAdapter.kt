@@ -2,6 +2,8 @@ package io.julius.chow.main.orders
 
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.view.ViewCompat
+import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.DiffUtil
 import io.julius.chow.R
 import io.julius.chow.base.BaseAdapter
@@ -12,6 +14,27 @@ class OrderAdapter(private val lifecycleOwner: OrdersFragment) : BaseAdapter<Ord
     private var orders: List<Order> = ArrayList()
 
     var listener: (Order, AppCompatImageView?) -> Unit = { _, _ -> }
+
+    // LiveData variable for the total order cost
+    val orderCost = MutableLiveData<Double>().apply {
+        var totalCost = 0.0
+
+        orders.forEach {
+            totalCost += it.liveCost.value!!
+        }
+
+        postValue(totalCost)
+    }
+
+    // MediatorLiveData variable for the total order cost
+    val totalOrderCost = MediatorLiveData<Double>().apply {
+
+        orders.forEach {
+            addSource(it.liveCost) {
+
+            }
+        }
+    }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         // If the binding does not have a lifecycle owner, set a new one with the fragment passed when creating this adapter

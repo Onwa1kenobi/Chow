@@ -22,6 +22,9 @@ class OrderViewModel @Inject constructor(
     // public LiveData variable to expose returned list of orders
     val orders = MutableLiveData<List<Order>>()
 
+    // LiveData variable for the total order cost
+    val orderCost = MutableLiveData<Double>()
+
     fun getOrders() {
         // Display progress bar
         orderViewContract.postValue(Event(OrderViewContract.ProgressDisplay(true)))

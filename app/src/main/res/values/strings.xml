@@ -50,4 +50,7 @@
     <string name="naira_sign">\u20A6</string>
     <string name="number_format">%02d</string>
     <string name="thousand_format">%,.2f</string>
+    <string name="place_order">Place Order</string>
+    <string name="no_orders">You have no orders.</string>
+    <string name="no_orders_sub">Look around for something you like</string>
 </resources>

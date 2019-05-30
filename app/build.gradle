@@ -29,7 +29,7 @@ android {
     }
 
     lintOptions {
-//      To prevent CI build fails due to lint errors
+        // To prevent CI build fails due to lint errors
         abortOnError false
     }
 }

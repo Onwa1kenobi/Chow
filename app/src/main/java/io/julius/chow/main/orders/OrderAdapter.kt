@@ -2,7 +2,6 @@ package io.julius.chow.main.orders
 
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.view.ViewCompat
-import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.DiffUtil
 import io.julius.chow.R
@@ -16,24 +15,9 @@ class OrderAdapter(private val lifecycleOwner: OrdersFragment) : BaseAdapter<Ord
     var listener: (Order, AppCompatImageView?) -> Unit = { _, _ -> }
 
     // LiveData variable for the total order cost
-    val orderCost = MutableLiveData<Double>().apply {
-        var totalCost = 0.0
-
-        orders.forEach {
-            totalCost += it.liveCost.value!!
-        }
-
-        postValue(totalCost)
-    }
-
-    // MediatorLiveData variable for the total order cost
-    val totalOrderCost = MediatorLiveData<Double>().apply {
-
-        orders.forEach {
-            addSource(it.liveCost) {
-
-            }
-        }
+    val totalOrderCost = MutableLiveData<Double>().apply {
+        // Post initial value of zero
+        postValue(0.0)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -48,6 +32,9 @@ class OrderAdapter(private val lifecycleOwner: OrdersFragment) : BaseAdapter<Ord
         val diffResult = DiffUtil.calculateDiff(OrderListDiffCallback(orders, data))
         this.orders = data
         diffResult.dispatchUpdatesTo(this)
+
+        // Update total cost
+        updateTotalCost()
     }
 
     override fun getItemForPosition(position: Int): Order {
@@ -75,18 +62,40 @@ class OrderAdapter(private val lifecycleOwner: OrdersFragment) : BaseAdapter<Ord
         // Set maximum order limit to 50
         if (order.quantity < 50) {
             order.quantity += 1
+
+            order.liveQuantity.value = (order.quantity)
+            order.liveCost.value = (order.quantity * order.food.price)
+
+            // Update total cost
+            updateTotalCost()
         }
-        order.liveQuantity.postValue(order.quantity)
-        order.liveCost.postValue(order.quantity * order.food.price)
     }
 
     fun decrementOrderQuantity(order: Order) {
-        orders.indexOf(order)
         // Set minimum order limit to 1
         if (order.quantity > 1) {
             order.quantity -= 1
+
+            order.liveQuantity.value = (order.quantity)
+            order.liveCost.value = (order.quantity * order.food.price)
+
+            // Update total cost
+            updateTotalCost()
         }
-        order.liveQuantity.postValue(order.quantity)
-        order.liveCost.postValue(order.quantity * order.food.price)
+    }
+
+    private fun updateTotalCost() {
+        totalOrderCost.apply {
+            var totalCost = 0.0
+
+            orders.forEach { order ->
+                // Force unwrap was giving NullPointerException for some reason.
+                order.liveCost.value?.let {
+                    totalCost += it
+                }
+            }
+
+            value = totalCost
+        }
     }
 }

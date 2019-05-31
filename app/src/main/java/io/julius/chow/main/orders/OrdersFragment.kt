@@ -3,6 +3,7 @@ package io.julius.chow.main.orders
 import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.transition.*
@@ -14,7 +15,8 @@ import io.julius.chow.databinding.FragmentOrdersBinding
 import io.julius.chow.main.food.FoodDetailsFragment.Companion.FOOD
 import io.julius.chow.model.Order
 import io.julius.chow.util.Event
-import kotlinx.android.synthetic.main.fragment_restaurants.*
+import kotlinx.android.synthetic.main.fragment_orders.*
+import kotlinx.android.synthetic.main.fragment_restaurants.progress_bar
 
 class OrdersFragment : BaseFragment<FragmentOrdersBinding>() {
 
@@ -72,6 +74,11 @@ class OrdersFragment : BaseFragment<FragmentOrdersBinding>() {
 
         // Make call to view model to fetch orders
         orderViewModel.getOrders()
+
+        // Observe the total order cost from the adapter
+        orderAdapter.totalOrderCost.observe(this, Observer {
+            label_total_cost.text = resources.getString(R.string.thousand_format, it)
+        })
     }
 
     private fun viewStateResponse(event: Event<OrderViewContract>) {

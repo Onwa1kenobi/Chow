@@ -19,5 +19,4 @@ class ConfirmOrderFragment : RoundedBottomSheetDialogFragment() {
         return inflater.inflate(R.layout.fragment_confirm_order, container, false)
     }
 
-
 }

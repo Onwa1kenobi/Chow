@@ -2,6 +2,7 @@ package io.julius.chow.main.orders
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.FragmentNavigatorExtras
@@ -78,11 +79,21 @@ class OrdersFragment : BaseFragment<FragmentOrdersBinding>() {
         // Observe the total order cost from the adapter
         orderAdapter.totalOrderCost.observe(this, Observer {
             label_total_cost.text = resources.getString(R.string.thousand_format, it)
+
+            if (it > 0) {
+                button_place_order.setBackgroundColor(ContextCompat.getColor(context!!, R.color.colorAccent))
+                button_place_order.isClickable = true
+            } else {
+                button_place_order.setBackgroundColor(ContextCompat.getColor(context!!, R.color.gray))
+                button_place_order.isClickable = false
+            }
         })
 
         // Click listener for place order button
         button_place_order.setOnClickListener {
-
+            if (orderAdapter.totalOrderCost.value!! > 0) {
+                ConfirmOrderFragment().show(fragmentManager!!, "")
+            }
         }
     }
 

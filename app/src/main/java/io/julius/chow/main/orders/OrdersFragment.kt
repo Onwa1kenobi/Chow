@@ -79,6 +79,11 @@ class OrdersFragment : BaseFragment<FragmentOrdersBinding>() {
         orderAdapter.totalOrderCost.observe(this, Observer {
             label_total_cost.text = resources.getString(R.string.thousand_format, it)
         })
+
+        // Click listener for place order button
+        button_place_order.setOnClickListener {
+
+        }
     }
 
     private fun viewStateResponse(event: Event<OrderViewContract>) {

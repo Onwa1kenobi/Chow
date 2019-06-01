@@ -6,7 +6,6 @@ import io.julius.chow.domain.Result
 import io.julius.chow.domain.interactor.Interactor
 import io.julius.chow.domain.interactor.food.DeleteOrderInteractor
 import io.julius.chow.domain.interactor.food.GetOrdersInteractor
-import io.julius.chow.domain.interactor.food.SaveOrderInteractor
 import io.julius.chow.mapper.OrderMapper
 import io.julius.chow.model.Order
 import io.julius.chow.util.Event
@@ -14,8 +13,7 @@ import javax.inject.Inject
 
 class OrderViewModel @Inject constructor(
     private val getOrdersInteractor: GetOrdersInteractor,
-    private val deleteOrderInteractor: DeleteOrderInteractor,
-    private val saveOrderInteractor: SaveOrderInteractor
+    private val deleteOrderInteractor: DeleteOrderInteractor
 ) : ViewModel() {
 
     // LiveData object for view state interaction
@@ -64,11 +62,5 @@ class OrderViewModel @Inject constructor(
 
     fun removeOrder(order: Order) {
         deleteOrderInteractor.execute(OrderMapper.mapToModel(order))
-    }
-
-    fun updateOrders(orders: List<Order>) {
-        orders.forEach {
-            saveOrderInteractor.execute(OrderMapper.mapToModel(it))
-        }
     }
 }

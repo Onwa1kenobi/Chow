@@ -53,4 +53,9 @@
     <string name="place_order">Place Order</string>
     <string name="no_orders">You have no orders.</string>
     <string name="no_orders_sub">Look around for something you like</string>
+    <string name="change">Change</string>
+    <string name="delivery_period">Delivery Period</string>
+    <string name="five_to_six_pm">05:00 PM - 06:00 PM</string>
+    <string name="one_to_two_pm">01:00 PM - 02:00 PM</string>
+    <string name="ten_to_eleven_am">10:00 AM - 11:00 AM</string>
 </resources>

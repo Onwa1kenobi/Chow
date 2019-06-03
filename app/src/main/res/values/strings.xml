@@ -58,4 +58,7 @@
     <string name="five_to_six_pm">05:00 PM - 06:00 PM</string>
     <string name="one_to_two_pm">01:00 PM - 02:00 PM</string>
     <string name="ten_to_eleven_am">10:00 AM - 11:00 AM</string>
+    <string name="sub_total">Sub Total</string>
+    <string name="tax">Tax</string>
+    <string name="delivery_charge">Delivery Charge</string>
 </resources>

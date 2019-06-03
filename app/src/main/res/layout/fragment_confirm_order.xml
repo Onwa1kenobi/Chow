@@ -52,6 +52,7 @@
         android:layout_marginEnd="@dimen/activity_horizontal_margin"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:text="@string/change"
+        android:textAllCaps="false"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/layout_address_field_wrapper" />
 
@@ -59,7 +60,10 @@
         android:id="@+id/label_delivery_period"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:gravity="center"
         android:text="@string/delivery_period"
         android:textStyle="bold"
@@ -99,14 +103,103 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/label_sub_total"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_horizontal_margin"
         android:gravity="center"
-        android:text="@string/delivery_period"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@id/button_place_order"
+        android:paddingStart="@dimen/text_margin"
+        android:paddingLeft="@dimen/text_margin"
+        android:paddingEnd="@dimen/text_margin"
+        android:paddingRight="@dimen/text_margin"
+        android:text="@string/sub_total"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/checkbox_five_six" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/label_sub_total_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/activity_horizontal_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:gravity="center"
+        android:paddingStart="@dimen/text_margin"
+        android:paddingLeft="@dimen/text_margin"
+        android:paddingEnd="@dimen/text_margin"
+        android:paddingRight="@dimen/text_margin"
+        android:text="#3,892.78"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/checkbox_five_six" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/label_tax"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/text_margin"
+        android:gravity="center"
+        android:paddingStart="@dimen/text_margin"
+        android:paddingLeft="@dimen/text_margin"
+        android:paddingEnd="@dimen/text_margin"
+        android:paddingRight="@dimen/text_margin"
+        android:text="@string/tax"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/label_sub_total" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/label_tax_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/text_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:gravity="center"
+        android:paddingStart="@dimen/text_margin"
+        android:paddingLeft="@dimen/text_margin"
+        android:paddingEnd="@dimen/text_margin"
+        android:paddingRight="@dimen/text_margin"
+        android:text="#92.78"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/label_sub_total_amount" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/label_delivery_charge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/text_margin"
+        android:layout_marginBottom="@dimen/activity_horizontal_margin"
+        android:gravity="center"
+        android:paddingStart="@dimen/text_margin"
+        android:paddingLeft="@dimen/text_margin"
+        android:paddingEnd="@dimen/text_margin"
+        android:paddingRight="@dimen/text_margin"
+        android:text="@string/delivery_charge"
+        app:layout_constraintBottom_toTopOf="@id/button_place_order"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/label_tax" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/label_delivery_charge_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/text_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginBottom="@dimen/activity_horizontal_margin"
+        android:gravity="center"
+        android:paddingStart="@dimen/text_margin"
+        android:paddingLeft="@dimen/text_margin"
+        android:paddingEnd="@dimen/text_margin"
+        android:paddingRight="@dimen/text_margin"
+        android:text="#200.00"
+        app:layout_constraintBottom_toTopOf="@id/button_place_order"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/label_tax_amount" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_place_order"

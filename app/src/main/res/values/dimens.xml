@@ -9,6 +9,7 @@
 
     <dimen name="text_margin">8dp</dimen>
     <dimen name="text_half_margin">4dp</dimen>
+    <dimen name="text_quarter_margin">2dp</dimen>
 
     <dimen name="user_image_boarder">2dp</dimen>
 

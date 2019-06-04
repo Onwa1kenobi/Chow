@@ -6,14 +6,19 @@ import io.julius.chow.domain.Result
 import io.julius.chow.domain.interactor.Interactor
 import io.julius.chow.domain.interactor.food.DeleteOrderInteractor
 import io.julius.chow.domain.interactor.food.GetOrdersInteractor
+import io.julius.chow.domain.interactor.profile.GetUserInteractor
+import io.julius.chow.domain.model.UserModel
 import io.julius.chow.mapper.OrderMapper
+import io.julius.chow.mapper.UserMapper
 import io.julius.chow.model.Order
+import io.julius.chow.model.User
 import io.julius.chow.util.Event
 import javax.inject.Inject
 
 class OrderViewModel @Inject constructor(
     private val getOrdersInteractor: GetOrdersInteractor,
-    private val deleteOrderInteractor: DeleteOrderInteractor
+    private val deleteOrderInteractor: DeleteOrderInteractor,
+    private val getUserInteractor: GetUserInteractor
 ) : ViewModel() {
 
     // LiveData object for view state interaction
@@ -21,6 +26,8 @@ class OrderViewModel @Inject constructor(
 
     // public LiveData variable to expose returned list of orders
     val orders = MutableLiveData<List<Order>>()
+
+    val currentUser = MutableLiveData<User>()
 
     fun getOrders() {
         // Display progress bar
@@ -62,5 +69,15 @@ class OrderViewModel @Inject constructor(
 
     fun removeOrder(order: Order) {
         deleteOrderInteractor.execute(OrderMapper.mapToModel(order))
+    }
+
+    fun getCurrentUser() {
+        getUserInteractor.execute(false) {
+            currentUser.postValue(UserMapper.mapFromModel(it as UserModel))
+        }
+    }
+
+    fun placeOrder(address: String, deliveryTime: String) {
+
     }
 }

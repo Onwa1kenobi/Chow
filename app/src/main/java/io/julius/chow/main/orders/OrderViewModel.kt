@@ -37,7 +37,7 @@ class OrderViewModel @Inject constructor(
 
     // Delivery cost simply calculated as 4% of total cost plus 200.
     // More complex method could use address distance and stuff.
-    val deliveryCost: Double get() = (totalOrderCost * (3 / 100)) + 200
+    val deliveryCharge: Double get() = (totalOrderCost * (3 / 100)) + 200
 
     fun getOrders() {
         // Display progress bar

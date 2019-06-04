@@ -33,9 +33,16 @@ interface DataSource {
     }
 
     /**
-     * Fetch the current user the database
+     * Fetch the current user from the local database
      */
     suspend fun getCurrentUser(): Flowable<Result<UserEntity>> {
+        TODO("Not Implemented")
+    }
+
+    /**
+     * Single fetch operation to get the current user from the local database
+     */
+    suspend fun fetchCurrentUser(): UserEntity {
         TODO("Not Implemented")
     }
 

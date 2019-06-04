@@ -46,6 +46,10 @@ class LocalDataSource @Inject constructor(private val appDAO: AppDAO) : DataSour
         }, BackpressureStrategy.LATEST)
     }
 
+    override suspend fun fetchCurrentUser(): UserEntity {
+        return appDAO.fetchCurrentUser()
+    }
+
     override suspend fun fetchRestaurants(): Flowable<Result<List<RestaurantEntity>>> =
     // Since we can't get Room to return our custom Result type, we get the normal data, and create a Flowable
         // to which we pass a successful list of data objects or an error and propagate down to the subscriber.

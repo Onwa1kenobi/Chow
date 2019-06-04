@@ -13,6 +13,9 @@ interface AppDAO {
     @Query("SELECT * FROM User")
     fun getCurrentUser(): Flowable<UserEntity>
 
+    @Query("SELECT * FROM User")
+    fun fetchCurrentUser(): UserEntity
+
     @Query("SELECT * FROM User where id = :id")
     fun getUser(id: String): UserEntity
 

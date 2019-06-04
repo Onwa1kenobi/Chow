@@ -78,6 +78,8 @@ class OrdersFragment : BaseFragment<FragmentOrdersBinding>() {
 
         // Observe the total order cost from the adapter
         orderAdapter.totalOrderCost.observe(this, Observer {
+            orderViewModel.totalOrderCost = it
+
             label_total_cost.text = resources.getString(R.string.thousand_format, it)
 
             if (it > 0) {

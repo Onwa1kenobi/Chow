@@ -75,26 +75,29 @@ class OrdersFragment : BaseFragment<FragmentOrdersBinding>() {
         // Set recycler view adapter to order adapter
         dataBinding.recyclerView.adapter = orderAdapter
 
-        // Make call to view model to fetch orders
+        // Make call to viewmodel to fetch orders
         orderViewModel.getOrders()
+
+        // Make call to viewmodel to fetch current user and keep a reference in case we need to check out
+        orderViewModel.getCurrentUser()
 
         // Observe the total order cost from the adapter
         orderAdapter.totalOrderCost.observe(this, Observer {
-            orderViewModel.totalOrderCost = it
+            orderViewModel.computeAdditionalCharges(it)
 
             label_total_cost.text = resources.getString(R.string.thousand_format, it)
 
             if (it > 0) {
-                button_place_order.setBackgroundColor(ContextCompat.getColor(context!!, R.color.colorAccent))
-                button_place_order.isClickable = true
+                button_check_out_order.setBackgroundColor(ContextCompat.getColor(context!!, R.color.colorAccent))
+                button_check_out_order.isClickable = true
             } else {
-                button_place_order.setBackgroundColor(ContextCompat.getColor(context!!, R.color.gray))
-                button_place_order.isClickable = false
+                button_check_out_order.setBackgroundColor(ContextCompat.getColor(context!!, R.color.gray))
+                button_check_out_order.isClickable = false
             }
         })
 
         // Click listener for place order button
-        button_place_order.setOnClickListener {
+        button_check_out_order.setOnClickListener {
             if (orderAdapter.totalOrderCost.value!! > 0) {
                 ConfirmOrderFragment.newInstance(orderViewModel).show(fragmentManager!!, "")
             }

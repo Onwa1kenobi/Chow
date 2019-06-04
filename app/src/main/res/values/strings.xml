@@ -50,6 +50,7 @@
     <string name="naira_sign">\u20A6</string>
     <string name="number_format">%02d</string>
     <string name="thousand_format">%,.2f</string>
+    <string name="naira_thousand_format">\u20A6%,.2f</string>
     <string name="place_order">Place Order</string>
     <string name="no_orders">You have no orders.</string>
     <string name="no_orders_sub">Look around for something you like</string>
@@ -61,4 +62,5 @@
     <string name="sub_total">Sub Total</string>
     <string name="tax">Tax</string>
     <string name="delivery_charge">Delivery Charge</string>
+    <string name="check_out_order">Check Out Order</string>
 </resources>

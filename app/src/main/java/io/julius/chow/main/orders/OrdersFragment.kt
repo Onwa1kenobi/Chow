@@ -5,13 +5,12 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.transition.*
 import io.julius.chow.R
 import io.julius.chow.base.BaseFragment
-import io.julius.chow.base.extension.observe
-import io.julius.chow.base.extension.viewModel
 import io.julius.chow.databinding.FragmentOrdersBinding
 import io.julius.chow.main.food.FoodDetailsFragment.Companion.FOOD
 import io.julius.chow.model.Order
@@ -34,11 +33,12 @@ class OrdersFragment : BaseFragment<FragmentOrdersBinding>() {
         // Inject all requisite objects for this fragment
         appComponent.inject(this)
 
-        //subscription to LiveData in RestaurantViewModel
-        orderViewModel = viewModel(viewModelFactory) {
-            observe(orderViewContract, ::viewStateResponse)
-            observe(orders, ::updateOrders)
-        }
+        // Create viewmodel to be shared by this fragment and the order confirmation fragment
+        orderViewModel = ViewModelProviders.of(activity!!).get(OrderViewModel::class.java)
+
+        // Subscription to LiveData in OrderViewModel
+        orderViewModel.orderViewContract.observe(this, Observer { viewStateResponse(it) })
+        orderViewModel.orders.observe(this, Observer { updateOrders(it) })
 
         val transition = TransitionSet().setOrdering(TransitionSet.ORDERING_TOGETHER)
             .addTransition(ChangeBounds())

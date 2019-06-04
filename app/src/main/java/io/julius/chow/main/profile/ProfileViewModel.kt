@@ -3,11 +3,12 @@ package io.julius.chow.main.profile
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import io.julius.chow.domain.Result
-import io.julius.chow.domain.interactor.Interactor
 import io.julius.chow.domain.interactor.profile.GetUserInteractor
+import io.julius.chow.domain.model.UserModel
 import io.julius.chow.mapper.UserMapper
 import io.julius.chow.model.User
 import io.julius.chow.util.Event
+import io.reactivex.Flowable
 import javax.inject.Inject
 
 class ProfileViewModel @Inject constructor(getUserInteractor: GetUserInteractor) : ViewModel() {
@@ -22,15 +23,15 @@ class ProfileViewModel @Inject constructor(getUserInteractor: GetUserInteractor)
         // Display progress bar
         profileViewContract.postValue(Event(ProfileViewContract.ProgressDisplay(true)))
 
-        getUserInteractor.execute(Interactor.None()) {
-            it.subscribe({ result ->
+        getUserInteractor.execute(true) {
+            (it as Flowable<*>).subscribe({ result ->
                 // Hide progress bar
                 profileViewContract.postValue(Event(ProfileViewContract.ProgressDisplay(false)))
 
                 when (result) {
-                    is Result.Success -> {
+                    is Result.Success<*> -> {
                         // Map to layer specific model and pass to view.
-                        user.postValue(UserMapper.mapFromModel(result.data))
+                        user.postValue(UserMapper.mapFromModel(result.data as UserModel))
                     }
 
                     is Result.Failure -> {

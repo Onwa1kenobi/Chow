@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import io.julius.chow.R
 import io.julius.chow.util.RoundedBottomSheetDialogFragment
 import kotlinx.android.synthetic.main.fragment_confirm_order.*
+import java.util.*
 
 
 class ConfirmOrderFragment : RoundedBottomSheetDialogFragment() {
@@ -47,6 +48,54 @@ class ConfirmOrderFragment : RoundedBottomSheetDialogFragment() {
                 }
             }
         })
+
+        updateAvailableTimes(Calendar.getInstance())
+
+
+
     }
 
+    private fun updateAvailableTimes(currentTime: Calendar) {
+        val tenAM = Calendar.getInstance()
+        tenAM.set(Calendar.HOUR_OF_DAY, 10)
+        tenAM.set(Calendar.MINUTE, 0)
+        tenAM.set(Calendar.SECOND, 0)
+
+        val onePM = Calendar.getInstance()
+        onePM.set(Calendar.HOUR_OF_DAY, 13)
+        onePM.set(Calendar.MINUTE, 0)
+        onePM.set(Calendar.SECOND, 0)
+
+        val fivePM = Calendar.getInstance()
+        fivePM.set(Calendar.HOUR_OF_DAY, 17)
+        fivePM.set(Calendar.MINUTE, 0)
+        fivePM.set(Calendar.SECOND, 0)
+
+        when {
+            currentTime.after(fivePM) -> {
+                checkbox_ten_eleven.isEnabled = false
+                checkbox_one_two.isEnabled = false
+                checkbox_five_six.isEnabled = false
+
+                radio_group.clearCheck()
+            }
+
+            currentTime.after(onePM) -> {
+                checkbox_ten_eleven.isEnabled = false
+                checkbox_one_two.isEnabled = false
+
+                radio_group.check(R.id.checkbox_five_six)
+            }
+
+            currentTime.after(tenAM) -> {
+                checkbox_ten_eleven.isEnabled = false
+
+                radio_group.check(R.id.checkbox_one_two)
+            }
+
+            else -> {
+                radio_group.check(R.id.checkbox_ten_eleven)
+            }
+        }
+    }
 }

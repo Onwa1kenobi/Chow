@@ -19,6 +19,8 @@ interface ChowRepository {
 
     suspend fun getCurrentUser() : Flowable<Result<UserModel>>
 
+    suspend fun fetchCurrentUser(): UserModel
+
     suspend fun saveUser(userModel: UserModel) : Result<Boolean>
 
     suspend fun saveUserLocally(userModel: UserModel) : Result<Boolean>

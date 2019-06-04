@@ -5,12 +5,13 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.transition.*
 import io.julius.chow.R
 import io.julius.chow.base.BaseFragment
+import io.julius.chow.base.extension.observe
+import io.julius.chow.base.extension.viewModel
 import io.julius.chow.databinding.FragmentOrdersBinding
 import io.julius.chow.main.food.FoodDetailsFragment.Companion.FOOD
 import io.julius.chow.model.Order
@@ -34,11 +35,12 @@ class OrdersFragment : BaseFragment<FragmentOrdersBinding>() {
         appComponent.inject(this)
 
         // Create viewmodel to be shared by this fragment and the order confirmation fragment
-        orderViewModel = ViewModelProviders.of(activity!!).get(OrderViewModel::class.java)
+        orderViewModel = viewModel(viewModelFactory) {
 
-        // Subscription to LiveData in OrderViewModel
-        orderViewModel.orderViewContract.observe(this, Observer { viewStateResponse(it) })
-        orderViewModel.orders.observe(this, Observer { updateOrders(it) })
+            // Subscription to LiveData in OrderViewModel
+            observe(orderViewContract, ::viewStateResponse)
+            observe(orders, ::updateOrders)
+        }
 
         val transition = TransitionSet().setOrdering(TransitionSet.ORDERING_TOGETHER)
             .addTransition(ChangeBounds())
@@ -94,7 +96,7 @@ class OrdersFragment : BaseFragment<FragmentOrdersBinding>() {
         // Click listener for place order button
         button_place_order.setOnClickListener {
             if (orderAdapter.totalOrderCost.value!! > 0) {
-                ConfirmOrderFragment().show(fragmentManager!!, "")
+                ConfirmOrderFragment.newInstance(orderViewModel).show(fragmentManager!!, "")
             }
         }
     }

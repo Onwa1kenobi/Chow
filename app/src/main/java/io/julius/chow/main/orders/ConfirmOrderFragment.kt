@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import io.julius.chow.R
 import io.julius.chow.util.RoundedBottomSheetDialogFragment
 import kotlinx.android.synthetic.main.fragment_confirm_order.*
@@ -20,13 +19,6 @@ class ConfirmOrderFragment : RoundedBottomSheetDialogFragment() {
 
     private val editing = MutableLiveData<Boolean>().apply {
         value = false
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        // Get reference to commonly shared viewmodel between this fragment and the orders fragment
-        orderViewModel = ViewModelProviders.of(activity!!).get(OrderViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -108,5 +100,10 @@ class ConfirmOrderFragment : RoundedBottomSheetDialogFragment() {
                 radio_group.check(R.id.checkbox_ten_eleven)
             }
         }
+    }
+
+    companion object {
+        @JvmStatic
+        fun newInstance(viewModel: OrderViewModel) = ConfirmOrderFragment().apply { this.orderViewModel = viewModel }
     }
 }

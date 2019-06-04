@@ -53,6 +53,11 @@ class ChowRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun fetchCurrentUser(): UserModel {
+        val user = localDataSource.fetchCurrentUser()
+        return UserEntityMapper.mapFromEntity(user)
+    }
+
     override suspend fun saveUser(userModel: UserModel): Result<Boolean> {
         return remoteDataSource.saveUser(UserEntityMapper.mapToEntity(userModel))
     }

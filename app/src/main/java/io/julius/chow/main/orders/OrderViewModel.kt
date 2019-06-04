@@ -29,6 +29,16 @@ class OrderViewModel @Inject constructor(
 
     val currentUser = MutableLiveData<User>()
 
+    // variable for the total cost of orders
+    var totalOrderCost: Double = 0.0
+
+    // Tax calculated as 2%
+    val tax: Double get() = totalOrderCost * (2 / 100)
+
+    // Delivery cost simply calculated as 4% of total cost plus 200.
+    // More complex method could use address distance and stuff.
+    val deliveryCost: Double get() = (totalOrderCost * (3 / 100)) + 200
+
     fun getOrders() {
         // Display progress bar
         orderViewContract.postValue(Event(OrderViewContract.ProgressDisplay(true)))

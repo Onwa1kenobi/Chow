@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:animateLayoutChanges="true"
@@ -16,10 +17,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/activity_horizontal_margin"
-        android:text="Julius | +2347067420774"
+        android:textColor="@android:color/black"
         android:textSize="@dimen/title_text_size"
-        android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Julius | +2347067420774" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/layout_address_field_wrapper"
@@ -38,7 +39,7 @@
             android:enabled="false"
             android:imeOptions="actionDone"
             android:inputType="textCapSentences"
-            android:text="Plot 42A, Water Estate, Ash Island, Lagos."
+            tools:text="Plot 42A, Water Estate, Ash Island, Lagos."
             android:textSize="@dimen/description_text_size" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -144,7 +145,7 @@
         android:paddingLeft="@dimen/text_margin"
         android:paddingEnd="@dimen/text_margin"
         android:paddingRight="@dimen/text_margin"
-        android:text="#3,892.78"
+        tools:text="#3,892.78"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/radio_group" />
 
@@ -176,7 +177,7 @@
         android:paddingLeft="@dimen/text_margin"
         android:paddingEnd="@dimen/text_margin"
         android:paddingRight="@dimen/text_margin"
-        android:text="#92.78"
+        tools:text="#92.78"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/label_sub_total_amount" />
 
@@ -211,7 +212,7 @@
         android:paddingLeft="@dimen/text_margin"
         android:paddingEnd="@dimen/text_margin"
         android:paddingRight="@dimen/text_margin"
-        android:text="#200.00"
+        tools:text="#200.00"
         app:layout_constraintBottom_toTopOf="@id/button_place_order"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/label_tax_amount" />

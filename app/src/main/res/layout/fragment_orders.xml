@@ -24,7 +24,7 @@
             <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                app:layout_constraintBottom_toTopOf="@id/button_place_order"
+                app:layout_constraintBottom_toTopOf="@id/button_check_out_order"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -69,7 +69,7 @@
                 android:gravity="center"
                 android:orientation="vertical"
                 app:hide="@{orders == null || !orders.isEmpty()}"
-                app:layout_constraintBottom_toTopOf="@id/button_place_order"
+                app:layout_constraintBottom_toTopOf="@id/button_check_out_order"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -94,11 +94,11 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:visibility="invisible"
-                app:layout_constraintBottom_toTopOf="@id/button_place_order"
+                app:layout_constraintBottom_toTopOf="@id/button_check_out_order"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/button_place_order"
+                android:id="@+id/button_check_out_order"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
@@ -112,7 +112,7 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:text="@string/place_order"
+                    android:text="@string/check_out_order"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/title_text_size"
                     android:textStyle="bold"

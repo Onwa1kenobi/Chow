@@ -32,12 +32,15 @@ class OrderViewModel @Inject constructor(
     // variable for the total cost of orders
     var totalOrderCost: Double = 0.0
 
+    // variable for the sub-total cost of orders
+    var subTotalOrderCost: Double = 0.0
+
     // Tax calculated as 2%
-    val tax: Double get() = totalOrderCost * (2 / 100)
+    val tax: Double get() = subTotalOrderCost * (2 / 100.0)
 
     // Delivery cost simply calculated as 4% of total cost plus 200.
     // More complex method could use address distance and stuff.
-    val deliveryCharge: Double get() = (totalOrderCost * (3 / 100)) + 200
+    var deliveryCharge: Double = 0.0
 
     fun getOrders() {
         // Display progress bar
@@ -85,6 +88,12 @@ class OrderViewModel @Inject constructor(
         getUserInteractor.execute(false) {
             currentUser.postValue(UserMapper.mapFromModel(it as UserModel))
         }
+    }
+
+    fun computeAdditionalCharges(orderCost: Double) {
+        subTotalOrderCost = orderCost
+        deliveryCharge = (subTotalOrderCost * (30 / 100.0)) + 200
+        totalOrderCost = subTotalOrderCost + tax + deliveryCharge
     }
 
     fun placeOrder(address: String, deliveryTime: String) {

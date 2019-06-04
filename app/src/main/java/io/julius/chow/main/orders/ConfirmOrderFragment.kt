@@ -37,6 +37,9 @@ class ConfirmOrderFragment : RoundedBottomSheetDialogFragment() {
         }
 
         editing.observe(this, Observer {
+            // This happens when the current time is after 5:00 PM
+            if (it == null) return@Observer
+
             button_place_order.isEnabled = it.not()
             when (it) {
                 true -> {
@@ -53,9 +56,21 @@ class ConfirmOrderFragment : RoundedBottomSheetDialogFragment() {
 
         updateAvailableTimes(Calendar.getInstance())
 
-        label_sub_total_amount.text = resources.getString(R.string.thousand_format, orderViewModel.totalOrderCost)
-        label_tax_amount.text = resources.getString(R.string.thousand_format, orderViewModel.tax)
-        label_delivery_charge_amount.text = resources.getString(R.string.thousand_format, orderViewModel.deliveryCharge)
+        label_user_name.text =
+            "${orderViewModel.currentUser.value?.name.toString()} | ${orderViewModel.currentUser.value?.phoneNumber}"
+
+        field_user_address.setText("${orderViewModel.currentUser.value?.address}")
+
+        label_sub_total_amount.text =
+            resources.getString(R.string.naira_thousand_format, orderViewModel.subTotalOrderCost)
+        label_tax_amount.text = resources.getString(R.string.naira_thousand_format, orderViewModel.tax)
+        label_delivery_charge_amount.text =
+            resources.getString(R.string.naira_thousand_format, orderViewModel.deliveryCharge)
+
+        button_place_order.text = resources.getString(R.string.place_order) + " for " + resources.getString(
+            R.string.naira_thousand_format,
+            orderViewModel.subTotalOrderCost
+        )
     }
 
     private fun updateAvailableTimes(currentTime: Calendar) {
@@ -81,6 +96,10 @@ class ConfirmOrderFragment : RoundedBottomSheetDialogFragment() {
                 checkbox_five_six.isEnabled = false
 
                 radio_group.clearCheck()
+
+                button_change_address.isEnabled = false
+                button_place_order.isEnabled = false
+                editing.value = null
             }
 
             currentTime.after(onePM) -> {

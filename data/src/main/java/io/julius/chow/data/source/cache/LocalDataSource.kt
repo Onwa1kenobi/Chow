@@ -1,10 +1,7 @@
 package io.julius.chow.data.source.cache
 
 import com.google.firebase.auth.FirebaseAuth
-import io.julius.chow.data.model.FoodEntity
-import io.julius.chow.data.model.OrderEntity
-import io.julius.chow.data.model.RestaurantEntity
-import io.julius.chow.data.model.UserEntity
+import io.julius.chow.data.model.*
 import io.julius.chow.data.source.DataSource
 import io.julius.chow.domain.Exception
 import io.julius.chow.domain.Result
@@ -116,5 +113,10 @@ class LocalDataSource @Inject constructor(private val appDAO: AppDAO) : DataSour
 
     override fun deleteOrder(orderEntity: OrderEntity) {
         appDAO.deleteOrder(orderEntity)
+    }
+
+    override suspend fun savePlacedOrder(placedOrder: PlacedOrderEntity): Boolean {
+        val rowId: Long? = appDAO.savePlacedOrder(placedOrder)
+        return rowId != null
     }
 }

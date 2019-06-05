@@ -5,8 +5,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RadioButton
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import com.google.android.material.snackbar.Snackbar
 import io.julius.chow.R
 import io.julius.chow.util.RoundedBottomSheetDialogFragment
 import kotlinx.android.synthetic.main.fragment_confirm_order.*
@@ -56,8 +59,10 @@ class ConfirmOrderFragment : RoundedBottomSheetDialogFragment() {
 
         updateAvailableTimes(Calendar.getInstance())
 
-        label_user_name.text =
-            "${orderViewModel.currentUser.value?.name.toString()} | ${orderViewModel.currentUser.value?.phoneNumber}"
+        label_user_name.text = String.format(
+            "%s | %s",
+            orderViewModel.currentUser.value?.name.toString(), orderViewModel.currentUser.value?.phoneNumber
+        )
 
         field_user_address.setText("${orderViewModel.currentUser.value?.address}")
 
@@ -67,10 +72,56 @@ class ConfirmOrderFragment : RoundedBottomSheetDialogFragment() {
         label_delivery_charge_amount.text =
             resources.getString(R.string.naira_thousand_format, orderViewModel.deliveryCharge)
 
-        button_place_order.text = resources.getString(R.string.place_order) + " for " + resources.getString(
-            R.string.naira_thousand_format,
-            orderViewModel.subTotalOrderCost
+        button_place_order.text = String.format(
+            "%s for %s",
+            resources.getString(R.string.place_order),
+            resources.getString(R.string.naira_thousand_format, orderViewModel.totalOrderCost)
         )
+
+        button_place_order.setOnClickListener {
+            orderViewModel.placeOrder(
+                field_user_address.text.toString().trim(),
+                view.findViewById<RadioButton>(radio_group.checkedRadioButtonId).text.toString()
+            )
+        }
+
+        orderViewModel.orderViewContract.observe(this, Observer { event ->
+            event.getContentIfNotHandled()?.let { data ->
+                when (data) {
+                    is OrderViewContract.ProgressDisplay -> {
+                        // Toggle progress bar visibility
+                        if (data.display) {
+                            progress_bar.layoutParams.width = 0
+                            progress_bar.requestLayout()
+                            this.isCancelable = false
+
+                            button_place_order.isEnabled = false
+                        } else {
+                            progress_bar.layoutParams.width = 1
+                            progress_bar.requestLayout()
+                            this.isCancelable = true
+                        }
+                    }
+
+                    is OrderViewContract.MessageDisplay -> {
+                        // Display message feedback to user
+                        Snackbar.make(view.rootView, data.message, Snackbar.LENGTH_SHORT).apply {
+                            view.setBackgroundColor(ContextCompat.getColor(context, R.color.colorAccent))
+                            show()
+                        }.addCallback(object : Snackbar.Callback() {
+                            override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
+                                dismiss()
+                                super.onDismissed(transientBottomBar, event)
+                            }
+                        })
+                    }
+
+                    else -> {
+                        // Do nothing
+                    }
+                }
+            }
+        })
     }
 
     private fun updateAvailableTimes(currentTime: Calendar) {
@@ -91,14 +142,15 @@ class ConfirmOrderFragment : RoundedBottomSheetDialogFragment() {
 
         when {
             currentTime.after(fivePM) -> {
+                // Disable all components
                 checkbox_ten_eleven.isEnabled = false
                 checkbox_one_two.isEnabled = false
-                checkbox_five_six.isEnabled = false
+//                checkbox_five_six.isEnabled = false
 
                 radio_group.clearCheck()
 
                 button_change_address.isEnabled = false
-                button_place_order.isEnabled = false
+//                button_place_order.isEnabled = false
                 editing.value = null
             }
 

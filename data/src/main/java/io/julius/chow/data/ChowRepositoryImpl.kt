@@ -1,20 +1,14 @@
 package io.julius.chow.data
 
 import android.annotation.SuppressLint
-import io.julius.chow.data.mapper.FoodEntityMapper
-import io.julius.chow.data.mapper.OrderEntityMapper
-import io.julius.chow.data.mapper.RestaurantEntityMapper
-import io.julius.chow.data.mapper.UserEntityMapper
+import io.julius.chow.data.mapper.*
 import io.julius.chow.data.source.DataSource
 import io.julius.chow.data.source.DataSourceQualifier
 import io.julius.chow.data.source.Source
 import io.julius.chow.domain.ChowRepository
 import io.julius.chow.domain.Exception
 import io.julius.chow.domain.Result
-import io.julius.chow.domain.model.FoodModel
-import io.julius.chow.domain.model.OrderModel
-import io.julius.chow.domain.model.RestaurantModel
-import io.julius.chow.domain.model.UserModel
+import io.julius.chow.domain.model.*
 import io.reactivex.Flowable
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -161,5 +155,24 @@ class ChowRepositoryImpl @Inject constructor(
 
     override suspend fun deleteOrder(orderModel: OrderModel) {
         localDataSource.deleteOrder(OrderEntityMapper.mapToEntity(orderModel))
+    }
+
+    override suspend fun placeOrder(placedOrder: PlacedOrderModel): Result<String> {
+
+        return when (val response = remoteDataSource.placeOrder(PlacedOrderEntityMapper.mapToEntity(placedOrder))) {
+            is Result.Success -> {
+                // Save to local datastore and remove items from Orders db table
+                val isCached = localDataSource.savePlacedOrder(response.data)
+                if (isCached) {
+                    Result.Success("Your order was placed successfully.")
+                } else {
+                    Result.Failure(Exception.LocalDataException("Could not cached data locally."))
+                }
+            }
+
+            is Result.Failure -> {
+                response
+            }
+        }
     }
 }

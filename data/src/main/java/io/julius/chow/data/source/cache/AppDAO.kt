@@ -1,10 +1,7 @@
 package io.julius.chow.data.source.cache
 
 import androidx.room.*
-import io.julius.chow.data.model.FoodEntity
-import io.julius.chow.data.model.OrderEntity
-import io.julius.chow.data.model.RestaurantEntity
-import io.julius.chow.data.model.UserEntity
+import io.julius.chow.data.model.*
 import io.reactivex.Flowable
 
 @Dao
@@ -26,7 +23,7 @@ interface AppDAO {
     fun getRestaurantMenu(id: String): Flowable<List<FoodEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun saveUser(userEntity: UserEntity) : Long
+    fun saveUser(userEntity: UserEntity): Long
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun saveRestaurant(restaurantEntity: RestaurantEntity)
@@ -41,14 +38,17 @@ interface AppDAO {
     fun deleteRestaurants()
 
     @Query("SELECT * FROM Orders")
-    fun getOrders() : Flowable<List<OrderEntity>>
+    fun getOrders(): Flowable<List<OrderEntity>>
 
     @Query("SELECT * FROM Orders where id = :id")
-    fun getOrder(id: String) : OrderEntity
+    fun getOrder(id: String): OrderEntity
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun saveOrder(orderEntity: OrderEntity) : Long
+    fun saveOrder(orderEntity: OrderEntity): Long
 
     @Delete
     fun deleteOrder(orderEntity: OrderEntity)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun savePlacedOrder(placedOrderEntity: PlacedOrderEntity): Long
 }

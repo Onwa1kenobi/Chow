@@ -100,7 +100,7 @@ interface DataSource {
     /**
      * Places an order and sends a notification to corresponding restaurants from the remote database
      */
-    suspend fun placeOrder(placedOrder: PlacedOrderEntity): Result<String> {
+    suspend fun placeOrder(placedOrder: PlacedOrderEntity): Result<PlacedOrderEntity> {
         TODO("Not Implemented")
     }
 

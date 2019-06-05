@@ -1,9 +1,6 @@
 package io.julius.chow.domain
 
-import io.julius.chow.domain.model.FoodModel
-import io.julius.chow.domain.model.OrderModel
-import io.julius.chow.domain.model.RestaurantModel
-import io.julius.chow.domain.model.UserModel
+import io.julius.chow.domain.model.*
 import io.reactivex.Flowable
 
 /**
@@ -36,4 +33,6 @@ interface ChowRepository {
     suspend fun saveOrder(orderModel: OrderModel) : Boolean
 
     suspend fun deleteOrder(orderModel: OrderModel)
+
+    suspend fun placeOrder(placedOrder: PlacedOrderModel): Result<String>
 }

@@ -4,7 +4,8 @@ import androidx.lifecycle.MutableLiveData
 
 class Order(
     val food: Food,
-    var quantity: Int = 1
+    var quantity: Int = 1,
+    val inHistory: Boolean = false
 ) {
     // Data binding live data variables for UI display
     val liveQuantity = MutableLiveData<Int>().apply { postValue(quantity) }

@@ -6,19 +6,24 @@ import io.julius.chow.domain.Result
 import io.julius.chow.domain.interactor.Interactor
 import io.julius.chow.domain.interactor.food.DeleteOrderInteractor
 import io.julius.chow.domain.interactor.food.GetOrdersInteractor
+import io.julius.chow.domain.interactor.food.PlaceOrderInteractor
 import io.julius.chow.domain.interactor.profile.GetUserInteractor
 import io.julius.chow.domain.model.UserModel
 import io.julius.chow.mapper.OrderMapper
+import io.julius.chow.mapper.PlacedOrderMapper
 import io.julius.chow.mapper.UserMapper
 import io.julius.chow.model.Order
+import io.julius.chow.model.PlacedOrder
 import io.julius.chow.model.User
 import io.julius.chow.util.Event
+import java.util.*
 import javax.inject.Inject
 
 class OrderViewModel @Inject constructor(
     private val getOrdersInteractor: GetOrdersInteractor,
     private val deleteOrderInteractor: DeleteOrderInteractor,
-    private val getUserInteractor: GetUserInteractor
+    private val getUserInteractor: GetUserInteractor,
+    private val placeOrderInteractor: PlaceOrderInteractor
 ) : ViewModel() {
 
     // LiveData object for view state interaction
@@ -27,20 +32,21 @@ class OrderViewModel @Inject constructor(
     // public LiveData variable to expose returned list of orders
     val orders = MutableLiveData<List<Order>>()
 
+    // Current user variable to display user details
     val currentUser = MutableLiveData<User>()
 
     // variable for the total cost of orders
-    var totalOrderCost: Double = 0.0
+    val totalOrderCost: Double get() = subTotalOrderCost + tax + deliveryCharge
 
     // variable for the sub-total cost of orders
     var subTotalOrderCost: Double = 0.0
 
-    // Tax calculated as 2%
-    val tax: Double get() = subTotalOrderCost * (2 / 100.0)
+    // Tax calculated as 1%
+    val tax: Double get() = subTotalOrderCost * (1 / 100.0)
 
     // Delivery cost simply calculated as 4% of total cost plus 200.
     // More complex method could use address distance and stuff.
-    var deliveryCharge: Double = 0.0
+    val deliveryCharge: Double get() = (subTotalOrderCost * (5 / 100.0)) + 150
 
     fun getOrders() {
         // Display progress bar
@@ -90,13 +96,29 @@ class OrderViewModel @Inject constructor(
         }
     }
 
-    fun computeAdditionalCharges(orderCost: Double) {
-        subTotalOrderCost = orderCost
-        deliveryCharge = (subTotalOrderCost * (30 / 100.0)) + 200
-        totalOrderCost = subTotalOrderCost + tax + deliveryCharge
-    }
-
     fun placeOrder(address: String, deliveryTime: String) {
+        val placedOrder = PlacedOrder(
+            id = "",
+            orders = orders.value!!,
+            user = currentUser.value!!.apply { this.address = address },
+            createdAt = Calendar.getInstance().time,
+            deliveryTime = deliveryTime,
+            subTotalCost = subTotalOrderCost,
+            tax = tax,
+            deliveryCharge = deliveryCharge
+        )
 
+        // Display progress bar
+        orderViewContract.postValue(Event(OrderViewContract.ProgressDisplay(true)))
+
+        placeOrderInteractor.execute(PlacedOrderMapper.mapToModel(placedOrder)) {
+            // Hide progress bar
+            orderViewContract.postValue(Event(OrderViewContract.ProgressDisplay(false)))
+
+            // Display returned message to user
+            orderViewContract.postValue(
+                Event(OrderViewContract.MessageDisplay(it))
+            )
+        }
     }
 }

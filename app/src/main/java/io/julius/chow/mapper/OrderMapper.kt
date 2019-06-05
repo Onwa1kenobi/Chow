@@ -24,7 +24,11 @@ object OrderMapper : Mapper<Order, OrderModel> {
             rating = type.rating
         )
 
-        return Order(food = orderFood, quantity = type.quantity)
+        return Order(
+            food = orderFood,
+            quantity = type.quantity,
+            inHistory = type.inHistory
+        )
     }
 
     /**
@@ -39,7 +43,8 @@ object OrderMapper : Mapper<Order, OrderModel> {
             restaurantId = type.food.restaurantId,
             price = type.food.price,
             rating = type.food.rating,
-            quantity = type.quantity
+            quantity = type.quantity,
+            inHistory = type.inHistory
         )
     }
 }

@@ -1,241 +1,250 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:animateLayoutChanges="true"
     android:background="@drawable/background_bottom_sheet_fragment"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:layout_height="wrap_content"
     android:paddingStart="@dimen/activity_horizontal_margin"
-    android:paddingEnd="@dimen/activity_horizontal_margin"
-    app:layout_dodgeInsetEdges="bottom">
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingEnd="@dimen/activity_horizontal_margin">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/label_user_name"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/activity_double_margin"
-        android:gravity="center"
-        android:textColor="@android:color/black"
-        android:textSize="@dimen/title_text_size"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Julius | +2347067420774" />
+        android:background="@android:color/white"
+        app:layout_dodgeInsetEdges="bottom">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/layout_address_field_wrapper"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/activity_horizontal_margin"
-        android:hint="@string/address_hint"
-        android:imeOptions="actionDone"
-        app:layout_constraintTop_toBottomOf="@id/label_user_name">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/field_user_address"
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/label_user_name"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:enabled="false"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/activity_vertical_margin"
+            android:gravity="center"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/title_text_size"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Julius | +2347067420774" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layout_address_field_wrapper"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:hint="@string/address_hint"
             android:imeOptions="actionDone"
-            android:inputType="textCapSentences"
-            android:textSize="@dimen/description_text_size"
-            tools:text="Plot 42A, Water Estate, Ash Island, Lagos." />
+            app:layout_constraintTop_toBottomOf="@id/label_user_name">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/field_user_address"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:enabled="false"
+                android:imeOptions="actionDone"
+                android:inputType="textCapSentences"
+                android:textSize="@dimen/description_text_size"
+                tools:text="Plot 42A, Water Estate, Ash Island, Lagos." />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/button_change_address"
-        style="@style/Widget.MaterialComponents.Button.TextButton.Dialog"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:text="@string/change"
-        android:textAllCaps="false"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layout_address_field_wrapper" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/label_delivery_period"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:gravity="center"
-        android:text="@string/delivery_period"
-        android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@id/button_change_address" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_change_address"
+            style="@style/Widget.MaterialComponents.Button.TextButton.Dialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:text="@string/change"
+            android:textAllCaps="false"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_address_field_wrapper" />
 
-    <RadioGroup
-        android:id="@+id/radio_group"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/label_delivery_period">
-
-        <androidx.appcompat.widget.AppCompatRadioButton
-            android:id="@+id/checkbox_ten_eleven"
-            style="@style/Widget.AppCompat.CompoundButton.CheckBox"
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/label_delivery_period"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/activity_horizontal_margin"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:layout_marginTop="@dimen/activity_half_margin"
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:text="@string/ten_to_eleven_am" />
+            android:gravity="center"
+            android:text="@string/delivery_period"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/button_change_address" />
 
-        <androidx.appcompat.widget.AppCompatRadioButton
-            android:id="@+id/checkbox_one_two"
-            style="@style/Widget.AppCompat.CompoundButton.CheckBox"
+        <RadioGroup
+            android:id="@+id/radio_group"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/label_delivery_period">
+
+            <androidx.appcompat.widget.AppCompatRadioButton
+                android:id="@+id/checkbox_ten_eleven"
+                style="@style/Widget.AppCompat.CompoundButton.CheckBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/activity_half_margin"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:text="@string/ten_to_eleven_am" />
+
+            <androidx.appcompat.widget.AppCompatRadioButton
+                android:id="@+id/checkbox_one_two"
+                style="@style/Widget.AppCompat.CompoundButton.CheckBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/activity_half_margin"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:text="@string/one_to_two_pm"
+                app:layout_constraintTop_toBottomOf="@id/checkbox_ten_eleven" />
+
+            <androidx.appcompat.widget.AppCompatRadioButton
+                android:id="@+id/checkbox_five_six"
+                style="@style/Widget.AppCompat.CompoundButton.CheckBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/activity_half_margin"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:text="@string/five_to_six_pm"
+                app:layout_constraintTop_toBottomOf="@id/checkbox_one_two" />
+
+        </RadioGroup>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/label_sub_total"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/activity_horizontal_margin"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:layout_marginTop="@dimen/activity_half_margin"
+            android:layout_marginTop="@dimen/activity_horizontal_margin"
+            android:gravity="center"
+            android:paddingStart="@dimen/text_margin"
+            android:paddingLeft="@dimen/text_margin"
+            android:paddingEnd="@dimen/text_margin"
+            android:paddingRight="@dimen/text_margin"
+            android:text="@string/sub_total"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/radio_group" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/label_sub_total_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_horizontal_margin"
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:text="@string/one_to_two_pm"
-            app:layout_constraintTop_toBottomOf="@id/checkbox_ten_eleven" />
+            android:gravity="center"
+            android:paddingStart="@dimen/text_margin"
+            android:paddingLeft="@dimen/text_margin"
+            android:paddingEnd="@dimen/text_margin"
+            android:paddingRight="@dimen/text_margin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/radio_group"
+            tools:text="#3,892.78" />
 
-        <androidx.appcompat.widget.AppCompatRadioButton
-            android:id="@+id/checkbox_five_six"
-            style="@style/Widget.AppCompat.CompoundButton.CheckBox"
-            android:layout_width="match_parent"
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/label_tax"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/activity_horizontal_margin"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:layout_marginTop="@dimen/activity_half_margin"
+            android:layout_marginTop="@dimen/text_margin"
+            android:gravity="center"
+            android:paddingStart="@dimen/text_margin"
+            android:paddingLeft="@dimen/text_margin"
+            android:paddingEnd="@dimen/text_margin"
+            android:paddingRight="@dimen/text_margin"
+            android:text="@string/tax"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/label_sub_total" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/label_tax_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/text_margin"
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:text="@string/five_to_six_pm"
-            app:layout_constraintTop_toBottomOf="@id/checkbox_one_two" />
+            android:gravity="center"
+            android:paddingStart="@dimen/text_margin"
+            android:paddingLeft="@dimen/text_margin"
+            android:paddingEnd="@dimen/text_margin"
+            android:paddingRight="@dimen/text_margin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/label_sub_total_amount"
+            tools:text="#92.78" />
 
-    </RadioGroup>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/label_delivery_charge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/text_margin"
+            android:layout_marginBottom="@dimen/activity_horizontal_margin"
+            android:gravity="center"
+            android:paddingStart="@dimen/text_margin"
+            android:paddingLeft="@dimen/text_margin"
+            android:paddingEnd="@dimen/text_margin"
+            android:paddingRight="@dimen/text_margin"
+            android:text="@string/delivery_charge"
+            app:layout_constraintBottom_toTopOf="@id/button_place_order"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/label_tax" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/label_sub_total"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="@dimen/activity_horizontal_margin"
-        android:gravity="center"
-        android:paddingStart="@dimen/text_margin"
-        android:paddingLeft="@dimen/text_margin"
-        android:paddingEnd="@dimen/text_margin"
-        android:paddingRight="@dimen/text_margin"
-        android:text="@string/sub_total"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/radio_group" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/label_delivery_charge_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/text_margin"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:layout_marginBottom="@dimen/activity_horizontal_margin"
+            android:gravity="center"
+            android:paddingStart="@dimen/text_margin"
+            android:paddingLeft="@dimen/text_margin"
+            android:paddingEnd="@dimen/text_margin"
+            android:paddingRight="@dimen/text_margin"
+            app:layout_constraintBottom_toTopOf="@id/button_place_order"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/label_tax_amount"
+            tools:text="#200.00" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/label_sub_total_amount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/activity_horizontal_margin"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:gravity="center"
-        android:paddingStart="@dimen/text_margin"
-        android:paddingLeft="@dimen/text_margin"
-        android:paddingEnd="@dimen/text_margin"
-        android:paddingRight="@dimen/text_margin"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/radio_group"
-        tools:text="#3,892.78" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_place_order"
+            style="@style/Widget.MaterialComponents.Button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:text="@string/place_order"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/progress_bar"
+            app:layout_constraintStart_toStartOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/label_tax"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="@dimen/text_margin"
-        android:gravity="center"
-        android:paddingStart="@dimen/text_margin"
-        android:paddingLeft="@dimen/text_margin"
-        android:paddingEnd="@dimen/text_margin"
-        android:paddingRight="@dimen/text_margin"
-        android:text="@string/tax"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/label_sub_total" />
+        <androidx.core.widget.ContentLoadingProgressBar
+            android:id="@+id/progress_bar"
+            style="@style/Widget.AppCompat.ProgressBar"
+            android:layout_width="0dp"
+            android:layout_height="28dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/button_place_order"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/button_place_order" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/label_tax_amount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/text_margin"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:gravity="center"
-        android:paddingStart="@dimen/text_margin"
-        android:paddingLeft="@dimen/text_margin"
-        android:paddingEnd="@dimen/text_margin"
-        android:paddingRight="@dimen/text_margin"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/label_sub_total_amount"
-        tools:text="#92.78" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/label_delivery_charge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="@dimen/text_margin"
-        android:layout_marginBottom="@dimen/activity_horizontal_margin"
-        android:gravity="center"
-        android:paddingStart="@dimen/text_margin"
-        android:paddingLeft="@dimen/text_margin"
-        android:paddingEnd="@dimen/text_margin"
-        android:paddingRight="@dimen/text_margin"
-        android:text="@string/delivery_charge"
-        app:layout_constraintBottom_toTopOf="@id/button_place_order"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/label_tax" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/label_delivery_charge_amount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/text_margin"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:layout_marginBottom="@dimen/activity_horizontal_margin"
-        android:gravity="center"
-        android:paddingStart="@dimen/text_margin"
-        android:paddingLeft="@dimen/text_margin"
-        android:paddingEnd="@dimen/text_margin"
-        android:paddingRight="@dimen/text_margin"
-        app:layout_constraintBottom_toTopOf="@id/button_place_order"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/label_tax_amount"
-        tools:text="#200.00" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/button_place_order"
-        style="@style/Widget.MaterialComponents.Button"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/activity_horizontal_margin"
-        android:text="@string/place_order"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/progress_bar"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <ProgressBar
-        android:id="@+id/progress_bar"
-        style="@style/Widget.AppCompat.ProgressBar"
-        android:layout_width="1dp"
-        android:layout_height="28dp"
-        app:layout_constraintBottom_toBottomOf="@id/button_place_order"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/button_place_order" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

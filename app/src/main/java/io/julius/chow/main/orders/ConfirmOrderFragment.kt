@@ -83,30 +83,29 @@ class ConfirmOrderFragment : RoundedBottomSheetDialogFragment() {
                 field_user_address.text.toString().trim(),
                 view.findViewById<RadioButton>(radio_group.checkedRadioButtonId).text.toString()
             )
+
+
         }
 
-        orderViewModel.orderViewContract.observe(this, Observer { event ->
+        orderViewModel.orderConfirmationViewContract.observe(this, Observer { event ->
             event.getContentIfNotHandled()?.let { data ->
                 when (data) {
                     is OrderViewContract.ProgressDisplay -> {
                         // Toggle progress bar visibility
                         if (data.display) {
-                            progress_bar.layoutParams.width = 0
-                            progress_bar.requestLayout()
-                            this.isCancelable = false
-
+                            progress_bar.visibility = View.VISIBLE
                             button_place_order.isEnabled = false
+                            this.isCancelable = false
                         } else {
-                            progress_bar.layoutParams.width = 1
-                            progress_bar.requestLayout()
+                            progress_bar.visibility = View.GONE
                             this.isCancelable = true
                         }
                     }
 
                     is OrderViewContract.MessageDisplay -> {
                         // Display message feedback to user
-                        Snackbar.make(view.rootView, data.message, Snackbar.LENGTH_SHORT).apply {
-                            view.setBackgroundColor(ContextCompat.getColor(context, R.color.colorAccent))
+                        Snackbar.make(view, data.message, Snackbar.LENGTH_SHORT).apply {
+                            this.view.setBackgroundColor(ContextCompat.getColor(context, R.color.colorAccent))
                             show()
                         }.addCallback(object : Snackbar.Callback() {
                             override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
@@ -150,6 +149,7 @@ class ConfirmOrderFragment : RoundedBottomSheetDialogFragment() {
                 radio_group.clearCheck()
 
                 button_change_address.isEnabled = false
+                radio_group.check(R.id.checkbox_five_six)
 //                button_place_order.isEnabled = false
                 editing.value = null
             }

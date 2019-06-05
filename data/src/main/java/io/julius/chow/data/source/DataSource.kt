@@ -1,9 +1,6 @@
 package io.julius.chow.data.source
 
-import io.julius.chow.data.model.FoodEntity
-import io.julius.chow.data.model.OrderEntity
-import io.julius.chow.data.model.RestaurantEntity
-import io.julius.chow.data.model.UserEntity
+import io.julius.chow.data.model.*
 import io.julius.chow.domain.Exception
 import io.julius.chow.domain.Result
 import io.julius.chow.domain.model.UserModel
@@ -99,4 +96,18 @@ interface DataSource {
      * Deletes an order from the local database
      */
     fun deleteOrder(orderEntity: OrderEntity) {}
+
+    /**
+     * Places an order and sends a notification to corresponding restaurants from the remote database
+     */
+    suspend fun placeOrder(placedOrder: PlacedOrderEntity): Result<String> {
+        TODO("Not Implemented")
+    }
+
+    /**
+     * Saves a placed order in the local database for posterity sake
+     */
+    suspend fun savePlacedOrder(placedOrder: PlacedOrderEntity): Boolean {
+        TODO("Not Implemented")
+    }
 }

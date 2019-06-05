@@ -21,7 +21,8 @@ object OrderEntityMapper : Mapper<OrderEntity, OrderModel> {
             restaurantId = type.restaurantId,
             price = type.price,
             rating = type.rating,
-            quantity = type.quantity
+            quantity = type.quantity,
+            inHistory = type.inHistory
         )
     }
 
@@ -37,7 +38,8 @@ object OrderEntityMapper : Mapper<OrderEntity, OrderModel> {
             restaurantId = type.restaurantId,
             price = type.price,
             rating = type.rating,
-            quantity = type.quantity
+            quantity = type.quantity,
+            inHistory = type.inHistory
         )
     }
 }

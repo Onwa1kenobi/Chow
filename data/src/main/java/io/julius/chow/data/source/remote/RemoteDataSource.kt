@@ -166,13 +166,15 @@ class RemoteDataSource @Inject constructor() : DataSource {
             .observeOn(Schedulers.io())
     }
 
-    override suspend fun placeOrder(placedOrder: PlacedOrderEntity): Result<String> {
+    override suspend fun placeOrder(placedOrder: PlacedOrderEntity): Result<PlacedOrderEntity> {
         // Update id of placedOrder
         placedOrder.id = db.collection("PlacedOrders").document().id
 
         return try {
             db.collection("PlacedOrders").document(placedOrder.id).set(placedOrder, SetOptions.merge()).await()
-            Result.Success("Your order was successfully placed.")
+
+            // Return placed order for local db caching with firebase created id
+            Result.Success(placedOrder)
         } catch (e: FirebaseFirestoreException) {
             Result.Failure(Exception.RemoteDataException(e.localizedMessage))
         }

@@ -8,5 +8,6 @@ class OrderModel(
     val restaurantId: String,
     val price: Double,
     val rating: Double,
-    var quantity: Int
+    var quantity: Int,
+    val inHistory: Boolean
 )

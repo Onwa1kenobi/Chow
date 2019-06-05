@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import io.julius.chow.data.model.FoodEntity
 import io.julius.chow.data.model.OrderEntity
 import io.julius.chow.data.model.RestaurantEntity
@@ -15,6 +16,7 @@ import io.julius.chow.data.model.UserEntity
     version = 1,
     exportSchema = false
 )
+@TypeConverters(TimeConverter::class, PlacedOrderDataConverter::class)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun appDao(): AppDAO

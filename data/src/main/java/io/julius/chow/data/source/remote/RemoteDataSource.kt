@@ -8,6 +8,7 @@ import com.google.firebase.firestore.GeoPoint
 import com.google.firebase.firestore.SetOptions
 import io.julius.chow.data.mapper.UserEntityMapper
 import io.julius.chow.data.model.FoodEntity
+import io.julius.chow.data.model.PlacedOrderEntity
 import io.julius.chow.data.model.RestaurantEntity
 import io.julius.chow.data.model.UserEntity
 import io.julius.chow.data.source.DataSource
@@ -163,5 +164,17 @@ class RemoteDataSource @Inject constructor() : DataSource {
             // because we are using this remote function call to make local db changes.
             .subscribeOn(Schedulers.io())
             .observeOn(Schedulers.io())
+    }
+
+    override suspend fun placeOrder(placedOrder: PlacedOrderEntity): Result<String> {
+        // Update id of placedOrder
+        placedOrder.id = db.collection("PlacedOrders").document().id
+
+        return try {
+            db.collection("PlacedOrders").document(placedOrder.id).set(placedOrder, SetOptions.merge()).await()
+            Result.Success("Your order was successfully placed.")
+        } catch (e: FirebaseFirestoreException) {
+            Result.Failure(Exception.RemoteDataException(e.localizedMessage))
+        }
     }
 }

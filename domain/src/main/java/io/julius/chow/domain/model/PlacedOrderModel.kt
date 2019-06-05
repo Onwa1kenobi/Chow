@@ -10,5 +10,6 @@ class PlacedOrderModel(
     val deliveryTime: String,
     val subTotalCost: Double,
     val tax: Double,
-    val deliveryCharge: Double
+    val deliveryCharge: Double,
+    val restaurantIds: MutableList<String> = mutableListOf()
 )

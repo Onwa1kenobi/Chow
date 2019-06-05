@@ -19,6 +19,7 @@ class PlacedOrderEntity() {
     var subTotalCost: Double = 0.0
     var tax: Double = 0.0
     var deliveryCharge: Double = 0.0
+    lateinit var restaurantIds: List<String>
 
     @Ignore
     constructor(
@@ -29,7 +30,8 @@ class PlacedOrderEntity() {
         deliveryTime: String,
         subTotalCost: Double,
         tax: Double,
-        deliveryCharge: Double
+        deliveryCharge: Double,
+        restaurantIds: List<String>
     ) : this() {
         this.id = id
         this.orders = orders
@@ -39,5 +41,6 @@ class PlacedOrderEntity() {
         this.subTotalCost = subTotalCost
         this.tax = tax
         this.deliveryCharge = deliveryCharge
+        this.restaurantIds = restaurantIds
     }
 }

@@ -21,7 +21,8 @@ object PlacedOrderEntityMapper : Mapper<PlacedOrderEntity, PlacedOrderModel> {
             deliveryTime = type.deliveryTime,
             subTotalCost = type.subTotalCost,
             tax = type.tax,
-            deliveryCharge = type.deliveryCharge
+            deliveryCharge = type.deliveryCharge,
+            restaurantIds = type.restaurantIds
         )
     }
 
@@ -37,7 +38,8 @@ object PlacedOrderEntityMapper : Mapper<PlacedOrderEntity, PlacedOrderModel> {
             deliveryTime = type.deliveryTime,
             subTotalCost = type.subTotalCost,
             tax = type.tax,
-            deliveryCharge = type.deliveryCharge
+            deliveryCharge = type.deliveryCharge,
+            restaurantIds = type.restaurantIds as MutableList<String>
         )
     }
 }

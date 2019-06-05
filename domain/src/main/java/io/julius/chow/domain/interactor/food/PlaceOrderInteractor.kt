@@ -10,6 +10,11 @@ class PlaceOrderInteractor @Inject constructor(private val chowRepository: ChowR
     Interactor<PlacedOrderModel, String>() {
 
     override suspend fun run(params: PlacedOrderModel): String {
+
+        params.orders.forEach {
+            params.restaurantIds.add(it.restaurantId)
+        }
+
         return when (val result = chowRepository.placeOrder(params)) {
             is Result.Success -> {
                 result.data

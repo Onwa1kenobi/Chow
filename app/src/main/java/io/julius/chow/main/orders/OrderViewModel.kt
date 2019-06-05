@@ -29,6 +29,9 @@ class OrderViewModel @Inject constructor(
     // LiveData object for view state interaction
     val orderViewContract: MutableLiveData<Event<OrderViewContract>> = MutableLiveData()
 
+    // LiveData object for order confirmation view state interaction
+    val orderConfirmationViewContract: MutableLiveData<Event<OrderViewContract>> = MutableLiveData()
+
     // public LiveData variable to expose returned list of orders
     val orders = MutableLiveData<List<Order>>()
 
@@ -109,14 +112,14 @@ class OrderViewModel @Inject constructor(
         )
 
         // Display progress bar
-        orderViewContract.postValue(Event(OrderViewContract.ProgressDisplay(true)))
+        orderConfirmationViewContract.postValue(Event(OrderViewContract.ProgressDisplay(true)))
 
         placeOrderInteractor.execute(PlacedOrderMapper.mapToModel(placedOrder)) {
             // Hide progress bar
-            orderViewContract.postValue(Event(OrderViewContract.ProgressDisplay(false)))
+            orderConfirmationViewContract.postValue(Event(OrderViewContract.ProgressDisplay(false)))
 
             // Display returned message to user
-            orderViewContract.postValue(
+            orderConfirmationViewContract.postValue(
                 Event(OrderViewContract.MessageDisplay(it))
             )
         }

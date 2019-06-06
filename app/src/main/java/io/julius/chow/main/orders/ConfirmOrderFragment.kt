@@ -144,13 +144,12 @@ class ConfirmOrderFragment : RoundedBottomSheetDialogFragment() {
                 // Disable all components
                 checkbox_ten_eleven.isEnabled = false
                 checkbox_one_two.isEnabled = false
-//                checkbox_five_six.isEnabled = false
+                checkbox_five_six.isEnabled = false
 
                 radio_group.clearCheck()
 
                 button_change_address.isEnabled = false
-                radio_group.check(R.id.checkbox_five_six)
-//                button_place_order.isEnabled = false
+                button_place_order.isEnabled = false
                 editing.value = null
             }
 

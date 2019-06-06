@@ -1,4 +1,4 @@
-package io.julius.chow.data.source.cache
+package io.julius.chow.data.source.cache.converter
 
 import androidx.room.TypeConverter
 import com.google.gson.Gson

@@ -117,6 +117,12 @@ class LocalDataSource @Inject constructor(private val appDAO: AppDAO) : DataSour
 
     override suspend fun savePlacedOrder(placedOrder: PlacedOrderEntity): Boolean {
         val rowId: Long? = appDAO.savePlacedOrder(placedOrder)
+
+        // Remove all orders from local db
+        placedOrder.orders.forEach {
+            appDAO.deleteOrder(it)
+        }
+
         return rowId != null
     }
 }

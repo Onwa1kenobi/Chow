@@ -6,6 +6,9 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import io.julius.chow.data.model.*
+import io.julius.chow.data.source.cache.converter.ListConverter
+import io.julius.chow.data.source.cache.converter.PlacedOrderDataConverter
+import io.julius.chow.data.source.cache.converter.TimeConverter
 
 
 @Database(
@@ -14,7 +17,7 @@ import io.julius.chow.data.model.*
     version = 1,
     exportSchema = false
 )
-@TypeConverters(TimeConverter::class, PlacedOrderDataConverter::class)
+@TypeConverters(TimeConverter::class, PlacedOrderDataConverter::class, ListConverter::class)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun appDao(): AppDAO

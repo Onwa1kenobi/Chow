@@ -28,6 +28,9 @@ interface AppDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun saveRestaurant(restaurantEntity: RestaurantEntity)
 
+    @Query("SELECT * FROM Food WHERE category = :category")
+    fun getMenu(category: String): Flowable<List<FoodEntity>>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun saveFood(foodEntity: FoodEntity)
 

@@ -6,8 +6,9 @@
           android:icon="@drawable/ic_restaurant_grey"/>
 
 
-    <item android:id="@+id/navigation_offers"
-          android:title="@string/offers"
+    <item
+        android:id="@+id/navigation_menu"
+        android:title="@string/menu"
           android:icon="@drawable/ic_offer_grey"/>
 
     <item android:id="@+id/navigation_orders"

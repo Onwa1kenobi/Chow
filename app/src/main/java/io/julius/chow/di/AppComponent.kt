@@ -5,6 +5,7 @@ import io.julius.chow.app.App
 import io.julius.chow.auth.AuthActivity
 import io.julius.chow.di.viewmodel.ViewModelModule
 import io.julius.chow.main.food.FoodDetailsFragment
+import io.julius.chow.main.menu.MenuFragment
 import io.julius.chow.main.orders.OrdersFragment
 import io.julius.chow.main.profile.ProfileFragment
 import io.julius.chow.main.restaurants.RestaurantDetailsFragment
@@ -22,6 +23,8 @@ interface AppComponent {
     fun inject(authActivity: AuthActivity)
 
     fun inject(restaurantsFragment: RestaurantsFragment)
+
+    fun inject(menuFragment: MenuFragment)
 
     fun inject(ordersFragment: OrdersFragment)
 

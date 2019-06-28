@@ -34,7 +34,7 @@ class RestaurantDetailsFragment : BaseFragment<FragmentRestaurantDetailsBinding>
 
     private lateinit var restaurant: Restaurant
 
-    private val foodAdapter: FoodAdapter = FoodAdapter()
+    private val foodAdapter: FoodAdapter = FoodAdapter(FoodAdapter.MenuType.RestaurantMenu)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

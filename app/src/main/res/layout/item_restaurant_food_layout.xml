@@ -47,7 +47,7 @@
                     android:layout_height="wrap_content"
                     android:contentDescription="@string/content_desc_food_image"
                     android:adjustViewBounds="true"
-                    app:squareImageUrl="@{object.imageUrl}"/>
+                app:roundCornerImageUrl="@{object.imageUrl}" />
 
             <androidx.constraintlayout.widget.Guideline
                     android:layout_width="wrap_content"

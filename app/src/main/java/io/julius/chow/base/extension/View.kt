@@ -46,6 +46,24 @@ fun ImageView.setSquareImageUrl(url: String?) {
             .apply(
                 RequestOptions()
                     .placeholder(R.color.gray)
+                    .transforms(CenterCrop())
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+            )
+            .into(this)
+    }
+}
+
+@BindingAdapter("roundCornerImageUrl")
+fun ImageView.setRoundCornerImageUrl(url: String?) {
+    if (null == url) {
+        setImageResource(R.color.gray)
+    } else {
+        Glide.with(context)
+            .load(url.trim { it <= ' ' })
+            .transition(DrawableTransitionOptions.withCrossFade())
+            .apply(
+                RequestOptions()
+                    .placeholder(R.color.gray)
                     .transforms(CenterCrop(), RoundedCorners(32))
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
             )

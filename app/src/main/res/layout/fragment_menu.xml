@@ -21,6 +21,78 @@
             android:layout_height="match_parent"
             tools:context=".main.menu.MenuFragment">
 
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/activity_double_margin"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="8dp"
+                app:layout_constraintBottom_toBottomOf="@id/label_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/label_title">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/label_breakfast"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/selector_background_start_item_state"
+                        android:gravity="center"
+                        android:onClick="@{clickListener::onClick}"
+                        android:paddingStart="@dimen/activity_horizontal_margin"
+                        android:paddingLeft="@dimen/activity_horizontal_margin"
+                        android:paddingTop="@dimen/text_margin"
+                        android:paddingEnd="@dimen/activity_horizontal_margin"
+                        android:paddingRight="@dimen/activity_horizontal_margin"
+                        android:paddingBottom="@dimen/text_margin"
+                        android:text="@string/breakfast"
+                        android:textColor="@color/selector_food_menu"
+                        android:textSize="@dimen/small_text_size"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@id/label_dinner"
+                        app:layout_constraintEnd_toStartOf="@id/label_lunch"
+                        app:layout_constraintTop_toTopOf="@id/label_dinner" />
+
+                    <TextView
+                        android:id="@+id/label_lunch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/selector_background_middle_item_state"
+                        android:gravity="center"
+                        android:onClick="@{clickListener::onClick}"
+                        android:padding="@dimen/text_margin"
+                        android:text="@string/lunch"
+                        android:textColor="@color/selector_food_menu"
+                        android:textSize="@dimen/small_text_size"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@id/label_dinner"
+                        app:layout_constraintEnd_toStartOf="@id/label_dinner"
+                        app:layout_constraintTop_toTopOf="@id/label_dinner" />
+
+                    <TextView
+                        android:id="@+id/label_dinner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/selector_background_end_item_state"
+                        android:gravity="center"
+                        android:onClick="@{clickListener::onClick}"
+                        android:padding="@dimen/text_margin"
+                        android:text="@string/dinner"
+                        android:textColor="@color/selector_food_menu"
+                        android:textSize="@dimen/small_text_size"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
             <TextView
                 android:id="@+id/label_title"
                 android:layout_width="wrap_content"
@@ -35,61 +107,16 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/label_breakfast"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/selector_background_start_item_state"
-                android:gravity="center"
-                android:onClick="@{clickListener::onClick}"
-                android:padding="@dimen/text_margin"
-                android:text="@string/breakfast"
-                android:textColor="@color/selector_food_menu"
-                android:textSize="@dimen/small_text_size"
-                app:layout_constraintBottom_toBottomOf="@id/label_dinner"
-                app:layout_constraintEnd_toStartOf="@id/label_lunch"
-                app:layout_constraintTop_toTopOf="@id/label_dinner" />
-
-            <TextView
-                android:id="@+id/label_lunch"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/selector_background_middle_item_state"
-                android:gravity="center"
-                android:onClick="@{clickListener::onClick}"
-                android:padding="@dimen/text_margin"
-                android:text="@string/lunch"
-                android:textColor="@color/selector_food_menu"
-                android:textSize="@dimen/small_text_size"
-                app:layout_constraintBottom_toBottomOf="@id/label_dinner"
-                app:layout_constraintEnd_toStartOf="@id/label_dinner"
-                app:layout_constraintTop_toTopOf="@id/label_dinner" />
-
-            <TextView
-                android:id="@+id/label_dinner"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/activity_double_margin"
-                android:background="@drawable/selector_background_end_item_state"
-                android:gravity="center"
-                android:onClick="@{clickListener::onClick}"
-                android:padding="@dimen/text_margin"
-                android:text="@string/dinner"
-                android:textColor="@color/selector_food_menu"
-                android:textSize="@dimen/small_text_size"
-                app:layout_constraintBottom_toBottomOf="@id/label_title"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/label_title" />
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/activity_horizontal_margin"
                 android:orientation="vertical"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:layout_constraintTop_toBottomOf="@id/label_title"
-                app:nestScroll="@{false}" />
+                app:nestScroll="@{false}"
+                app:spanCount="2" />
 
             <ProgressBar
                 android:id="@+id/progress_bar"

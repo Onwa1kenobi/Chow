@@ -10,27 +10,29 @@ import io.reactivex.Flowable
  */
 interface ChowRepository {
 
-    fun isUserLoggedIn() : Result<Boolean>
+    fun isUserLoggedIn(): Result<Boolean>
 
-    suspend fun authenticateUser() : Result<UserModel>
+    suspend fun authenticateUser(): Result<UserModel>
 
-    suspend fun getCurrentUser() : Flowable<Result<UserModel>>
+    suspend fun getCurrentUser(): Flowable<Result<UserModel>>
 
     suspend fun fetchCurrentUser(): UserModel
 
-    suspend fun saveUser(userModel: UserModel) : Result<Boolean>
+    suspend fun saveUser(userModel: UserModel): Result<Boolean>
 
-    suspend fun saveUserLocally(userModel: UserModel) : Result<Boolean>
+    suspend fun saveUserLocally(userModel: UserModel): Result<Boolean>
 
-    suspend fun fetchRestaurants() : Flowable<Result<List<RestaurantModel>>>
+    suspend fun fetchRestaurants(): Flowable<Result<List<RestaurantModel>>>
 
-    suspend fun fetchRestaurantMenu(restaurantId: String) : Flowable<Result<List<FoodModel>>>
+    suspend fun fetchRestaurantMenu(restaurantId: String): Flowable<Result<List<FoodModel>>>
 
-    suspend fun getOrders() : Flowable<Result<List<OrderModel>>>
+    suspend fun getMenu(category: String): Flowable<Result<List<FoodModel>>>
 
-    suspend fun getOrder(id: String) : OrderModel?
+    suspend fun getOrders(): Flowable<Result<List<OrderModel>>>
 
-    suspend fun saveOrder(orderModel: OrderModel) : Boolean
+    suspend fun getOrder(id: String): OrderModel?
+
+    suspend fun saveOrder(orderModel: OrderModel): Boolean
 
     suspend fun deleteOrder(orderModel: OrderModel)
 

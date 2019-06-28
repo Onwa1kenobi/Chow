@@ -166,6 +166,33 @@ class RemoteDataSource @Inject constructor() : DataSource {
             .observeOn(Schedulers.io())
     }
 
+    override suspend fun getMenu(category: String): Flowable<Result<List<FoodEntity>>> {
+        return Flowable.create<Result<List<FoodEntity>>>({
+            db.collection("Food")
+                .whereEqualTo("category", category)
+                .get()
+                .addOnSuccessListener { result ->
+                    // Initialize list of food to return
+                    val menu = mutableListOf<FoodEntity>()
+
+                    // Add each food to the list
+                    for (document in result) {
+                        val foodEntity = document.toObject(FoodEntity::class.java)
+                        menu.add(foodEntity)
+                    }
+
+                    // return the menu
+                    it.onNext(Result.Success(menu))
+                }
+                .addOnFailureListener { exception ->
+                    // Return appropriate error message
+                    it.onError(Exception.RemoteDataException(exception.localizedMessage))
+                }
+        }, BackpressureStrategy.BUFFER)
+            .subscribeOn(Schedulers.io())
+            .observeOn(Schedulers.io())
+    }
+
     override suspend fun placeOrder(placedOrder: PlacedOrderEntity): Result<PlacedOrderEntity> {
         // Update id of placedOrder
         placedOrder.id = db.collection("PlacedOrders").document().id

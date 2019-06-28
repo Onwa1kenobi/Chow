@@ -8,5 +8,13 @@
         android:id="@+id/menuFragment"
         android:name="io.julius.chow.main.menu.MenuFragment"
         android:label="fragment_offers"
-        tools:layout="@layout/fragment_menu" />
+        tools:layout="@layout/fragment_menu">
+        <action
+            android:id="@+id/action_menu_to_foodDetails"
+            app:destination="@id/foodDetailsFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/foodDetailsFragment2"
+        android:name="io.julius.chow.main.food.FoodDetailsFragment"
+        android:label="FoodDetailsFragment" />
 </navigation>

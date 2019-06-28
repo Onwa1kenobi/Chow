@@ -66,6 +66,11 @@ interface DataSource {
     suspend fun fetchRestaurantMenu(restaurantId: String): Flowable<Result<List<FoodEntity>>>
 
     /**
+     * Gets all the food related to the category passed
+     */
+    suspend fun getMenu(category: String): Flowable<Result<List<FoodEntity>>>
+
+    /**
      * Saves a food to the local database
      */
     fun saveFood(foodEntities: List<FoodEntity>) {}

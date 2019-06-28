@@ -13,6 +13,7 @@ class FoodEntity() {
     lateinit var title: String
     lateinit var imageUrl: String
     lateinit var description: String
+    lateinit var category: String
     var price: Double = 0.0
     var rating: Double = 0.0
 
@@ -23,6 +24,7 @@ class FoodEntity() {
         imageUrl: String,
         description: String,
         restaurantId: String,
+        category: String,
         price: Double,
         rating: Double
     ) : this() {
@@ -31,6 +33,7 @@ class FoodEntity() {
         this.imageUrl = imageUrl
         this.description = description
         this.restaurantId = restaurantId
+        this.category = category
         this.price = price
         this.rating = rating
     }

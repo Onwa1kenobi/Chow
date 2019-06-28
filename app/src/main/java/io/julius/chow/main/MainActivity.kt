@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
 
         val navGraphIds = listOf(
             R.navigation.navigation_restaurants,
-            R.navigation.navigation_offers,
+            R.navigation.navigation_menu,
             R.navigation.navigation_orders,
             R.navigation.navigation_profile
         )

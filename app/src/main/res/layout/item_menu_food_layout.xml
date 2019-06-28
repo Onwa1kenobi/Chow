@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="object"
+            type="io.julius.chow.model.Food" />
+
+        <variable
+            name="adapter"
+            type="io.julius.chow.main.food.FoodAdapter" />
+
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_half_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginBottom="@dimen/activity_half_margin"
+        app:cardCornerRadius="@dimen/activity_half_margin"
+        app:cardElevation="4dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="@{() -> adapter.onItemClick(object, imageFood)}">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/image_food"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/content_desc_food_image"
+                android:foreground="@drawable/shadow"
+                android:src="@drawable/shade"
+                app:layout_constrainedWidth="true"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:squareImageUrl="@{object.imageUrl}" />
+
+            <TextView
+                android:id="@+id/label_food_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:text="@{object.title}"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/description_text_size"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@id/label_food_price"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="Fibi's delicious chocolate cupcakes" />
+
+            <TextView
+                android:id="@+id/label_food_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginBottom="@dimen/activity_horizontal_margin"
+                android:text="@{object.displayPrice}"
+                android:textColor="@color/green"
+                android:textSize="@dimen/description_text_size"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="$12.99" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</layout>

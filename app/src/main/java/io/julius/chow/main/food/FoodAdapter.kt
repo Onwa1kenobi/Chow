@@ -7,7 +7,7 @@ import io.julius.chow.R
 import io.julius.chow.base.BaseAdapter
 import io.julius.chow.model.Food
 
-class FoodAdapter : BaseAdapter<Food>() {
+class FoodAdapter(private val menuType: MenuType) : BaseAdapter<Food>() {
 
     private var foodList: List<Food> = ArrayList()
 
@@ -24,7 +24,10 @@ class FoodAdapter : BaseAdapter<Food>() {
     }
 
     override fun getLayoutIdForPosition(position: Int): Int {
-        return R.layout.item_restaurant_food_layout
+        return when (menuType) {
+            MenuType.MainMenu -> R.layout.item_menu_food_layout
+            MenuType.RestaurantMenu -> R.layout.item_restaurant_food_layout
+        }
     }
 
     override fun getItemCount(): Int {
@@ -38,5 +41,9 @@ class FoodAdapter : BaseAdapter<Food>() {
 
     fun onAddCartClick(food: Food) {
         listener(food, null)
+    }
+
+    enum class MenuType {
+        MainMenu, RestaurantMenu
     }
 }

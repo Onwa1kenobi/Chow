@@ -1,21 +1,16 @@
-package io.julius.chow.main.restaurants
+package io.julius.chow.main.menu
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import io.julius.chow.domain.Result
-import io.julius.chow.domain.interactor.food.SaveOrderInteractor
-import io.julius.chow.domain.interactor.restaurant.RestaurantMenuInteractor
+import io.julius.chow.domain.interactor.food.GetMenuInteractor
+import io.julius.chow.main.restaurants.RestaurantViewContract
 import io.julius.chow.mapper.FoodMapper
-import io.julius.chow.mapper.OrderMapper
 import io.julius.chow.model.Food
-import io.julius.chow.model.Order
 import io.julius.chow.util.Event
 import javax.inject.Inject
 
-class RestaurantDetailsViewModel @Inject constructor(
-    private val menuInteractor: RestaurantMenuInteractor,
-    private val saveOrderInteractor: SaveOrderInteractor
-) : ViewModel() {
+class MenuViewModel @Inject constructor(private val menuInteractor: GetMenuInteractor) : ViewModel() {
 
     // LiveData object for view state interaction
     val restaurantViewContract: MutableLiveData<Event<RestaurantViewContract>> = MutableLiveData()
@@ -23,8 +18,8 @@ class RestaurantDetailsViewModel @Inject constructor(
     // public LiveData variable to expose returned restaurant menu list
     val menu = MutableLiveData<List<Food>>()
 
-    fun fetchRestaurantMenu(restaurantId: String) {
-        menuInteractor.execute(restaurantId) {
+    fun fetchCategoryMenu(category: String) {
+        menuInteractor.execute(category) {
             it.subscribe({ result ->
                 when (result) {
                     is Result.Success -> {
@@ -48,15 +43,6 @@ class RestaurantDetailsViewModel @Inject constructor(
                     Event(RestaurantViewContract.MessageDisplay(throwable.localizedMessage.toString()))
                 )
             })
-        }
-    }
-
-    fun addOrder(food: Food) {
-        // Construct an order object with the food passed
-        val order = Order(food)
-        // Save order to the database
-        saveOrderInteractor.execute(OrderMapper.mapToModel(order)) { message ->
-            restaurantViewContract.postValue(Event(RestaurantViewContract.MessageDisplay(message)))
         }
     }
 }

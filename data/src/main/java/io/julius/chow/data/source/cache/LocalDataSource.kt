@@ -90,6 +90,18 @@ class LocalDataSource @Inject constructor(private val appDAO: AppDAO) : DataSour
         foodEntities.forEach { appDAO.saveFood(it) }
     }
 
+    override suspend fun getMenu(category: String): Flowable<Result<List<FoodEntity>>> {
+        return Flowable.create({
+            appDAO.getMenu(category).subscribe { food ->
+                if (food == null) {
+                    it.onError(Exception.LocalDataNotFoundException)
+                } else {
+                    it.onNext(Result.Success(food))
+                }
+            }
+        }, BackpressureStrategy.BUFFER)
+    }
+
     override suspend fun getOrders(): Flowable<Result<List<OrderEntity>>> {
         return Flowable.create({
             appDAO.getOrders().subscribe { orders ->

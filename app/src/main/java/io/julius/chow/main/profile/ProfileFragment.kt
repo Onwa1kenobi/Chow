@@ -3,6 +3,7 @@ package io.julius.chow.main.profile
 
 import android.os.Bundle
 import android.view.View
+import androidx.navigation.fragment.findNavController
 import io.julius.chow.R
 import io.julius.chow.base.BaseFragment
 import io.julius.chow.base.extension.observe
@@ -58,7 +59,11 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(), View.OnClickList
         v?.let {
             when (v) {
                 dataBinding.buttonEditAddress -> {
+                    val action = ProfileFragmentDirections.actionProfileToAuthActivity()
+                    action.isEditMode = true
 
+                    // Navigate to the auth activity to edit user info
+                    findNavController().navigate(action)
                 }
 
                 dataBinding.buttonHistoryDetails -> {

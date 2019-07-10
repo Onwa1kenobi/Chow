@@ -11,6 +11,8 @@ class PlaceOrderInteractor @Inject constructor(private val chowRepository: ChowR
 
     override suspend fun run(params: PlacedOrderModel): String {
 
+        // Loop through all orders in this order placement and add the restaurant id to an array
+        // so restaurants can query to see orders they need to handle
         params.orders.forEach {
             params.restaurantIds.add(it.restaurantId)
         }

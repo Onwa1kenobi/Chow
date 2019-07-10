@@ -81,7 +81,7 @@ class RestaurantDetailsFragment : BaseFragment<FragmentRestaurantDetailsBinding>
                 // From our design, if the image is null, then the click operation was to add the current food to order
                 restaurantDetailsViewModel.addOrder(food)
             } else {
-                // Put restaurant id in bundle to fetch restaurant in detail view
+                // Put food object in bundle to display in detail view
                 val bundle = bundleOf(FOOD to food)
                 // Put the restaurant image in an extra for shared element transition
                 val extras = FragmentNavigatorExtras(

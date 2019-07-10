@@ -8,10 +8,24 @@
               android:label="fragment_profile" tools:layout="@layout/fragment_profile">
         <action android:id="@+id/action_profile_to_foodDetails"
                 app:destination="@id/foodDetailsFragment"/>
+        <action
+            android:id="@+id/action_profile_to_authActivity"
+            app:destination="@id/authActivity" />
     </fragment>
 
     <fragment android:id="@+id/foodDetailsFragment" android:name="io.julius.chow.main.food.FoodDetailsFragment"
               android:label="FoodDetailsFragment">
         <argument android:name="food" app:argType="io.julius.chow.model.Food"/>
     </fragment>
+
+    <activity
+        android:id="@+id/authActivity"
+        android:name="io.julius.chow.auth.AuthActivity"
+        android:label="activity_auth"
+        tools:layout="@layout/activity_auth">
+        <argument
+            android:name="isEditMode"
+            android:defaultValue="false"
+            app:argType="boolean" />
+    </activity>
 </navigation>

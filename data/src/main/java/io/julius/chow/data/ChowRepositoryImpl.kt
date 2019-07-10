@@ -54,7 +54,8 @@ class ChowRepositoryImpl @Inject constructor(
     }
 
     override suspend fun saveUser(userModel: UserModel): Result<Boolean> {
-        return remoteDataSource.saveUser(UserEntityMapper.mapToEntity(userModel))
+        remoteDataSource.saveUser(UserEntityMapper.mapToEntity(userModel))
+        return saveUserLocally(userModel)
     }
 
     override suspend fun saveUserLocally(userModel: UserModel): Result<Boolean> {

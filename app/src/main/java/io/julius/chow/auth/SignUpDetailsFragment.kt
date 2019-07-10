@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import io.julius.chow.R
 import io.julius.chow.base.extension.observe
 import kotlinx.android.synthetic.main.fragment_sign_up_details.*
@@ -20,10 +22,15 @@ class SignUpDetailsFragment : Fragment() {
 
     private lateinit var authViewModel: AuthViewModel
 
+    private var isEditMode = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         authViewModel = ViewModelProviders.of(activity!!).get(AuthViewModel::class.java)
+
+        val safeArgs: SignUpDetailsFragmentArgs by navArgs()
+        isEditMode = safeArgs.isEditMode
     }
 
     override fun onCreateView(
@@ -37,8 +44,21 @@ class SignUpDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        toolbar.setNavigationOnClickListener {
-            Navigation.findNavController(activity!!, R.id.navigation_host_fragment).popBackStack()
+        if (isEditMode) {
+            // Fetch the current user details
+            authViewModel.getCurrentUser()
+
+            // Change toolbar title to reflect the edit mode action
+            toolbar.title = "Update Information"
+
+            // Set back button to finish the activity
+            toolbar.setNavigationOnClickListener {
+                activity?.finish()
+            }
+        } else {
+            toolbar.setNavigationOnClickListener {
+                findNavController().popBackStack()
+            }
         }
 
         button_done.setOnClickListener {
@@ -74,9 +94,13 @@ class SignUpDetailsFragment : Fragment() {
                     }
 
                     is AuthViewContract.NavigateToHome -> {
-                        // Navigate to the MainActivity and finish this current activity
-                        Navigation.findNavController(activity!!, R.id.navigation_host_fragment)
-                            .navigate(R.id.action_mainActivity)
+                        // If this fragment was not entered to edit user info, navigate to main activity;
+                        // else, finish the current activity
+                        if (!isEditMode) {
+                            // Navigate to the MainActivity and finish this current activity
+                            Navigation.findNavController(activity!!, R.id.navigation_host_fragment)
+                                .navigate(R.id.action_mainActivity)
+                        }
                         activity?.finish()
                     }
 
@@ -86,5 +110,14 @@ class SignUpDetailsFragment : Fragment() {
                 }
             }
         }
+
+        observe(authViewModel.currentUser) {
+            field_user_name.setText(it.name)
+            field_user_address.setText(it.address)
+        }
+    }
+
+    companion object {
+        const val EDIT_MODE = "isEditMode"
     }
 }

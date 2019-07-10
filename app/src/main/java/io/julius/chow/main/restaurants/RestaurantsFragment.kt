@@ -52,7 +52,7 @@ class RestaurantsFragment : BaseFragment<FragmentRestaurantsBinding>() {
 
         // Prepare the restaurants adapter for item click listening
         restaurantsAdapter.listener = { restaurant, image ->
-            // Put restaurant id in bundle to fetch restaurant in detail view
+            // Put restaurant object in bundle to fetch restaurant food in detail view
             val bundle = bundleOf(RESTAURANT to restaurant)
             // Put the restaurant image in an extra for shared element transition
             val extras = FragmentNavigatorExtras(

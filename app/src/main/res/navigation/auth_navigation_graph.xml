@@ -7,6 +7,10 @@
     <fragment android:id="@+id/signUpDetailsFragment" android:name="io.julius.chow.auth.SignUpDetailsFragment"
               android:label="fragment_sign_up_details" tools:layout="@layout/fragment_sign_up_details">
         <action android:id="@+id/action_mainActivity" app:destination="@id/mainActivity"/>
+        <argument
+            android:name="isEditMode"
+            android:defaultValue="false"
+            app:argType="boolean" />
     </fragment>
     <fragment android:id="@+id/authFragment" android:name="io.julius.chow.auth.AuthFragment"
               android:label="AuthFragment">

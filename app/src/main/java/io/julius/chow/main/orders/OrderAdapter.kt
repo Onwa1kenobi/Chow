@@ -46,7 +46,7 @@ class OrderAdapter(private val lifecycleOwner: OrdersFragment) : BaseAdapter<Ord
     }
 
     override fun getItemCount(): Int {
-        return this.orders.size
+        return this.orders.size + 1
     }
 
     fun onItemClick(order: Order, image: AppCompatImageView) {

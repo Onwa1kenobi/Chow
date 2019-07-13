@@ -10,7 +10,7 @@ import io.julius.chow.model.Order
 
 class OrderAdapter(private val lifecycleOwner: OrdersFragment) : BaseAdapter<Order>() {
 
-    private var orders: List<Order> = ArrayList()
+    private var orders: MutableList<Order> = ArrayList()
 
     var listener: (Order, AppCompatImageView?) -> Unit = { _, _ -> }
 
@@ -30,7 +30,7 @@ class OrderAdapter(private val lifecycleOwner: OrdersFragment) : BaseAdapter<Ord
 
     override fun setData(data: List<Order>) {
         val diffResult = DiffUtil.calculateDiff(OrderListDiffCallback(orders, data))
-        this.orders = data
+        this.orders = data.toMutableList()
         diffResult.dispatchUpdatesTo(this)
 
         // Update total cost
@@ -46,7 +46,7 @@ class OrderAdapter(private val lifecycleOwner: OrdersFragment) : BaseAdapter<Ord
     }
 
     override fun getItemCount(): Int {
-        return this.orders.size + 1
+        return this.orders.size
     }
 
     fun onItemClick(order: Order, image: AppCompatImageView) {

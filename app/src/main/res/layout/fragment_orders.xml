@@ -24,6 +24,7 @@
             <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:fillViewport="true"
                 app:layout_constraintBottom_toTopOf="@id/button_check_out_order"
                 app:layout_constraintTop_toTopOf="parent">
 
@@ -48,12 +49,13 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recycler_view"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="0dp"
                         android:layout_marginTop="@dimen/activity_horizontal_margin"
                         android:layout_marginBottom="@dimen/activity_horizontal_margin"
                         android:orientation="vertical"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         app:layout_constraintTop_toBottomOf="@id/label_title"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:nestScroll="@{false}" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>

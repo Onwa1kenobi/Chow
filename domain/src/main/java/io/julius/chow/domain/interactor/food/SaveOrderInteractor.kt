@@ -1,8 +1,8 @@
 package io.julius.chow.domain.interactor.food
 
-import io.julius.chow.domain.ChowRepository
 import io.julius.chow.domain.interactor.Interactor
 import io.julius.chow.domain.model.OrderModel
+import io.julius.chow.domain.repository.ChowRepository
 import javax.inject.Inject
 
 class SaveOrderInteractor @Inject constructor(private val chowRepository: ChowRepository) :

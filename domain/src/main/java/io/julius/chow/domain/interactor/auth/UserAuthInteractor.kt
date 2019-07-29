@@ -1,12 +1,12 @@
 package io.julius.chow.domain.interactor.auth
 
-import io.julius.chow.domain.ChowRepository
 import io.julius.chow.domain.Result
 import io.julius.chow.domain.interactor.Interactor
-import io.julius.chow.domain.interactor.auth.AuthInteractor.Params
-import io.julius.chow.domain.interactor.auth.AuthInteractor.Params.ParamType.AUTHENTICATE_USER
-import io.julius.chow.domain.interactor.auth.AuthInteractor.Params.ParamType.UPDATE_USER_INFO
+import io.julius.chow.domain.interactor.auth.UserAuthInteractor.Params
+import io.julius.chow.domain.interactor.auth.UserAuthInteractor.Params.ParamType.AUTHENTICATE_USER
+import io.julius.chow.domain.interactor.auth.UserAuthInteractor.Params.ParamType.UPDATE_USER_INFO
 import io.julius.chow.domain.model.UserModel
+import io.julius.chow.domain.repository.ChowRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import javax.inject.Inject
@@ -19,7 +19,7 @@ import kotlin.coroutines.CoroutineContext
  * Rather, we pass in functions as parameters, so they can be called with whatever data we may be expecting,
  * and handle the return in our ViewModels. Think Higher Order Functions.
  */
-class AuthInteractor @Inject constructor(private val chowRepository: ChowRepository) :
+class UserAuthInteractor @Inject constructor(private val chowRepository: ChowRepository) :
     Interactor<Params, Result<Any>>(), CoroutineScope {
 
     override val coroutineContext: CoroutineContext = Dispatchers.IO

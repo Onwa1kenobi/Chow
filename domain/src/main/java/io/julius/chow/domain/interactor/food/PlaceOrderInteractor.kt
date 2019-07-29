@@ -1,9 +1,9 @@
 package io.julius.chow.domain.interactor.food
 
-import io.julius.chow.domain.ChowRepository
 import io.julius.chow.domain.Result
 import io.julius.chow.domain.interactor.Interactor
 import io.julius.chow.domain.model.PlacedOrderModel
+import io.julius.chow.domain.repository.ChowRepository
 import javax.inject.Inject
 
 class PlaceOrderInteractor @Inject constructor(private val chowRepository: ChowRepository) :

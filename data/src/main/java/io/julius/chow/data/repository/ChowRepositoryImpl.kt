@@ -1,4 +1,4 @@
-package io.julius.chow.data
+package io.julius.chow.data.repository
 
 import android.annotation.SuppressLint
 import android.util.Log
@@ -6,10 +6,10 @@ import io.julius.chow.data.mapper.*
 import io.julius.chow.data.source.DataSource
 import io.julius.chow.data.source.DataSourceQualifier
 import io.julius.chow.data.source.Source
-import io.julius.chow.domain.ChowRepository
 import io.julius.chow.domain.Exception
 import io.julius.chow.domain.Result
 import io.julius.chow.domain.model.*
+import io.julius.chow.domain.repository.ChowRepository
 import io.reactivex.Flowable
 import javax.inject.Inject
 import javax.inject.Singleton

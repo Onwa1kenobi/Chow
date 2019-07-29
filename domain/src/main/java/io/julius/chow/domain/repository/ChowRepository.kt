@@ -1,5 +1,6 @@
-package io.julius.chow.domain
+package io.julius.chow.domain.repository
 
+import io.julius.chow.domain.Result
 import io.julius.chow.domain.model.*
 import io.reactivex.Flowable
 

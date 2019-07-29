@@ -8,23 +8,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
 import com.firebase.ui.auth.AuthUI
+import com.google.android.material.snackbar.Snackbar
 import io.julius.chow.R
 import io.julius.chow.base.extension.observe
 import io.julius.chow.util.Event
 import kotlinx.android.synthetic.main.fragment_auth.*
-import java.util.*
 
 /**
  * A simple [Fragment] subclass.
  *
  */
-class AuthFragment : Fragment() {
+class AuthFragment : Fragment(), View.OnClickListener {
 
     private lateinit var authViewModel: AuthViewModel
+    private var userCategory: UserCategory? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,7 +45,18 @@ class AuthFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        avatar_restaurant.setOnClickListener(this)
+        avatar_customer.setOnClickListener(this)
+
         button_phone_login.setOnClickListener {
+            if (userCategory == null) {
+                Snackbar.make(view, "Select an account type.", Snackbar.LENGTH_LONG).apply {
+                    this.view.setBackgroundColor(ContextCompat.getColor(context, R.color.colorAccent))
+                    show()
+                }
+                return@setOnClickListener
+            }
+
             initiatePhoneAuth()
         }
 
@@ -63,8 +76,13 @@ class AuthFragment : Fragment() {
                     }
 
                     is AuthViewContract.NavigateToSignUp -> {
-                        Navigation.findNavController(activity!!, R.id.navigation_host_fragment)
-                            .navigate(R.id.action_signUpDetailsFragment)
+                        if (userCategory == Companion.UserCategory.CUSTOMER) {
+                            Navigation.findNavController(activity!!, R.id.navigation_host_fragment)
+                                .navigate(R.id.action_signUpDetailsFragment)
+                        } else {
+                            Navigation.findNavController(activity!!, R.id.navigation_host_fragment)
+                                .navigate(R.id.action_restaurantAdditionalDetailsFragment)
+                        }
                     }
 
                     is AuthViewContract.NavigateToHome -> {
@@ -74,6 +92,24 @@ class AuthFragment : Fragment() {
                         activity?.finish()
                     }
                 }
+            }
+        }
+    }
+
+    override fun onClick(view: View) {
+        when (view.id) {
+            R.id.avatar_customer -> {
+                avatar_customer.alpha = 1f
+                avatar_restaurant.alpha = 0.5f
+
+                userCategory = Companion.UserCategory.CUSTOMER
+            }
+
+            R.id.avatar_restaurant -> {
+                avatar_restaurant.alpha = 1f
+                avatar_customer.alpha = 0.5f
+
+                userCategory = Companion.UserCategory.RESTAURANT
             }
         }
     }
@@ -101,9 +137,7 @@ class AuthFragment : Fragment() {
         authViewModel.authContractData.value = Event(AuthViewContract.ProgressDisplay(true))
 
         // Choose authentication providers
-        val providers = Arrays.asList(
-            AuthUI.IdpConfig.Builder(AuthUI.PHONE_VERIFICATION_PROVIDER).build()
-        )
+        val providers = listOf(AuthUI.IdpConfig.Builder(AuthUI.PHONE_VERIFICATION_PROVIDER).build())
 
         // Create and launch sign-in intent
         startActivityForResult(
@@ -118,5 +152,9 @@ class AuthFragment : Fragment() {
 
     companion object {
         private const val RC_PHONE_SIGN_IN = 123
+
+        enum class UserCategory(category: String) {
+            RESTAURANT("restaurant"), CUSTOMER("customer")
+        }
     }
 }

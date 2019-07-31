@@ -3,7 +3,8 @@ package io.julius.chow.di
 import android.content.Context
 import dagger.Module
 import dagger.Provides
-import io.julius.chow.data.ChowRepositoryImpl
+import io.julius.chow.data.repository.ChowRepositoryImpl
+import io.julius.chow.data.repository.RestaurantRepositoryImpl
 import io.julius.chow.data.source.DataSource
 import io.julius.chow.data.source.DataSourceQualifier
 import io.julius.chow.data.source.Source
@@ -11,7 +12,8 @@ import io.julius.chow.data.source.cache.AppDAO
 import io.julius.chow.data.source.cache.AppDatabase
 import io.julius.chow.data.source.cache.LocalDataSource
 import io.julius.chow.data.source.remote.RemoteDataSource
-import io.julius.chow.domain.ChowRepository
+import io.julius.chow.domain.repository.ChowRepository
+import io.julius.chow.domain.repository.RestaurantRepository
 import javax.inject.Named
 import javax.inject.Singleton
 
@@ -29,6 +31,10 @@ class RepositoryModule {
     @Provides
     @Singleton
     fun provideChowRepository(repository: ChowRepositoryImpl): ChowRepository = repository
+
+    @Provides
+    @Singleton
+    fun provideRestaurantRepository(repository: RestaurantRepositoryImpl): RestaurantRepository = repository
 
     @Provides
     @DataSourceQualifier(Source.Local)

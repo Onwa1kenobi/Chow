@@ -9,5 +9,6 @@ class RestaurantModel(
     val address: String,
     val location: String,
     val locationLongitude: Double,
-    val locationLatitude: Double
+    val locationLatitude: Double,
+    val profileComplete: Boolean
 )

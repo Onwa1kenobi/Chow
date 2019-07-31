@@ -8,11 +8,12 @@ data class Restaurant(
     var name: String,
     var imageUrl: String,
     val phoneNumber: String,
-    val description: String,
-    val address: String,
-    val location: String,
-    val locationLongitude: Double,
-    val locationLatitude: Double
+    var description: String,
+    var address: String,
+    var location: String,
+    var locationLongitude: Double,
+    var locationLatitude: Double,
+    var profileComplete: Boolean = false
 ) : Parcelable {
 
     override fun describeContents() = 0
@@ -28,6 +29,7 @@ data class Restaurant(
             it.writeString(location)
             it.writeDouble(locationLongitude)
             it.writeDouble(locationLatitude)
+            it.writeInt(if (profileComplete) 1 else 0)
         }
     }
 
@@ -40,7 +42,8 @@ data class Restaurant(
         address = internal.readString(),
         location = internal.readString(),
         locationLongitude = internal.readDouble(),
-        locationLatitude = internal.readDouble()
+        locationLatitude = internal.readDouble(),
+        profileComplete = internal.readInt() == 1
     )
 //    {
 //        menu = internal.createStringArrayList()

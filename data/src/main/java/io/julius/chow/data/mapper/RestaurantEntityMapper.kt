@@ -22,7 +22,8 @@ object RestaurantEntityMapper : Mapper<RestaurantEntity, RestaurantModel> {
             address = type.address,
             location = type.location,
             locationLongitude = type.locationLongitude,
-            locationLatitude = type.locationLatitude
+            locationLatitude = type.locationLatitude,
+            profileComplete = type.profileComplete
         )
     }
 
@@ -39,7 +40,8 @@ object RestaurantEntityMapper : Mapper<RestaurantEntity, RestaurantModel> {
             address = type.address,
             location = type.location,
             locationLongitude = type.locationLongitude,
-            locationLatitude = type.locationLatitude
+            locationLatitude = type.locationLatitude,
+            profileComplete = type.profileComplete
         )
     }
 }

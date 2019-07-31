@@ -17,6 +17,9 @@ class RestaurantEntity() {
     lateinit var location: String
     var locationLongitude: Double = 0.0
     var locationLatitude: Double = 0.0
+    // Boolean variable to check if the profile was successfully created.
+    var profileComplete: Boolean = false
+    var isCurrentRestaurant = false
 
 
     @Ignore
@@ -29,7 +32,8 @@ class RestaurantEntity() {
         address: String,
         location: String,
         locationLongitude: Double,
-        locationLatitude: Double
+        locationLatitude: Double,
+        profileComplete: Boolean = false
     ) : this() {
         this.id = id
         this.name = name
@@ -40,5 +44,6 @@ class RestaurantEntity() {
         this.location = location
         this.locationLongitude = locationLongitude
         this.locationLatitude = locationLatitude
+        this.profileComplete = profileComplete
     }
 }

@@ -69,8 +69,36 @@ class LocalDataSource @Inject constructor(private val appDAO: AppDAO) : DataSour
         }
     }
 
+    override suspend fun getCurrentRestaurant(): Flowable<Result<RestaurantEntity>> {
+        return Flowable.create({
+            appDAO.getCurrentRestaurant().subscribe { restaurantEntity ->
+                if (restaurantEntity == null) {
+                    it.onError(Exception.LocalDataNotFoundException)
+                } else {
+                    it.onNext(Result.Success(restaurantEntity))
+                }
+            }
+        }, BackpressureStrategy.LATEST)
+    }
+
+    override suspend fun fetchCurrentRestaurant(): RestaurantEntity {
+        return appDAO.fetchCurrentRestaurant()
+    }
+
     override fun saveRestaurants(restaurantEntities: List<RestaurantEntity>) {
         restaurantEntities.forEach { appDAO.saveRestaurant(it) }
+    }
+
+    override suspend fun saveRestaurant(restaurantEntity: RestaurantEntity): Result<Boolean> {
+        // The only time we will be calling this function is when we are saving a signed in restaurant,
+        // which at that point becomes the current restaurant.
+        restaurantEntity.apply { isCurrentRestaurant = true }
+        val rowId: Long? = appDAO.saveRestaurant(restaurantEntity)
+        return if (rowId == null) {
+            Result.Failure(Exception.LocalDataException("Failed to save restaurant"))
+        } else {
+            Result.Success(true)
+        }
     }
 
     override suspend fun fetchRestaurantMenu(restaurantId: String): Flowable<Result<List<FoodEntity>>> =

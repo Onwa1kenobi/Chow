@@ -16,6 +16,12 @@ interface AppDAO {
     @Query("SELECT * FROM User where id = :id")
     fun getUser(id: String): UserEntity
 
+    @Query("SELECT * FROM Restaurants WHERE isCurrentRestaurant = 1")
+    fun getCurrentRestaurant(): Flowable<RestaurantEntity>
+
+    @Query("SELECT * FROM Restaurants WHERE isCurrentRestaurant = 1")
+    fun fetchCurrentRestaurant(): RestaurantEntity
+
     @Query("SELECT * FROM Restaurants")
     fun getRestaurants(): Flowable<List<RestaurantEntity>>
 
@@ -26,7 +32,7 @@ interface AppDAO {
     fun saveUser(userEntity: UserEntity): Long
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun saveRestaurant(restaurantEntity: RestaurantEntity)
+    fun saveRestaurant(restaurantEntity: RestaurantEntity): Long
 
     @Query("SELECT * FROM Food WHERE category = :category")
     fun getMenu(category: String): Flowable<List<FoodEntity>>

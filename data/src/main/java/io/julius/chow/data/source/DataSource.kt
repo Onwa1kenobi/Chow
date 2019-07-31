@@ -3,6 +3,7 @@ package io.julius.chow.data.source
 import io.julius.chow.data.model.*
 import io.julius.chow.domain.Exception
 import io.julius.chow.domain.Result
+import io.julius.chow.domain.model.RestaurantModel
 import io.julius.chow.domain.model.UserModel
 import io.reactivex.Flowable
 
@@ -47,6 +48,35 @@ interface DataSource {
      * Saves the complete user profile to the database
      */
     suspend fun saveUser(userEntity: UserEntity): Result<Boolean> {
+        return Result.Success(false)
+    }
+
+    /**
+     * Check if a restaurant is currently logged in.
+     * With default implementation since we only want to use this from RemoteDataSource
+     */
+    suspend fun authenticateRestaurant(): Result<RestaurantModel> {
+        return Result.Failure(Exception.Error)
+    }
+
+    /**
+     * Fetch the current restaurant from the local database
+     */
+    suspend fun getCurrentRestaurant(): Flowable<Result<RestaurantEntity>> {
+        TODO("Not Implemented")
+    }
+
+    /**
+     * Single fetch operation to get the current user from the local database
+     */
+    suspend fun fetchCurrentRestaurant(): RestaurantEntity {
+        TODO("Not Implemented")
+    }
+
+    /**
+     * Saves the complete restaurant profile to the database
+     */
+    suspend fun saveRestaurant(restaurantEntity: RestaurantEntity): Result<Boolean> {
         return Result.Success(false)
     }
 

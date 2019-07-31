@@ -6,6 +6,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.GeoPoint
 import com.google.firebase.firestore.SetOptions
+import io.julius.chow.data.mapper.RestaurantEntityMapper
 import io.julius.chow.data.mapper.UserEntityMapper
 import io.julius.chow.data.model.FoodEntity
 import io.julius.chow.data.model.PlacedOrderEntity
@@ -14,6 +15,7 @@ import io.julius.chow.data.model.UserEntity
 import io.julius.chow.data.source.DataSource
 import io.julius.chow.domain.Exception
 import io.julius.chow.domain.Result
+import io.julius.chow.domain.model.RestaurantModel
 import io.julius.chow.domain.model.UserModel
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
@@ -60,6 +62,47 @@ class RemoteDataSource @Inject constructor() : DataSource {
         return try {
             db.collection("Users").document(userEntity.id).set(userEntity, SetOptions.merge()).await()
             // User object saved successfully
+            Result.Success(true)
+        } catch (e: FirebaseFirestoreException) {
+            Result.Failure(Exception.RemoteDataException(e.localizedMessage))
+        }
+    }
+
+    override suspend fun authenticateRestaurant(): Result<RestaurantModel> {
+        // Check if the currently logged user is a new user
+        val firebaseUser = FirebaseAuth.getInstance().currentUser
+
+        try {
+            val document = db.collection("Restaurants").document(firebaseUser!!.uid).get().await()
+            return if (document.exists() && document.toObject(RestaurantEntity::class.java)!!.profileComplete) {
+                // The user exists...
+                Result.Success(RestaurantEntityMapper.mapFromEntity(document.toObject(RestaurantEntity::class.java)!!))
+            } else {
+                //The user doesn't exist...
+                val currentRestaurant = RestaurantEntity(
+                    id = firebaseUser.uid,
+                    name = "",
+                    address = "",
+                    imageUrl = "",
+                    phoneNumber = firebaseUser.phoneNumber!!,
+                    description = "",
+                    location = "",
+                    locationLongitude = 0.0,
+                    locationLatitude = 0.0
+                )
+
+                Result.Success(RestaurantEntityMapper.mapFromEntity(currentRestaurant))
+            }
+
+        } catch (e: FirebaseFirestoreException) {
+            return Result.Failure(Exception.RemoteDataException(e.localizedMessage))
+        }
+    }
+
+    override suspend fun saveRestaurant(restaurantEntity: RestaurantEntity): Result<Boolean> {
+        return try {
+            db.collection("Restaurants").document(restaurantEntity.id).set(restaurantEntity, SetOptions.merge()).await()
+            // Restaurant object saved successfully
             Result.Success(true)
         } catch (e: FirebaseFirestoreException) {
             Result.Failure(Exception.RemoteDataException(e.localizedMessage))

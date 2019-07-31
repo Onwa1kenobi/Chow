@@ -1,8 +1,5 @@
 <resources>
     <string name="app_name">Chow</string>
-
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
     <string name="action_logout">Logout</string>
     <string name="hint_email">Email</string>
     <string name="hint_password">Password</string>
@@ -25,8 +22,12 @@
     <string name="terms_and_policy_text">By signing in, you agree to our Terms \nand Privacy Policy</string>
     <string name="done">Done</string>
     <string name="name_hint">Name</string>
-    <string name="name_confirmation_text">Your name and address will be attached to your profile, and will be shown to vendors for
-        delivery purposes.
+    <string name="restaurant_name_hint">Restaurant Name</string>
+    <string name="name_confirmation_text">Your name and address will be attached to your profile,
+        and will be shown to vendors for delivery purposes.
+    </string>
+    <string name="info_confirmation_text">Information provided will be attached to your profile,
+        and will be shown to users and customers.
     </string>
     <string name="additional_details">Additional Details</string>
     <string name="restaurants">Restaurants</string>
@@ -65,4 +66,17 @@
     <string name="breakfast">Breakfast</string>
     <string name="dinner">Dinner</string>
     <string name="lunch">Lunch</string>
+    <string name="restaurant">Restaurant</string>
+    <string name="customer">Customer</string>
+    <string name="restaurant_description_hint">Describe Your Story</string>
+    <string name="location">Location</string>
+    <string name="set_banner_image">Set Banner Image</string>
+    <string name="choose_from_gallery">Choose From Gallery</string>
+    <string name="take_camera_picture">Take a Picture</string>
+    <string name="dialog_permission_title">Grant Permissions</string>
+    <string name="dialog_permission_message">This app needs permission to use this feature. You can grant them in app settings.</string>
+    <string name="go_to_settings">GOTO SETTINGS</string>
+    <string name="which_one_are_you">Which one are you?</string>
+    <string name="restaurant_avatar">Restaurant Avatar</string>
+    <string name="customer_avatar">Customer Avatar</string>
 </resources>

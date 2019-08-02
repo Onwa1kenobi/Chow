@@ -123,14 +123,22 @@ class AuthViewModel @Inject constructor(
         }
     }
 
-    fun completeRestaurantRegistration(userName: String, userAddress: String) {
+    fun completeRestaurantRegistration(
+        name: String,
+        emailAddress: String,
+        address: String,
+        description: String,
+        location: String,
+        latitude: Double,
+        longitude: Double
+    ) {
         // Display progress bar
         authContractData.value = Event(AuthViewContract.ProgressDisplay(true))
 
         // Update the details of the current restaurant
         currentRestaurant.value?.apply {
-            name = userName
-            address = userAddress
+            this.name = name
+            this.address = address
             profileComplete = true
         }
 

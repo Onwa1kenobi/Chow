@@ -155,19 +155,17 @@ class RestaurantAdditionalDetails : Fragment() {
                     show()
                 }
 
-                // TODO()
                 else -> {
-                    Snackbar.make(v, "All is set.", Snackbar.LENGTH_LONG).apply {
-                        this.view.setBackgroundColor(ContextCompat.getColor(context, R.color.colorAccent))
-                        show()
-
-//                        authViewModel.completeRestaurantRegistration()
-                    }
+                    authViewModel.completeRestaurantRegistration(
+                        field_restaurant_name.text.toString().trim(),
+                        field_email_address.text.toString().trim(),
+                        field_restaurant_address.text.toString().trim(),
+                        field_restaurant_description.text.toString().trim(),
+                        field_restaurant_location.text.toString().substringAfterLast(","),
+                        latitude,
+                        longitude
+                    )
                 }
-//                authViewModel.completeUserRegistration(
-//                    field_user_name.text.toString().trim(),
-//                    field_user_address.text.toString().trim()
-//                )
             }
         }
 

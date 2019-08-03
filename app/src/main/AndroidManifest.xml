@@ -27,9 +27,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".main.restaurants.RestaurantMainActivity"></activity>
+
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_api_key" />
@@ -44,17 +47,12 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <!-- Image Picker activity -->
-        <activity android:name=".main.image.ImagePickerActivity" />
-
-        <!-- uCrop cropping activity -->
+        </activity> <!-- Image Picker activity -->
+        <activity android:name=".main.image.ImagePickerActivity" /> <!-- uCrop cropping activity -->
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme" />
-
-        <!-- Location Picker activity -->
+            android:theme="@style/AppTheme" /> <!-- Location Picker activity -->
         <activity
             android:name="com.schibstedspain.leku.LocationPickerActivity"
             android:label="@string/leku_title_activity_location_picker"
@@ -71,9 +69,7 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".auth.AuthActivity" />
-        </activity>
-
-        <!-- cache directory file provider paths -->
+        </activity> <!-- cache directory file provider paths -->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"
@@ -83,6 +79,7 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_provider" />
         </provider>
+
         <activity android:name=".main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />

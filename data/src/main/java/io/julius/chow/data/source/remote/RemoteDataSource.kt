@@ -100,6 +100,8 @@ class RemoteDataSource @Inject constructor() : DataSource {
     }
 
     override suspend fun saveRestaurant(restaurantEntity: RestaurantEntity): Result<Boolean> {
+//        val d = Uri.fromFile()
+
         return try {
             db.collection("Restaurants").document(restaurantEntity.id).set(restaurantEntity, SetOptions.merge()).await()
             // Restaurant object saved successfully

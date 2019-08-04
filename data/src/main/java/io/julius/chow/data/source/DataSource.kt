@@ -23,6 +23,14 @@ interface DataSource {
     }
 
     /**
+     * Get the currently logged in account.
+     * With default implementation since we only want to use this from LocalDataSource
+     */
+    fun getCurrentLoggedAccount(): Any? {
+        return Result.Success(false)
+    }
+
+    /**
      * Check if a user is currently logged in.
      * With default implementation since we only want to use this from RemoteDataSource
      */

@@ -6,7 +6,6 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
@@ -18,6 +17,7 @@ import androidx.core.view.forEach
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
@@ -32,6 +32,7 @@ import com.schibstedspain.leku.LOCATION_ADDRESS
 import com.schibstedspain.leku.LONGITUDE
 import com.schibstedspain.leku.LocationPickerActivity
 import io.julius.chow.R
+import io.julius.chow.base.extension.isValidEmail
 import io.julius.chow.base.extension.observe
 import io.julius.chow.base.extension.setImageUrl
 import io.julius.chow.main.image.ImagePickerActivity
@@ -138,8 +139,9 @@ class RestaurantAdditionalDetails : Fragment() {
             when {
                 field_restaurant_name.text.toString().trim().isEmpty() -> layout_name_field_wrapper.error =
                     "Please enter the restaurant name"
-                field_email_address.text.toString().trim().isEmpty() -> layout_email_field_wrapper.error =
-                    "Please enter your email address"
+                field_email_address.text.toString().trim().isEmpty()
+                        || field_email_address.text.toString().trim().isValidEmail().not() -> layout_email_field_wrapper.error =
+                    "Please enter a valid email address"
                 field_restaurant_address.text.toString().trim().isEmpty() -> layout_address_field_wrapper.error =
                     "Please enter your fully qualified address"
                 field_restaurant_description.text.toString().trim().isEmpty() -> layout_description_field_wrapper.error =
@@ -160,8 +162,9 @@ class RestaurantAdditionalDetails : Fragment() {
                         field_restaurant_name.text.toString().trim(),
                         field_email_address.text.toString().trim(),
                         field_restaurant_address.text.toString().trim(),
+                        bannerImage.value.toString(),
                         field_restaurant_description.text.toString().trim(),
-                        field_restaurant_location.text.toString().substringAfterLast(","),
+                        field_restaurant_location.text.toString().substringAfterLast(",").trim(),
                         latitude,
                         longitude
                     )
@@ -178,6 +181,7 @@ class RestaurantAdditionalDetails : Fragment() {
 
                         // Enable/Disable data views
                         button_done.isEnabled = !data.display
+                        banner_image.isEnabled = !data.display
                         parent_layout.forEach { view -> view.isEnabled = !data.display }
                     }
 
@@ -190,8 +194,8 @@ class RestaurantAdditionalDetails : Fragment() {
                         // else, finish the current activity
                         if (!isEditMode) {
                             // Navigate to the MainActivity and finish this current activity
-//                            Navigation.findNavController(activity!!, R.id.navigation_host_fragment)
-//                                .navigate(R.id.action_mainActivity)
+                            Navigation.findNavController(activity!!, R.id.navigation_host_fragment)
+                                .navigate(R.id.action_restaurantMainActivity)
                         }
                         activity?.finish()
                     }
@@ -259,7 +263,7 @@ class RestaurantAdditionalDetails : Fragment() {
                 val uri = data.getParcelableExtra<Uri>("path")
                 try {
                     // You can update this bitmap to your server
-                    val bitmap = MediaStore.Images.Media.getBitmap(context!!.contentResolver, uri)
+//                    val bitmap = MediaStore.Images.Media.getBitmap(context!!.contentResolver, uri)
 
                     // loading profile image from local cache
                     bannerImage.postValue(uri.toString())

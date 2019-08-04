@@ -13,6 +13,8 @@ interface ChowRepository {
 
     fun isUserLoggedIn(): Result<Boolean>
 
+    fun getCurrentLoggedAccount(): Any?
+
     suspend fun authenticateUser(): Result<UserModel>
 
     suspend fun getCurrentUser(): Flowable<Result<UserModel>>

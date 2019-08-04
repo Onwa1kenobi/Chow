@@ -22,6 +22,9 @@ interface AppDAO {
     @Query("SELECT * FROM Restaurants WHERE isCurrentRestaurant = 1")
     fun fetchCurrentRestaurant(): RestaurantEntity
 
+    @Query("SELECT * FROM Restaurants where id = :id")
+    fun getRestaurant(id: String): RestaurantEntity
+
     @Query("SELECT * FROM Restaurants")
     fun getRestaurants(): Flowable<List<RestaurantEntity>>
 

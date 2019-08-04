@@ -127,6 +127,7 @@ class AuthViewModel @Inject constructor(
         name: String,
         emailAddress: String,
         address: String,
+        imageUri: String,
         description: String,
         location: String,
         latitude: Double,
@@ -139,6 +140,12 @@ class AuthViewModel @Inject constructor(
         currentRestaurant.value?.apply {
             this.name = name
             this.address = address
+            this.emailAddress = emailAddress
+            this.imageUrl = imageUri
+            this.description = description
+            this.location = location
+            this.locationLatitude = latitude
+            this.locationLongitude = longitude
             profileComplete = true
         }
 

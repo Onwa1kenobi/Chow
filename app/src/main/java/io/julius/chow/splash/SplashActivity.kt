@@ -2,7 +2,6 @@ package io.julius.chow.splash
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -10,6 +9,8 @@ import androidx.lifecycle.ViewModelProviders
 import io.julius.chow.app.App
 import io.julius.chow.auth.AuthActivity
 import io.julius.chow.main.MainActivity
+import io.julius.chow.main.restaurants.RestaurantMainActivity
+import io.julius.chow.model.Restaurant
 import io.julius.chow.model.User
 import javax.inject.Inject
 
@@ -31,13 +32,11 @@ class SplashActivity : AppCompatActivity() {
         splashViewModel.userIsLoggedIn.observe(this, Observer { userIsLoggedIn ->
 
             val intent = if (userIsLoggedIn) {
-                // User is logged in, check the type and proceed to MainActivity
-                val loggedUser = splashViewModel.getCurrentLoggedUser()
-                if (loggedUser is User) Intent(this, MainActivity::class.java)
-                else {
-                    Toast.makeText(this, "IMPLEMENT RESTAURANT ACTIVITY", Toast.LENGTH_SHORT).show()
-                    return@Observer
-//                    Intent(this, MainActivity::class.java)
+                // User is logged in, check the user type and proceed to respective MainActivity
+                when (splashViewModel.getCurrentLoggedUser()) {
+                    is User -> Intent(this, MainActivity::class.java)
+                    is Restaurant -> Intent(this, RestaurantMainActivity::class.java)
+                    else -> Intent(this, AuthActivity::class.java)
                 }
             } else {
                 // User is not logged in, move to AuthActivity

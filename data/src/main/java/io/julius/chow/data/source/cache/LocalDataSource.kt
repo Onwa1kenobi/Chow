@@ -26,9 +26,19 @@ class LocalDataSource @Inject constructor(private val appDAO: AppDAO) : DataSour
             if (user != null && user.profileComplete) {
                 Result.Success(true)
             } else {
-                Result.Success(false)
+                val restaurant: RestaurantEntity? = appDAO.getRestaurant(currentUser.uid)
+                if (restaurant != null && restaurant.profileComplete) {
+                    Result.Success(true)
+                } else {
+                    Result.Success(false)
+                }
             }
         }
+    }
+
+    override fun getCurrentLoggedAccount(): Any? {
+        // NOTE: This elvis expression is not useless. Room would return null if there are no entries in a table.
+        return appDAO.fetchCurrentUser()
     }
 
     override suspend fun getCurrentUser(): Flowable<Result<UserEntity>> {

@@ -21,7 +21,17 @@ class SplashViewModel @Inject constructor(private val userPresentInteractor: Use
         }
     }
 
-    fun getCurrentLoggedUser(): Any {
-        return userPresentInteractor.execute(UserPresentInteractor.Params(UserPresentInteractor.Params.ParamType.CHECK_USER_TYPE))
+    fun getCurrentLoggedUser(): Any? {
+        return userPresentInteractor.execute(
+            UserPresentInteractor.Params(
+                UserPresentInteractor.Params.ParamType.CHECK_USER_TYPE
+            )
+        ) {
+            when (it) {
+                is Result.Success<*> -> it.data
+                is Result.Failure -> null
+                else -> null
+            }
+        }
     }
 }

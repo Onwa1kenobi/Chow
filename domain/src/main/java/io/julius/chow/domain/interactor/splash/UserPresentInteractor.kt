@@ -1,5 +1,6 @@
 package io.julius.chow.domain.interactor.splash
 
+import io.julius.chow.domain.Exception
 import io.julius.chow.domain.Result
 import io.julius.chow.domain.interactor.Interactor
 import io.julius.chow.domain.interactor.splash.UserPresentInteractor.Params
@@ -19,9 +20,12 @@ class UserPresentInteractor @Inject constructor(
         return when (params.paramType) {
             CHECK_USER_PRESENCE -> chowRepository.isUserLoggedIn()
             CHECK_USER_TYPE -> {
-                val customer = chowRepository.fetchCurrentUser()
-                val restaurant = restaurantRepository.fetchCurrentRestaurant()
-                if (customer.profileComplete) Result.Success(customer) else Result.Success(restaurant)
+                val account = chowRepository.getCurrentLoggedAccount()
+                if (account != null) {
+                    Result.Success(account)
+                } else {
+                    Result.Failure(Exception.LocalDataNotFoundException)
+                }
             }
         }
     }

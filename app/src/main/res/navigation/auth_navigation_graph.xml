@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools" android:id="@+id/auth_navigation_graph"
-            app:startDestination="@id/authFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/auth_navigation_graph"
+    app:startDestination="@id/authFragment">
 
-    <fragment android:id="@+id/signUpDetailsFragment" android:name="io.julius.chow.auth.SignUpDetailsFragment"
-              android:label="fragment_sign_up_details" tools:layout="@layout/fragment_sign_up_details">
-        <action android:id="@+id/action_mainActivity" app:destination="@id/mainActivity"/>
+    <fragment
+        android:id="@+id/signUpDetailsFragment"
+        android:name="io.julius.chow.auth.SignUpDetailsFragment"
+        android:label="fragment_sign_up_details"
+        tools:layout="@layout/fragment_sign_up_details">
+        <action
+            android:id="@+id/action_mainActivity"
+            app:destination="@id/mainActivity" />
         <argument
             android:name="isEditMode"
             android:defaultValue="false"
@@ -26,20 +32,31 @@
         <action
             android:id="@+id/action_restaurantAdditionalDetailsFragment"
             app:destination="@id/restaurantAdditionalDetails" />
+        <action
+            android:id="@+id/action_authFragment_to_restaurantMainActivity"
+            app:destination="@id/restaurantMainActivity" />
     </fragment>
-    <activity android:id="@+id/mainActivity" android:name="io.julius.chow.main.MainActivity"
-              android:label="activity_main" tools:layout="@layout/activity_main"/>
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="io.julius.chow.main.MainActivity"
+        android:label="activity_main"
+        tools:layout="@layout/activity_main" />
     <fragment
         android:id="@+id/restaurantAdditionalDetails"
         android:name="io.julius.chow.auth.RestaurantAdditionalDetails"
         android:label="RestaurantAdditionalDetails"
         tools:layout="@layout/fragment_restaurant_additional_details">
-        <action
-            android:id="@+id/action_restaurantAdditionalDetails_to_mainActivity"
-            app:destination="@id/mainActivity" />
         <argument
             android:name="isEditMode"
             android:defaultValue="false"
             app:argType="boolean" />
+        <action
+            android:id="@+id/action_restaurantMainActivity"
+            app:destination="@id/restaurantMainActivity" />
     </fragment>
+    <activity
+        android:id="@+id/restaurantMainActivity"
+        android:name="io.julius.chow.main.restaurants.RestaurantMainActivity"
+        android:label="activity_restaurant_main"
+        tools:layout="@layout/activity_restaurant_main" />
 </navigation>

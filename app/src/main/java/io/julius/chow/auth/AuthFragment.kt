@@ -127,7 +127,10 @@ class AuthFragment : Fragment(), View.OnClickListener {
 
         when (requestCode) {
             RC_PHONE_SIGN_IN -> {
-                authViewModel.authCurrentUser()
+                when (userCategory) {
+                    Companion.UserCategory.CUSTOMER -> authViewModel.authCurrentUser()
+                    Companion.UserCategory.RESTAURANT -> authViewModel.authCurrentRestaurant()
+                }
             }
         }
     }

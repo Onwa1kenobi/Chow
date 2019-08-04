@@ -14,6 +14,7 @@ class RestaurantEntity() {
     lateinit var phoneNumber: String
     lateinit var description: String
     lateinit var address: String
+    lateinit var emailAddress: String
     lateinit var location: String
     var locationLongitude: Double = 0.0
     var locationLatitude: Double = 0.0
@@ -30,6 +31,7 @@ class RestaurantEntity() {
         phoneNumber: String,
         description: String,
         address: String,
+        emailAddress: String,
         location: String,
         locationLongitude: Double,
         locationLatitude: Double,
@@ -41,6 +43,7 @@ class RestaurantEntity() {
         this.phoneNumber = phoneNumber
         this.description = description
         this.address = address
+        this.emailAddress = emailAddress
         this.location = location
         this.locationLongitude = locationLongitude
         this.locationLatitude = locationLatitude

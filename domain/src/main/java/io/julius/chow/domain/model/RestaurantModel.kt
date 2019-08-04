@@ -7,6 +7,7 @@ class RestaurantModel(
     val phoneNumber: String,
     val description: String,
     val address: String,
+    val emailAddress: String,
     val location: String,
     val locationLongitude: Double,
     val locationLatitude: Double,

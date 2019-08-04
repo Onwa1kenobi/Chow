@@ -10,6 +10,7 @@ data class Restaurant(
     val phoneNumber: String,
     var description: String,
     var address: String,
+    var emailAddress: String,
     var location: String,
     var locationLongitude: Double,
     var locationLatitude: Double,
@@ -26,6 +27,7 @@ data class Restaurant(
             it.writeString(phoneNumber)
             it.writeString(description)
             it.writeString(address)
+            it.writeString(emailAddress)
             it.writeString(location)
             it.writeDouble(locationLongitude)
             it.writeDouble(locationLatitude)
@@ -40,6 +42,7 @@ data class Restaurant(
         phoneNumber = internal.readString(),
         description = internal.readString(),
         address = internal.readString(),
+        emailAddress = internal.readString(),
         location = internal.readString(),
         locationLongitude = internal.readDouble(),
         locationLatitude = internal.readDouble(),

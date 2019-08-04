@@ -1,11 +1,17 @@
 package io.julius.chow.data.source.remote
 
+import android.net.Uri
 import android.util.Log
+import com.google.android.gms.tasks.Continuation
+import com.google.android.gms.tasks.Task
+import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.GeoPoint
 import com.google.firebase.firestore.SetOptions
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.UploadTask
 import io.julius.chow.data.mapper.RestaurantEntityMapper
 import io.julius.chow.data.mapper.UserEntityMapper
 import io.julius.chow.data.model.FoodEntity
@@ -31,6 +37,7 @@ import javax.inject.Inject
 class RemoteDataSource @Inject constructor() : DataSource {
 
     private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
+    private val storageRef: FirebaseStorage = FirebaseStorage.getInstance()
 
     override suspend fun authenticateUser(): Result<UserModel> {
         // Check if the currently logged user is a new user
@@ -82,6 +89,7 @@ class RemoteDataSource @Inject constructor() : DataSource {
                 val currentRestaurant = RestaurantEntity(
                     id = firebaseUser.uid,
                     name = "",
+                    emailAddress = "",
                     address = "",
                     imageUrl = "",
                     phoneNumber = firebaseUser.phoneNumber!!,
@@ -100,13 +108,34 @@ class RemoteDataSource @Inject constructor() : DataSource {
     }
 
     override suspend fun saveRestaurant(restaurantEntity: RestaurantEntity): Result<Boolean> {
-//        val d = Uri.fromFile()
-
         return try {
+            val restaurantImagesRef = storageRef.reference
+                .child("restaurantImages/${Uri.parse(restaurantEntity.imageUrl).lastPathSegment}")
+            val uploadTask = restaurantImagesRef.putFile(Uri.parse(restaurantEntity.imageUrl))
+
+            val imageUrl: Uri? = uploadTask.continueWithTask(Continuation<UploadTask.TaskSnapshot, Task<Uri>> { task ->
+                if (!task.isSuccessful) {
+                    task.exception?.let {
+                        return@Continuation null
+                    }
+                }
+                return@Continuation restaurantImagesRef.downloadUrl
+            }).await()
+//        }).addOnCompleteListener { task ->
+//            return if (task.isSuccessful) {
+//                val downloadUri = task.result
+//            } else {
+//                // Handle failures
+//                // ...
+//            }
+//        }.await()
+
+            restaurantEntity.apply { this.imageUrl = imageUrl.toString() }
+
             db.collection("Restaurants").document(restaurantEntity.id).set(restaurantEntity, SetOptions.merge()).await()
             // Restaurant object saved successfully
             Result.Success(true)
-        } catch (e: FirebaseFirestoreException) {
+        } catch (e: FirebaseException) {
             Result.Failure(Exception.RemoteDataException(e.localizedMessage))
         }
     }

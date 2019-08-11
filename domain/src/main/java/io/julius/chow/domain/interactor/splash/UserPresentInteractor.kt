@@ -7,13 +7,9 @@ import io.julius.chow.domain.interactor.splash.UserPresentInteractor.Params
 import io.julius.chow.domain.interactor.splash.UserPresentInteractor.Params.ParamType.CHECK_USER_PRESENCE
 import io.julius.chow.domain.interactor.splash.UserPresentInteractor.Params.ParamType.CHECK_USER_TYPE
 import io.julius.chow.domain.repository.ChowRepository
-import io.julius.chow.domain.repository.RestaurantRepository
 import javax.inject.Inject
 
-class UserPresentInteractor @Inject constructor(
-    private val chowRepository: ChowRepository,
-    private val restaurantRepository: RestaurantRepository
-) :
+class UserPresentInteractor @Inject constructor(private val chowRepository: ChowRepository) :
     Interactor<Params, Result<Any>>() {
 
     override suspend fun run(params: Params): Result<Any> {

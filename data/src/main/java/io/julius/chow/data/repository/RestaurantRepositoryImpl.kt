@@ -29,7 +29,7 @@ class RestaurantRepositoryImpl @Inject constructor(
     private val remoteDataSource: DataSource
 ) : RestaurantRepository {
 
-    override suspend fun authenticateUser(): Result<RestaurantModel> {
+    override suspend fun authenticateRestaurant(): Result<RestaurantModel> {
         return remoteDataSource.authenticateRestaurant()
     }
 

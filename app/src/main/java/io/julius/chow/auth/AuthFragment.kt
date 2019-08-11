@@ -87,8 +87,13 @@ class AuthFragment : Fragment(), View.OnClickListener {
 
                     is AuthViewContract.NavigateToHome -> {
                         // Navigate to the MainActivity and finish this current activity
-                        Navigation.findNavController(activity!!, R.id.navigation_host_fragment)
-                            .navigate(R.id.action_authFragment_to_mainActivity)
+                        if (userCategory == Companion.UserCategory.CUSTOMER) {
+                            Navigation.findNavController(activity!!, R.id.navigation_host_fragment)
+                                .navigate(R.id.action_authFragment_to_mainActivity)
+                        } else {
+                            Navigation.findNavController(activity!!, R.id.navigation_host_fragment)
+                                .navigate(R.id.action_authFragment_to_restaurantMainActivity)
+                        }
                         activity?.finish()
                     }
                 }

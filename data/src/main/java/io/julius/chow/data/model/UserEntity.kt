@@ -14,6 +14,7 @@ class UserEntity() {
     lateinit var phoneNumber: String
     // Boolean variable to check if the profile was successfully created.
     var profileComplete: Boolean = false
+    var isCurrentUser = false
 
     @Ignore
     constructor(

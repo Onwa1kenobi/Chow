@@ -38,7 +38,8 @@ class LocalDataSource @Inject constructor(private val appDAO: AppDAO) : DataSour
 
     override fun getCurrentLoggedAccount(): Any? {
         // NOTE: This elvis expression is not useless. Room would return null if there are no entries in a table.
-        return appDAO.fetchCurrentUser()
+        val currentUser: UserEntity? = appDAO.fetchCurrentUser()
+        return currentUser ?: appDAO.fetchCurrentRestaurant()
     }
 
     override suspend fun getCurrentUser(): Flowable<Result<UserEntity>> {
@@ -71,6 +72,9 @@ class LocalDataSource @Inject constructor(private val appDAO: AppDAO) : DataSour
         }, BackpressureStrategy.BUFFER)
 
     override suspend fun saveUser(userEntity: UserEntity): Result<Boolean> {
+        // The only time we will be calling this function is when we are saving a signed in user,
+        // which at that point becomes the current user.
+        userEntity.apply { isCurrentUser = true }
         val rowId: Long? = appDAO.saveUser(userEntity)
         return if (rowId == null) {
             Result.Failure(Exception.LocalDataException("Failed to save user"))

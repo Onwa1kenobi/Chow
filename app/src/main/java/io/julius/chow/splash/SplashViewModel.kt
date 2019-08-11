@@ -9,6 +9,7 @@ import javax.inject.Inject
 class SplashViewModel @Inject constructor(private val userPresentInteractor: UserPresentInteractor) : ViewModel() {
 
     var userIsLoggedIn = MutableLiveData<Boolean>()
+    var currentLoggedAccount = MutableLiveData<Any?>()
 
     init {
         isUserLoggedIn()
@@ -21,17 +22,16 @@ class SplashViewModel @Inject constructor(private val userPresentInteractor: Use
         }
     }
 
-    fun getCurrentLoggedUser(): Any? {
-        return userPresentInteractor.execute(
-            UserPresentInteractor.Params(
-                UserPresentInteractor.Params.ParamType.CHECK_USER_TYPE
-            )
-        ) {
-            when (it) {
-                is Result.Success<*> -> it.data
-                is Result.Failure -> null
-                else -> null
+    fun getCurrentLoggedUser() = userPresentInteractor.execute(
+        UserPresentInteractor.Params(
+            UserPresentInteractor.Params.ParamType.CHECK_USER_TYPE
+        )
+    ) {
+        when (it) {
+            is Result.Success<Any> -> {
+                currentLoggedAccount.postValue(it.data)
             }
+            else -> currentLoggedAccount.postValue(null)
         }
     }
 }

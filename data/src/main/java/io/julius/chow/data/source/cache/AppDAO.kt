@@ -7,10 +7,10 @@ import io.reactivex.Flowable
 @Dao
 interface AppDAO {
 
-    @Query("SELECT * FROM User")
+    @Query("SELECT * FROM User WHERE isCurrentUser = 1")
     fun getCurrentUser(): Flowable<UserEntity>
 
-    @Query("SELECT * FROM User")
+    @Query("SELECT * FROM User WHERE isCurrentUser = 1")
     fun fetchCurrentUser(): UserEntity
 
     @Query("SELECT * FROM User where id = :id")

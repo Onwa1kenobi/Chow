@@ -12,7 +12,7 @@ import io.reactivex.Flowable
  */
 interface RestaurantRepository {
 
-    suspend fun authenticateUser(): Result<RestaurantModel>
+    suspend fun authenticateRestaurant(): Result<RestaurantModel>
 
     suspend fun getCurrentRestaurant(): Flowable<Result<RestaurantModel>>
 

@@ -8,10 +8,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import io.julius.chow.app.App
 import io.julius.chow.auth.AuthActivity
+import io.julius.chow.data.model.RestaurantEntity
+import io.julius.chow.data.model.UserEntity
 import io.julius.chow.main.MainActivity
 import io.julius.chow.main.restaurants.RestaurantMainActivity
-import io.julius.chow.model.Restaurant
-import io.julius.chow.model.User
 import javax.inject.Inject
 
 class SplashActivity : AppCompatActivity() {
@@ -31,21 +31,28 @@ class SplashActivity : AppCompatActivity() {
         // Observe changes to the userLoggedIn boolean status and check if there is a user currently logged in
         splashViewModel.userIsLoggedIn.observe(this, Observer { userIsLoggedIn ->
 
-            val intent = if (userIsLoggedIn) {
+            if (userIsLoggedIn) {
                 // User is logged in, check the user type and proceed to respective MainActivity
-                when (splashViewModel.getCurrentLoggedUser()) {
-                    is User -> Intent(this, MainActivity::class.java)
-                    is Restaurant -> Intent(this, RestaurantMainActivity::class.java)
-                    else -> Intent(this, AuthActivity::class.java)
-                }
+                splashViewModel.getCurrentLoggedUser()
+
+                splashViewModel.currentLoggedAccount.observe(this, Observer {
+                    val intent = when (it) {
+                        is UserEntity -> Intent(this, MainActivity::class.java)
+                        is RestaurantEntity -> Intent(this, RestaurantMainActivity::class.java)
+                        else -> Intent(this, AuthActivity::class.java)
+                    }
+
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    startActivity(intent)
+                })
             } else {
                 // User is not logged in, move to AuthActivity
-                Intent(this, AuthActivity::class.java)
+                val intent = Intent(this, AuthActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(intent)
             }
-
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            startActivity(intent)
         })
     }
 }

@@ -30,7 +30,7 @@ class RestaurantAuthInteractor @Inject constructor(private val restaurantReposit
         when (params.paramType) {
             AUTHENTICATE_RESTAURANT -> {
                 // Authenticate current active user
-                when (val result = restaurantRepository.authenticateUser()) {
+                when (val result = restaurantRepository.authenticateRestaurant()) {
                     is Result.Success -> {
                         // Get underlying data
                         return if (result.data.profileComplete) {
@@ -38,7 +38,7 @@ class RestaurantAuthInteractor @Inject constructor(private val restaurantReposit
                             restaurantRepository.saveRestaurantLocally(result.data)
                             Result.Success(true)
                         } else {
-                            // User profile was not completely created, return user object for detail screen
+                            // User profile was not completely created, return restaurant object for detail screen
                             Result.Success(result.data)
                         }
                     }

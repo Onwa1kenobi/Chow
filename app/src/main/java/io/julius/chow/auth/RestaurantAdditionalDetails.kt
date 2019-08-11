@@ -72,8 +72,8 @@ class RestaurantAdditionalDetails : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         if (isEditMode) {
-            // Fetch the current user details
-            authViewModel.getCurrentUser()
+            // Fetch the current restaurant details
+            authViewModel.getCurrentRestaurant()
 
             // Change toolbar title to reflect the edit mode action
             toolbar.title = "Update Information"

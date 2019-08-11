@@ -45,7 +45,7 @@ class RemoteDataSource @Inject constructor() : DataSource {
 
         try {
             val document = db.collection("Users").document(firebaseUser!!.uid).get().await()
-            return if (document.exists() && document.toObject<UserEntity>(UserEntity::class.java)!!.profileComplete) {
+            return if (document.exists() && document.toObject(UserEntity::class.java)!!.profileComplete) {
                 // The user exists...
                 Result.Success(UserEntityMapper.mapFromEntity(document.toObject(UserEntity::class.java)!!))
             } else {

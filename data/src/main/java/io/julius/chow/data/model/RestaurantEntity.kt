@@ -3,6 +3,8 @@ package io.julius.chow.data.model
 import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
+import com.google.firebase.firestore.Exclude
+import com.google.firebase.firestore.GeoPoint
 
 @Entity(tableName = "Restaurants")
 class RestaurantEntity() {
@@ -16,10 +18,16 @@ class RestaurantEntity() {
     lateinit var address: String
     lateinit var emailAddress: String
     lateinit var location: String
+    @get:Exclude
     var locationLongitude: Double = 0.0
+    @get:Exclude
     var locationLatitude: Double = 0.0
+    @Ignore
+    var latLng: GeoPoint = GeoPoint(locationLatitude, locationLongitude)
+        get() = GeoPoint(locationLatitude, locationLongitude)
     // Boolean variable to check if the profile was successfully created.
     var profileComplete: Boolean = false
+    @get:Exclude
     var isCurrentRestaurant = false
 
 

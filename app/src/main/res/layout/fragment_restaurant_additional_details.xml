@@ -27,10 +27,11 @@
         android:layout_height="wrap_content"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/parent_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:paddingTop="@dimen/activity_horizontal_margin"
             android:paddingBottom="@dimen/activity_horizontal_margin">
 
@@ -45,14 +46,14 @@
                 android:layout_marginEnd="@dimen/activity_horizontal_margin"
                 android:layout_marginRight="@dimen/activity_horizontal_margin"
                 android:hint="@string/restaurant_name_hint"
-                android:imeOptions="actionDone"
+                android:imeOptions="actionNext"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/field_restaurant_name"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:imeOptions="actionDone"
+                    android:imeOptions="actionNext"
                     android:inputType="textCapWords"
                     android:maxLines="1"
                     android:textSize="@dimen/description_text_size" />
@@ -70,15 +71,15 @@
                 android:layout_marginEnd="@dimen/activity_horizontal_margin"
                 android:layout_marginRight="@dimen/activity_horizontal_margin"
                 android:hint="@string/fui_email_hint"
-                android:imeOptions="actionDone"
+                android:imeOptions="actionNext"
                 app:layout_constraintTop_toBottomOf="@id/layout_name_field_wrapper">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/field_email_address"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:imeOptions="actionDone"
-                    android:inputType="textCapSentences"
+                    android:imeOptions="actionNext"
+                    android:inputType="textEmailAddress"
                     android:textSize="@dimen/description_text_size" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -94,14 +95,14 @@
                 android:layout_marginEnd="@dimen/activity_horizontal_margin"
                 android:layout_marginRight="@dimen/activity_horizontal_margin"
                 android:hint="@string/address_hint"
-                android:imeOptions="actionDone"
+                android:imeOptions="actionNext"
                 app:layout_constraintTop_toBottomOf="@id/layout_email_field_wrapper">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/field_restaurant_address"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:imeOptions="actionDone"
+                    android:imeOptions="actionNext"
                     android:inputType="textCapSentences"
                     android:textSize="@dimen/description_text_size" />
 
@@ -126,7 +127,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:imeOptions="actionDone"
-                    android:inputType="textCapSentences"
+                    android:inputType="textCapSentences|textMultiLine"
                     android:textSize="@dimen/description_text_size" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -191,34 +192,40 @@
                 android:textSize="@dimen/description_text_size"
                 app:layout_constraintTop_toBottomOf="@id/layout_banner_image_container" />
 
-            <androidx.core.widget.ContentLoadingProgressBar
-                android:id="@+id/progress_bar"
-                style="@style/Widget.AppCompat.ProgressBar"
-                android:layout_width="wrap_content"
-                android:layout_height="28dp"
-                android:layout_margin="@dimen/activity_horizontal_margin"
-                android:visibility="invisible"
-                app:layout_constraintBottom_toBottomOf="@id/button_done"
-                app:layout_constraintEnd_toStartOf="@id/button_done"
-                app:layout_constraintTop_toTopOf="@id/button_done" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/button_done"
-                style="@style/Widget.AppCompat.Button.Colored"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/activity_horizontal_margin"
-                android:paddingStart="@dimen/activity_horizontal_margin"
-                android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:paddingEnd="@dimen/activity_horizontal_margin"
-                android:paddingRight="@dimen/activity_horizontal_margin"
-                android:text="@string/done"
-                android:textAllCaps="false"
-                android:textSize="@dimen/description_text_size"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/label_info" />
+                <androidx.core.widget.ContentLoadingProgressBar
+                    android:id="@+id/progress_bar"
+                    style="@style/Widget.AppCompat.ProgressBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="28dp"
+                    android:layout_margin="@dimen/activity_horizontal_margin"
+                    android:visibility="invisible"
+                    app:layout_constraintBottom_toBottomOf="@id/button_done"
+                    app:layout_constraintEnd_toStartOf="@id/button_done"
+                    app:layout_constraintTop_toTopOf="@id/button_done" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/button_done"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/activity_horizontal_margin"
+                    android:paddingStart="@dimen/activity_horizontal_margin"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"
+                    android:paddingEnd="@dimen/activity_horizontal_margin"
+                    android:paddingRight="@dimen/activity_horizontal_margin"
+                    android:text="@string/done"
+                    android:textAllCaps="false"
+                    android:textSize="@dimen/description_text_size"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
     </androidx.core.widget.NestedScrollView>
 

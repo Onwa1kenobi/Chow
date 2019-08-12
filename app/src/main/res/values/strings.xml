@@ -79,4 +79,5 @@
     <string name="which_one_are_you">Which one are you?</string>
     <string name="restaurant_avatar">Restaurant Avatar</string>
     <string name="customer_avatar">Customer Avatar</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

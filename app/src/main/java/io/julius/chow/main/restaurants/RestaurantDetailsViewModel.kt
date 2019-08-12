@@ -4,15 +4,20 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import io.julius.chow.domain.Result
 import io.julius.chow.domain.interactor.food.SaveOrderInteractor
+import io.julius.chow.domain.interactor.restaurant.GetRestaurantInteractor
 import io.julius.chow.domain.interactor.restaurant.RestaurantMenuInteractor
+import io.julius.chow.domain.model.RestaurantModel
 import io.julius.chow.mapper.FoodMapper
 import io.julius.chow.mapper.OrderMapper
+import io.julius.chow.mapper.RestaurantMapper
 import io.julius.chow.model.Food
 import io.julius.chow.model.Order
 import io.julius.chow.util.Event
+import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
 class RestaurantDetailsViewModel @Inject constructor(
+    private val getRestaurantInteractor: GetRestaurantInteractor,
     private val menuInteractor: RestaurantMenuInteractor,
     private val saveOrderInteractor: SaveOrderInteractor
 ) : ViewModel() {
@@ -23,9 +28,22 @@ class RestaurantDetailsViewModel @Inject constructor(
     // public LiveData variable to expose returned restaurant menu list
     val menu = MutableLiveData<List<Food>>()
 
+    private val disposable: CompositeDisposable = CompositeDisposable()
+
+    fun getCurrentRestaurantMenu() {
+        restaurantViewContract.value = Event(RestaurantViewContract.ProgressDisplay(true))
+
+        getRestaurantInteractor.execute(false) {
+            restaurantViewContract.value = Event(RestaurantViewContract.ProgressDisplay(false))
+
+            val currentRestaurant = RestaurantMapper.mapFromModel(it as RestaurantModel)
+            fetchRestaurantMenu(currentRestaurant.id)
+        }
+    }
+
     fun fetchRestaurantMenu(restaurantId: String) {
         menuInteractor.execute(restaurantId) {
-            it.subscribe({ result ->
+            disposable.add(it.subscribe({ result ->
                 when (result) {
                     is Result.Success -> {
                         // Map all restaurant model objects and post the list
@@ -47,7 +65,7 @@ class RestaurantDetailsViewModel @Inject constructor(
                 restaurantViewContract.postValue(
                     Event(RestaurantViewContract.MessageDisplay(throwable.localizedMessage.toString()))
                 )
-            })
+            }))
         }
     }
 
@@ -58,5 +76,10 @@ class RestaurantDetailsViewModel @Inject constructor(
         saveOrderInteractor.execute(OrderMapper.mapToModel(order)) { message ->
             restaurantViewContract.postValue(Event(RestaurantViewContract.MessageDisplay(message)))
         }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        disposable.dispose()
     }
 }

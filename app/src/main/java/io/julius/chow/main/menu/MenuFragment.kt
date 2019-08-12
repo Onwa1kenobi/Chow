@@ -52,22 +52,21 @@ class MenuFragment : BaseFragment<FragmentMenuBinding>(), View.OnClickListener {
 
         initialiseCategory(Calendar.getInstance())
 
-        // Prepare the restaurants adapter for item click listening
+        // Prepare the food adapter for item click listening
         foodAdapter.listener = { food, image ->
             //            if (image == null) {
 //                // From our design, if the image is null, then the click operation was to add the current food to order
 ////                menuViewModel.addOrder(food)
 //            } else {
-            // Put restaurant id in bundle to fetch restaurant in detail view
+            // Put food id in bundle to fetch restaurant in detail view
             val bundle = bundleOf(FoodDetailsFragment.FOOD to food)
-            // Put the restaurant image in an extra for shared element transition
+            // Put the food image in an extra for shared element transition
             val extras = FragmentNavigatorExtras(
                 image!! to food.id
             )
             // Navigate to detail view
             findNavController().navigate(R.id.action_menu_to_foodDetails, bundle, null, extras)
         }
-//        }
 
         // Set recycler view adapter to restaurant adapter
         dataBinding.recyclerView.adapter = foodAdapter

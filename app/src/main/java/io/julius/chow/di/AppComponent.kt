@@ -9,6 +9,7 @@ import io.julius.chow.main.menu.MenuFragment
 import io.julius.chow.main.orders.OrdersFragment
 import io.julius.chow.main.profile.ProfileFragment
 import io.julius.chow.main.restaurants.RestaurantDetailsFragment
+import io.julius.chow.main.restaurants.RestaurantMenuFragment
 import io.julius.chow.main.restaurants.RestaurantsFragment
 import io.julius.chow.splash.SplashActivity
 import javax.inject.Singleton
@@ -31,6 +32,8 @@ interface AppComponent {
     fun inject(profileFragment: ProfileFragment)
 
     fun inject(restaurantDetailsFragment: RestaurantDetailsFragment)
+
+    fun inject(restaurantMenuFragment: RestaurantMenuFragment)
 
     fun inject(foodDetailsFragment: FoodDetailsFragment)
 }

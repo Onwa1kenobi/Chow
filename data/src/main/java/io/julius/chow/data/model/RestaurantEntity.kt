@@ -23,7 +23,7 @@ class RestaurantEntity() {
     @get:Exclude
     var locationLatitude: Double = 0.0
     @Ignore
-    var latLng: GeoPoint = GeoPoint(locationLatitude, locationLongitude)
+    var latlng: GeoPoint = GeoPoint(locationLatitude, locationLongitude)
         get() = GeoPoint(locationLatitude, locationLongitude)
     // Boolean variable to check if the profile was successfully created.
     var profileComplete: Boolean = false

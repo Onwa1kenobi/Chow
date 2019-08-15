@@ -69,6 +69,8 @@ class AuthFragment : Fragment(), View.OnClickListener {
 
                         // Enable/Disable data views
                         button_phone_login.isEnabled = !data.display
+                        avatar_customer.isEnabled = !data.display
+                        avatar_restaurant.isEnabled = !data.display
                     }
 
                     is AuthViewContract.MessageDisplay -> {

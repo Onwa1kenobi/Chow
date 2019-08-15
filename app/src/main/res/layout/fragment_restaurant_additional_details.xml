@@ -125,7 +125,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/field_restaurant_description"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:imeOptions="actionDone"
                     android:inputType="textCapSentences|textMultiLine"
                     android:textSize="@dimen/description_text_size" />

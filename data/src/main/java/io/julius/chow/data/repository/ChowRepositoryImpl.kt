@@ -1,7 +1,6 @@
 package io.julius.chow.data.repository
 
 import android.annotation.SuppressLint
-import android.util.Log
 import io.julius.chow.data.mapper.*
 import io.julius.chow.data.source.DataSource
 import io.julius.chow.data.source.DataSourceQualifier
@@ -99,42 +98,11 @@ class ChowRepositoryImpl @Inject constructor(
             }
     }
 
-    override suspend fun fetchRestaurantMenu(restaurantId: String): Flowable<Result<List<FoodModel>>> {
-        // Fetch remote data and save to local storage
-        remoteDataSource.fetchRestaurantMenu(restaurantId).subscribe {
-            when (it) {
-                is Result.Success -> {
-                    localDataSource.saveFood(it.data)
-                }
-
-                is Result.Failure -> {
-                    Result.Failure(Exception.LocalDataNotFoundException)
-                }
-            }
-        }
-
-        // Return local database result
-        return localDataSource.fetchRestaurantMenu(restaurantId).map {
-            when (it) {
-                is Result.Success -> {
-                    // Map each data entity to a domain model
-                    val menu = it.data.map { foodEntity -> FoodEntityMapper.mapFromEntity(foodEntity) }
-                    Result.Success(menu)
-                }
-
-                is Result.Failure -> {
-                    Result.Failure(Exception.LocalDataNotFoundException)
-                }
-            }
-        }
-    }
-
     override suspend fun getMenu(category: String): Flowable<Result<List<FoodModel>>> {
         remoteDataSource.getMenu(category).subscribe {
             when (it) {
                 is Result.Success -> {
                     localDataSource.saveFood(it.data)
-                    Log.e("CHOW", "Remote success: ${it.data.size}")
                 }
 
                 is Result.Failure -> Result.Failure(Exception.RemoteDataNotFoundException)
@@ -146,7 +114,6 @@ class ChowRepositoryImpl @Inject constructor(
                 is Result.Success -> {
                     // Map each data entity to a domain model
                     val menu = it.data.map { foodEntity -> FoodEntityMapper.mapFromEntity(foodEntity) }
-                    Log.e("CHOW", "Local success: ${it.data.size}")
                     Result.Success(menu)
                 }
 

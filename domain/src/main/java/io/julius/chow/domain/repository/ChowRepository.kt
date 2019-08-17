@@ -27,8 +27,6 @@ interface ChowRepository {
 
     suspend fun fetchRestaurants(): Flowable<Result<List<RestaurantModel>>>
 
-    suspend fun fetchRestaurantMenu(restaurantId: String): Flowable<Result<List<FoodModel>>>
-
     suspend fun getMenu(category: String): Flowable<Result<List<FoodModel>>>
 
     suspend fun getOrders(): Flowable<Result<List<OrderModel>>>

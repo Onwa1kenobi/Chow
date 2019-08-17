@@ -144,7 +144,6 @@ class RemoteDataSource @Inject constructor() : DataSource {
         Flowable.create<Result<List<RestaurantEntity>>>({
             db.collection("Restaurants").get()
                 .addOnSuccessListener { result ->
-                    Log.e("CHOW", "Remote Get was a success.")
                     // Initialize list of restaurants to return
                     val restaurants = mutableListOf<RestaurantEntity>()
 
@@ -162,7 +161,6 @@ class RemoteDataSource @Inject constructor() : DataSource {
 //                    it.onComplete()
                 }
                 .addOnFailureListener { exception ->
-                    Log.e("CHOW", "It failed o.")
                     // Return appropriate error message
                     it.onError(Exception.RemoteDataException(exception.localizedMessage))
                 }
@@ -224,6 +222,8 @@ class RemoteDataSource @Inject constructor() : DataSource {
                         val foodEntity = document.toObject(FoodEntity::class.java)
                         menu.add(foodEntity)
                     }
+
+                    Log.e("CHOW", "${result.size()}")
 
                     // return the menu
                     it.onNext(Result.Success(menu))

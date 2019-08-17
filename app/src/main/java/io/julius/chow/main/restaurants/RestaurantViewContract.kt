@@ -4,6 +4,9 @@ sealed class RestaurantViewContract {
     // Contract class to display progress bar
     class ProgressDisplay(val display: Boolean) : RestaurantViewContract()
 
+    // Contract class to display empty menu view
+    class EmptyListDisplay(val display: Boolean) : RestaurantViewContract()
+
     // Contract class to display message to the user
     class MessageDisplay(val message: String) : RestaurantViewContract()
 

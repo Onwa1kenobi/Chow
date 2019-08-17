@@ -50,6 +50,11 @@ class RestaurantDetailsViewModel @Inject constructor(
                         val response = result.data.map { foodModel ->
                             FoodMapper.mapFromModel(foodModel)
                         }
+
+                        restaurantViewContract.postValue(
+                            Event(RestaurantViewContract.EmptyListDisplay(response.isEmpty()))
+                        )
+
                         menu.postValue(response)
                     }
 

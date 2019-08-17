@@ -2,19 +2,21 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/restaurant_main_navigation_graph"
+    android:id="@+id/navigation_menu"
     app:startDestination="@id/menuFragment">
 
     <fragment
         android:id="@+id/menuFragment"
         android:name="io.julius.chow.main.restaurants.RestaurantMenuFragment"
         android:label="fragment_menu"
-        tools:layout="@layout/fragment_restaurant_menu" />
+        tools:layout="@layout/fragment_restaurant_menu">
+        <action
+            android:id="@+id/action_menu_to_foodDetails"
+            app:destination="@id/foodDetailsFragment" />
+    </fragment>
 
-    <!--<fragment-->
-    <!--android:id="@+id/profileFragmentX"-->
-    <!--android:name="io.julius.chow.main.profile.ProfileFragment"-->
-    <!--android:label="fragment_profile"-->
-    <!--tools:layout="@layout/fragment_profile" />-->
-
+    <fragment
+        android:id="@+id/foodDetailsFragment"
+        android:name="io.julius.chow.main.food.FoodDetailsFragment"
+        android:label="FoodDetailsFragment" />
 </navigation>

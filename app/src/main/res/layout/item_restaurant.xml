@@ -30,7 +30,6 @@
         <io.julius.chow.util.CustomImageView
                 android:id="@+id/image_restaurant"
                 android:layout_width="match_parent"
-                android:transitionName="bell"
                 android:scaleType="centerCrop"
                 android:contentDescription="@string/content_desc_restaurant_image"
                 app:imageUrl="@{object.imageUrl}"

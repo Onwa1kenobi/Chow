@@ -1,6 +1,5 @@
 package io.julius.chow.main.restaurants
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import io.julius.chow.domain.Result
@@ -9,6 +8,7 @@ import io.julius.chow.domain.interactor.restaurant.RestaurantInteractor
 import io.julius.chow.mapper.RestaurantMapper
 import io.julius.chow.model.Restaurant
 import io.julius.chow.util.Event
+import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
 class RestaurantViewModel @Inject constructor(private val restaurantInteractor: RestaurantInteractor) : ViewModel() {
@@ -19,12 +19,14 @@ class RestaurantViewModel @Inject constructor(private val restaurantInteractor: 
     // public LiveData variable to expose returned list of restaurants
     val restaurants = MutableLiveData<List<Restaurant>>()
 
+    private val disposable: CompositeDisposable = CompositeDisposable()
+
     fun fetchRestaurants() {
         // Display progress bar
         restaurantViewContract.postValue(Event(RestaurantViewContract.ProgressDisplay(true)))
 
         restaurantInteractor.execute(Interactor.None()) {
-            it.subscribe({ result ->
+            disposable.add(it.subscribe({ result ->
                 // Hide progress bar
                 restaurantViewContract.postValue(Event(RestaurantViewContract.ProgressDisplay(false)))
 
@@ -35,13 +37,10 @@ class RestaurantViewModel @Inject constructor(private val restaurantInteractor: 
                             RestaurantMapper.mapFromModel(restaurantModel)
                         }
 
-                        Log.e("CHOW", "Here $response")
-
                         restaurants.postValue(response)
                     }
 
                     is Result.Failure -> {
-                        Log.e("CHOW", "This one")
                         // Display error message to user
                         restaurantViewContract.postValue(
                             Event(RestaurantViewContract.MessageDisplay(result.exception.toString()))
@@ -52,12 +51,16 @@ class RestaurantViewModel @Inject constructor(private val restaurantInteractor: 
                 // Hide progress bar
                 restaurantViewContract.postValue(Event(RestaurantViewContract.ProgressDisplay(false)))
 
-                Log.e("CHOW", "Throwing.")
                 // Display error message to user
                 restaurantViewContract.postValue(
                     Event(RestaurantViewContract.MessageDisplay(throwable.localizedMessage.toString()))
                 )
-            })
+            }))
         }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        disposable.dispose()
     }
 }

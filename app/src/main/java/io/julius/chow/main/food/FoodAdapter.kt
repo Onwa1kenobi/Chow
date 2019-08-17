@@ -26,7 +26,7 @@ class FoodAdapter(private val menuType: MenuType) : BaseAdapter<Food>() {
     override fun getLayoutIdForPosition(position: Int): Int {
         return when (menuType) {
             MenuType.MainMenu -> R.layout.item_menu_food_layout
-            MenuType.RestaurantMenu -> R.layout.item_restaurant_food_layout
+            MenuType.RestaurantMenu -> R.layout.item_restaurant_menu_food_layout
         }
     }
 

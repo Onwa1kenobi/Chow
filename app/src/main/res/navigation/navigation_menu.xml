@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools" android:id="@+id/navigation_menu"
-            app:startDestination="@id/menuFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_menu"
+    app:startDestination="@id/menuFragment">
 
     <fragment
         android:id="@+id/menuFragment"
@@ -11,10 +12,11 @@
         tools:layout="@layout/fragment_menu">
         <action
             android:id="@+id/action_menu_to_foodDetails"
-            app:destination="@id/foodDetailsFragment2" />
+            app:destination="@id/foodDetailsFragment" />
     </fragment>
+
     <fragment
-        android:id="@+id/foodDetailsFragment2"
+        android:id="@+id/foodDetailsFragment"
         android:name="io.julius.chow.main.food.FoodDetailsFragment"
         android:label="FoodDetailsFragment" />
 </navigation>

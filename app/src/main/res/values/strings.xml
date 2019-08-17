@@ -39,6 +39,8 @@
     <string name="call_outlet">Call Outlet</string>
     <string name="get_directions">Get Directions</string>
     <string name="no_offers">We have nothing at this time.</string>
+    <string name="no_menu">There are no items on your Menu.</string>
+    <string name="no_menu_sub">Click \'+\' to add one</string>
     <string name="check_back_later">Check back later</string>
     <string name="content_desc_food_image">Food Image</string>
     <string name="add_to_order">Add To Order</string>

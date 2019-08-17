@@ -3,6 +3,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".main.restaurants.RestaurantMainActivity">
+
+    <!--<fragment-->
+    <!--android:id="@+id/navigation_host_fragment"-->
+    <!--android:name="androidx.navigation.fragment.NavHostFragment"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="0dp"-->
+    <!--app:layout_constraintBottom_toTopOf="@id/bottomNavigation"-->
+    <!--app:layout_constraintTop_toTopOf="parent"-->
+    <!--app:defaultNavHost="true"-->
+    <!--app:navGraph="@navigation/restaurant_main_navigation_graph"/>-->
+
+    <FrameLayout
+        android:id="@+id/navigation_host_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/bottomNavigation"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigation"
+        style="@style/Widget.MaterialComponents.BottomNavigationView.Colored"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        app:labelVisibilityMode="labeled"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:menu="@menu/restaurant_bottom_navigation_menu" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,6 +2,7 @@ package io.julius.chow.main.restaurants
 
 
 import android.os.Bundle
+import android.view.View
 import androidx.core.os.bundleOf
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
@@ -13,6 +14,7 @@ import io.julius.chow.databinding.FragmentRestaurantMenuBinding
 import io.julius.chow.main.food.FoodAdapter
 import io.julius.chow.main.food.FoodDetailsFragment
 import io.julius.chow.util.Event
+import kotlinx.android.synthetic.main.fragment_restaurant_menu.*
 
 
 class RestaurantMenuFragment : BaseFragment<FragmentRestaurantMenuBinding>() {
@@ -57,6 +59,11 @@ class RestaurantMenuFragment : BaseFragment<FragmentRestaurantMenuBinding>() {
                 is RestaurantViewContract.MessageDisplay -> {
                     // Display message feedback to user
                     notify(data.message)
+                }
+
+                is RestaurantViewContract.EmptyListDisplay -> {
+                    empty_feed_view.visibility = if (data.display) View.VISIBLE
+                    else View.GONE
                 }
             }
         }

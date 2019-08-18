@@ -27,6 +27,7 @@ class FoodAdapter(private val menuType: MenuType) : BaseAdapter<Food>() {
         return when (menuType) {
             MenuType.MainMenu -> R.layout.item_menu_food_layout
             MenuType.RestaurantMenu -> R.layout.item_restaurant_menu_food_layout
+            MenuType.RestaurantMenuExtended -> R.layout.item_restaurant_food_layout
         }
     }
 
@@ -44,6 +45,6 @@ class FoodAdapter(private val menuType: MenuType) : BaseAdapter<Food>() {
     }
 
     enum class MenuType {
-        MainMenu, RestaurantMenu
+        MainMenu, RestaurantMenu, RestaurantMenuExtended
     }
 }

@@ -4,6 +4,7 @@ import dagger.Component
 import io.julius.chow.app.App
 import io.julius.chow.auth.AuthActivity
 import io.julius.chow.di.viewmodel.ViewModelModule
+import io.julius.chow.main.food.AddFoodFragment
 import io.julius.chow.main.food.FoodDetailsFragment
 import io.julius.chow.main.menu.MenuFragment
 import io.julius.chow.main.orders.OrdersFragment
@@ -36,4 +37,6 @@ interface AppComponent {
     fun inject(restaurantMenuFragment: RestaurantMenuFragment)
 
     fun inject(foodDetailsFragment: FoodDetailsFragment)
+
+    fun inject(addFoodFragment: AddFoodFragment)
 }

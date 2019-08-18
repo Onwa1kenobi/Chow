@@ -6,6 +6,7 @@ import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
 import io.julius.chow.auth.AuthViewModel
+import io.julius.chow.main.food.AddFoodViewModel
 import io.julius.chow.main.food.FoodDetailsViewModel
 import io.julius.chow.main.menu.MenuViewModel
 import io.julius.chow.main.orders.OrderViewModel
@@ -58,4 +59,9 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(FoodDetailsViewModel::class)
     abstract fun bindsFoodDetailsViewModel(foodDetailsViewModel: FoodDetailsViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(AddFoodViewModel::class)
+    abstract fun bindsAddFoodViewModel(addFoodViewModel: AddFoodViewModel): ViewModel
 }

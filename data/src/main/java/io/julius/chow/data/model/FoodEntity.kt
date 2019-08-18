@@ -5,7 +5,7 @@ import androidx.room.Ignore
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "Food")
-class FoodEntity() {
+data class FoodEntity(val version: Int = 1) {
 
     @PrimaryKey
     lateinit var id: String

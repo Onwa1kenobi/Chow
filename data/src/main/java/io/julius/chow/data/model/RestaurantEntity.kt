@@ -7,7 +7,7 @@ import com.google.firebase.firestore.Exclude
 import com.google.firebase.firestore.GeoPoint
 
 @Entity(tableName = "Restaurants")
-class RestaurantEntity() {
+data class RestaurantEntity(val version: Int = 1) {
 
     @PrimaryKey
     lateinit var id: String

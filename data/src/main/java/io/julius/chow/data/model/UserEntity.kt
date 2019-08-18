@@ -5,7 +5,7 @@ import androidx.room.Ignore
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "User")
-class UserEntity() {
+data class UserEntity(val version: Int = 1) {
 
     @PrimaryKey
     lateinit var id: String

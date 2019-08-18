@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 import java.util.*
 
 @Entity(tableName = "PlacedOrders")
-class PlacedOrderEntity() {
+data class PlacedOrderEntity(val version: Int = 1) {
 
     @PrimaryKey
     lateinit var id: String

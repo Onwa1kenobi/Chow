@@ -132,6 +132,15 @@ class LocalDataSource @Inject constructor(private val appDAO: AppDAO) : DataSour
         foodEntities.forEach { appDAO.saveFood(it) }
     }
 
+    override suspend fun saveFood(foodEntity: FoodEntity): Result<FoodEntity> {
+        val rowId: Long? = appDAO.saveFood(foodEntity)
+        return if (rowId != null) {
+            Result.Success(foodEntity)
+        } else {
+            Result.Failure(Exception.LocalDataException("Failed to save to local storage"))
+        }
+    }
+
     override suspend fun getMenu(category: String): Flowable<Result<List<FoodEntity>>> {
         return Flowable.create({
             appDAO.getMenu(category).subscribe { food ->

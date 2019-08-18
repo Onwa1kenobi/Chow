@@ -267,6 +267,38 @@ class RemoteDataSource @Inject constructor() : DataSource {
             .observeOn(Schedulers.io())
     }
 
+    override suspend fun saveFood(foodEntity: FoodEntity): Result<FoodEntity> {
+        return try {
+            foodEntity.apply {
+                if (this.id.isBlank()) {
+                    this.id = db.collection("Food").document().id
+                }
+
+                if (this.imageUrl.startsWith("http").not()) {
+                    // Image url is a content uri for a local file. Save to firebase
+                    val foodImagesRef = storageRef.reference
+                        .child("foodImages/${Uri.parse(foodEntity.imageUrl).lastPathSegment}")
+                    val uploadTask = foodImagesRef.putFile(Uri.parse(foodEntity.imageUrl))
+
+                    this.imageUrl =
+                        uploadTask.continueWithTask(Continuation<UploadTask.TaskSnapshot, Task<Uri>> { task ->
+                            if (!task.isSuccessful) {
+                                task.exception?.let {
+                                    return@Continuation null
+                                }
+                            }
+                            return@Continuation foodImagesRef.downloadUrl
+                        }).await().toString()
+                }
+            }
+
+            db.collection("Food").document(foodEntity.id).set(foodEntity, SetOptions.merge()).await()
+            Result.Success(foodEntity)
+        } catch (e: FirebaseException) {
+            Result.Failure(Exception.RemoteDataException(e.localizedMessage))
+        }
+    }
+
     override suspend fun placeOrder(placedOrder: PlacedOrderEntity): Result<PlacedOrderEntity> {
         // Update id of placedOrder
         placedOrder.id = db.collection("PlacedOrders").document().id

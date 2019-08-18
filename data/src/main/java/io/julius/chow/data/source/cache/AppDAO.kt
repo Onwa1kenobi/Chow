@@ -40,8 +40,8 @@ interface AppDAO {
     @Query("SELECT * FROM Food WHERE category = :category")
     fun getMenu(category: String): Flowable<List<FoodEntity>>
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun saveFood(foodEntity: FoodEntity)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun saveFood(foodEntity: FoodEntity): Long
 
     @Query("DELETE FROM User")
     fun deleteUser()

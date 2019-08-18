@@ -109,9 +109,16 @@ interface DataSource {
     suspend fun getMenu(category: String): Flowable<Result<List<FoodEntity>>>
 
     /**
-     * Saves a food to the local database
+     * Saves a list of food items to the local database
      */
     fun saveFood(foodEntities: List<FoodEntity>) {}
+
+    /**
+     * Saves a food to the database
+     */
+    suspend fun saveFood(foodEntity: FoodEntity): Result<FoodEntity> {
+        return Result.Failure(Exception.NotImplementedException)
+    }
 
     /**
      * Gets all the saved orders from the local database
@@ -144,13 +151,13 @@ interface DataSource {
      * Places an order and sends a notification to corresponding restaurants from the remote database
      */
     suspend fun placeOrder(placedOrder: PlacedOrderEntity): Result<PlacedOrderEntity> {
-        TODO("Not Implemented")
+        return Result.Failure(Exception.NotImplementedException)
     }
 
     /**
      * Saves a placed order in the local database for posterity sake
      */
     suspend fun savePlacedOrder(placedOrder: PlacedOrderEntity): Boolean {
-        TODO("Not Implemented")
+        return false
     }
 }

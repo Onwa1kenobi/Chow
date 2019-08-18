@@ -25,4 +25,6 @@ interface RestaurantRepository {
     suspend fun fetchRestaurants(): Flowable<Result<List<RestaurantModel>>>
 
     suspend fun fetchRestaurantMenu(restaurantId: String): Flowable<Result<List<FoodModel>>>
+
+    suspend fun saveFood(foodModel: FoodModel): Result<Any>
 }

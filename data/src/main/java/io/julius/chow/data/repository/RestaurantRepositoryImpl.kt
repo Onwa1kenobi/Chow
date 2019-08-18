@@ -122,4 +122,18 @@ class RestaurantRepositoryImpl @Inject constructor(
             }
         }
     }
+
+    override suspend fun saveFood(foodModel: FoodModel): Result<Any> {
+        val remoteResponse = remoteDataSource.saveFood(FoodEntityMapper.mapToEntity(foodModel))
+        if (remoteResponse is Result.Failure) {
+            return remoteResponse
+        }
+
+        val saveStatus = localDataSource.saveFood((remoteResponse as Result.Success).data)
+        return if (saveStatus is Result.Success) {
+            Result.Success(true)
+        } else {
+            saveStatus
+        }
+    }
 }

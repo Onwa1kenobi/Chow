@@ -13,6 +13,7 @@ sealed class Exception(override val message: String = "An error occurred") : Thr
 
     object RemoteDataNotFoundException : FeatureException("Data not found in remote data source")
     object LocalDataNotFoundException : FeatureException("Data not found in local data source")
+    object NotImplementedException : FeatureException("Not Implemented")
 
     /** * Extend this class for feature specific exceptions.*/
     abstract class FeatureException(override var message: String): Exception()

@@ -65,13 +65,13 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/activity_horizontal_margin">
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/label_food_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/activity_horizontal_margin"
                         android:text="@{viewModel.order.food.title}"
                         android:textColor="@android:color/black"
                         android:textSize="@dimen/title_text_size"
@@ -98,7 +98,7 @@
                         android:id="@+id/label_food_price"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/activity_half_margin"
+                        android:layout_marginTop="@dimen/activity_half_margin"
                         android:maxLines="1"
                         android:text="@{@string/thousand_format(viewModel.order.liveCost)}"
                         android:textColor="@color/green"
@@ -118,7 +118,7 @@
                         style="@style/Widget.AppCompat.RatingBar.Small"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/activity_half_margin"
+                        android:layout_marginTop="@dimen/activity_half_margin"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/label_food_price"
@@ -143,9 +143,10 @@
                         tools:text="Come and chow sharp cupcakes that will change your settings at a discount now. Stay sharp; lest you carry last." />
 
                     <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/order_unit_container"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/activity_horizontal_margin"
+                        android:layout_marginTop="@dimen/activity_horizontal_margin"
                         android:gravity="center"
                         android:orientation="horizontal"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -194,19 +195,24 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_add_order"
+                style="@style/Widget.MaterialComponents.Button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/activity_double_margin"
-                android:layout_marginLeft="@dimen/activity_double_margin"
-                android:layout_marginTop="@dimen/activity_horizontal_margin"
-                android:layout_marginEnd="@dimen/activity_double_margin"
-                android:layout_marginRight="@dimen/activity_double_margin"
                 android:layout_marginBottom="@dimen/activity_horizontal_margin"
-                android:onClick="@{() -> viewModel.addOrder()}"
+                android:paddingStart="@dimen/activity_double_margin"
+                android:paddingLeft="@dimen/activity_double_margin"
+                android:paddingTop="@dimen/button_margin"
+                android:paddingEnd="@dimen/activity_double_margin"
+                android:paddingRight="@dimen/activity_double_margin"
+                android:paddingBottom="@dimen/button_margin"
                 android:text="@string/add_to_order"
+                app:icon="@drawable/ic_add_shopping_cart"
+                app:iconGravity="start"
+                app:iconTint="@android:color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintWidth_percent="0.5" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

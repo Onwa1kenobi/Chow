@@ -19,7 +19,7 @@ class FoodDetailsViewModel @Inject constructor(private val saveOrderInteractor: 
     // public LiveData variable to expose active food order quantity
     val orderQuantity = MutableLiveData<Int>()
 
-    fun createOrder(food: Food) {
+    fun prepareOrder(food: Food) {
         orderQuantity.value = 1
         order = Order(food = food, quantity = orderQuantity.value!!)
     }

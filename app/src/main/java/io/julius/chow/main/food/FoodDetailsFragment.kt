@@ -2,6 +2,8 @@ package io.julius.chow.main.food
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.core.view.ViewCompat
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -14,7 +16,9 @@ import io.julius.chow.base.BaseFragment
 import io.julius.chow.base.extension.observe
 import io.julius.chow.base.extension.viewModel
 import io.julius.chow.databinding.FragmentFoodDetailsBinding
+import io.julius.chow.domain.model.UserType
 import io.julius.chow.model.Food
+import kotlinx.android.synthetic.main.fragment_food_details.*
 
 class FoodDetailsFragment : BaseFragment<FragmentFoodDetailsBinding>(), View.OnClickListener {
 
@@ -23,6 +27,7 @@ class FoodDetailsFragment : BaseFragment<FragmentFoodDetailsBinding>(), View.OnC
     private lateinit var foodDetailsViewModel: FoodDetailsViewModel
 
     private lateinit var food: Food
+    private lateinit var userType: UserType
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +43,7 @@ class FoodDetailsFragment : BaseFragment<FragmentFoodDetailsBinding>(), View.OnC
 
         val safeArgs: FoodDetailsFragmentArgs by navArgs()
         food = safeArgs.food
+        userType = safeArgs.userType
 
         // Inject all requisite objects for this fragment
         appComponent.inject(this)
@@ -55,9 +61,31 @@ class FoodDetailsFragment : BaseFragment<FragmentFoodDetailsBinding>(), View.OnC
                 }
             }
         }
-        foodDetailsViewModel.createOrder(food)
+        foodDetailsViewModel.prepareOrder(food)
 
-//        postponeEnterTransition()
+        postponeEnterTransition()
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        if (userType == UserType.RESTAURANT) {
+            order_unit_container.visibility = View.GONE
+            button_add_order.icon = ContextCompat.getDrawable(context!!, R.drawable.ic_edit)
+            button_add_order.text = resources.getString(R.string.edit)
+        }
+
+        button_add_order.setOnClickListener {
+            if (userType == UserType.RESTAURANT) {
+                val bundle = bundleOf(
+                    FOOD to food
+                )
+                // Navigate to detail view
+                findNavController().navigate(R.id.action_foodDetails_to_addFood, bundle)
+            } else {
+                foodDetailsViewModel.addOrder()
+            }
+        }
     }
 
     override fun initialize(state: Bundle?) {
@@ -68,7 +96,7 @@ class FoodDetailsFragment : BaseFragment<FragmentFoodDetailsBinding>(), View.OnC
         dataBinding.viewModel = foodDetailsViewModel
         dataBinding.clickListener = this
 
-//        startPostponedEnterTransition()
+        startPostponedEnterTransition()
 
     }
 
@@ -78,5 +106,6 @@ class FoodDetailsFragment : BaseFragment<FragmentFoodDetailsBinding>(), View.OnC
 
     companion object {
         const val FOOD = "food"
+        const val USER_TYPE = "userType"
     }
 }

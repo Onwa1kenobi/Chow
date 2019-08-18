@@ -44,7 +44,7 @@ class LocalDataSource @Inject constructor(private val appDAO: AppDAO) : DataSour
 
     override suspend fun getCurrentUser(): Flowable<Result<UserEntity>> {
         return Flowable.create({
-            appDAO.getCurrentUser().subscribe { userEntity ->
+            appDAO.getCurrentUser().distinctUntilChanged().subscribe { userEntity ->
                 if (userEntity == null) {
                     it.onError(Exception.LocalDataNotFoundException)
                 } else {
@@ -62,14 +62,14 @@ class LocalDataSource @Inject constructor(private val appDAO: AppDAO) : DataSour
     // Since we can't get Room to return our custom Result type, we get the normal data, and create a Flowable
         // to which we pass a successful list of data objects or an error and propagate down to the subscriber.
         Flowable.create({
-            appDAO.getRestaurants().subscribe { restaurants ->
+            appDAO.getRestaurants().distinctUntilChanged().subscribe { restaurants ->
                 if (restaurants == null) {
                     it.onError(Exception.LocalDataNotFoundException)
                 } else {
                     it.onNext(Result.Success(restaurants))
                 }
             }
-        }, BackpressureStrategy.BUFFER)
+        }, BackpressureStrategy.LATEST)
 
     override suspend fun saveUser(userEntity: UserEntity): Result<Boolean> {
         // The only time we will be calling this function is when we are saving a signed in user,
@@ -85,7 +85,7 @@ class LocalDataSource @Inject constructor(private val appDAO: AppDAO) : DataSour
 
     override suspend fun getCurrentRestaurant(): Flowable<Result<RestaurantEntity>> {
         return Flowable.create({
-            appDAO.getCurrentRestaurant().subscribe { restaurantEntity ->
+            appDAO.getCurrentRestaurant().distinctUntilChanged().subscribe { restaurantEntity ->
                 if (restaurantEntity == null) {
                     it.onError(Exception.LocalDataNotFoundException)
                 } else {
@@ -119,14 +119,14 @@ class LocalDataSource @Inject constructor(private val appDAO: AppDAO) : DataSour
     // Since we can't get Room to return our custom Result type, we get the normal data, and create a Flowable
         // to which we pass a successful list of data objects or an error and propagate down to the subscriber.
         Flowable.create({
-            appDAO.getRestaurantMenu(restaurantId).subscribe { menu ->
+            appDAO.getRestaurantMenu(restaurantId).distinctUntilChanged().subscribe { menu ->
                 if (menu == null) {
                     it.onError(Exception.LocalDataNotFoundException)
                 } else {
                     it.onNext(Result.Success(menu))
                 }
             }
-        }, BackpressureStrategy.BUFFER)
+        }, BackpressureStrategy.LATEST)
 
     override fun saveFood(foodEntities: List<FoodEntity>) {
         foodEntities.forEach { appDAO.saveFood(it) }
@@ -143,26 +143,26 @@ class LocalDataSource @Inject constructor(private val appDAO: AppDAO) : DataSour
 
     override suspend fun getMenu(category: String): Flowable<Result<List<FoodEntity>>> {
         return Flowable.create({
-            appDAO.getMenu(category).subscribe { food ->
+            appDAO.getMenu(category).distinctUntilChanged().subscribe { food ->
                 if (food == null) {
                     it.onError(Exception.LocalDataNotFoundException)
                 } else {
                     it.onNext(Result.Success(food))
                 }
             }
-        }, BackpressureStrategy.BUFFER)
+        }, BackpressureStrategy.LATEST)
     }
 
     override suspend fun getOrders(): Flowable<Result<List<OrderEntity>>> {
         return Flowable.create({
-            appDAO.getOrders().subscribe { orders ->
+            appDAO.getOrders().distinctUntilChanged().subscribe { orders ->
                 if (orders == null) {
                     it.onError(Exception.LocalDataNotFoundException)
                 } else {
                     it.onNext(Result.Success(orders))
                 }
             }
-        }, BackpressureStrategy.BUFFER)
+        }, BackpressureStrategy.LATEST)
     }
 
     override fun getOrder(id: String): OrderEntity? {

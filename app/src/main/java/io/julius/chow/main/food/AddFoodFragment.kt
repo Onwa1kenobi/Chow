@@ -99,6 +99,10 @@ class AddFoodFragment : BaseFragment<FragmentAddFoodBinding>() {
 
         toolbar.setNavigationOnClickListener { findNavController().popBackStack() }
 
+        category_toggle_group.forEach { button ->
+            button.setOnClickListener { (button as MaterialButton).isChecked = true }
+        }
+
         banner_image.setOnClickListener {
             Dexter.withActivity(activity)
                 .withPermissions(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)

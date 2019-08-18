@@ -40,8 +40,20 @@ interface AppDAO {
     @Query("SELECT * FROM Food WHERE category = :category")
     fun getMenu(category: String): Flowable<List<FoodEntity>>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun saveFood(foodEntity: FoodEntity): Long
+    @Transaction
+    fun saveFood(foodEntity: FoodEntity): Long {
+        var id = insertFood(foodEntity)
+        if (id == -1L) {
+            id = updateFood(foodEntity).toLong()
+        }
+        return id
+    }
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    fun insertFood(foodEntity: FoodEntity): Long
+
+    @Update(onConflict = OnConflictStrategy.IGNORE)
+    fun updateFood(foodEntity: FoodEntity): Int
 
     @Query("DELETE FROM User")
     fun deleteUser()
@@ -55,8 +67,20 @@ interface AppDAO {
     @Query("SELECT * FROM Orders where id = :id")
     fun getOrder(id: String): OrderEntity
 
+    @Transaction
+    fun saveOrder(orderEntity: OrderEntity): Long {
+        var id = insertOrder(orderEntity)
+        if (id == -1L) {
+            id = updateOrder(orderEntity).toLong()
+        }
+        return id
+    }
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun saveOrder(orderEntity: OrderEntity): Long
+    fun insertOrder(orderEntity: OrderEntity): Long
+
+    @Update(onConflict = OnConflictStrategy.IGNORE)
+    fun updateOrder(orderEntity: OrderEntity): Int
 
     @Delete
     fun deleteOrder(orderEntity: OrderEntity)

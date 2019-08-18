@@ -71,6 +71,7 @@
     <string name="restaurant">Restaurant</string>
     <string name="customer">Customer</string>
     <string name="restaurant_description_hint">Describe Your Story</string>
+    <string name="food_description_hint">Describe the Food</string>
     <string name="location">Location</string>
     <string name="set_banner_image">Set Banner Image</string>
     <string name="choose_from_gallery">Choose From Gallery</string>
@@ -82,4 +83,9 @@
     <string name="restaurant_avatar">Restaurant Avatar</string>
     <string name="customer_avatar">Customer Avatar</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="add_item">Add Item</string>
+    <string name="food_details">Food Details</string>
+    <string name="food_name_hint">Food Name</string>
+    <string name="price_hint">Price (\u20A6)</string>
+    <string name="save">Save</string>
 </resources>

@@ -19,7 +19,12 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+
+        debug {
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -73,9 +78,6 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta2'
     implementation "androidx.annotation:annotation:1.1.0"
     implementation "android.arch.lifecycle:extensions:1.1.1"
-    implementation 'androidx.navigation:navigation-fragment:2.2.0-alpha01'
-    implementation "androidx.navigation:navigation-runtime:2.2.0-alpha01"
-    implementation "androidx.navigation:navigation-ui:2.2.0-alpha01"
     implementation "androidx.navigation:navigation-runtime-ktx:2.2.0-alpha01"
     implementation "androidx.navigation:navigation-fragment-ktx:2.2.0-alpha01"
     implementation "androidx.navigation:navigation-ui-ktx:2.2.0-alpha01"

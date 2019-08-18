@@ -19,3 +19,7 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+-keep class io.julius.chow.data.model.** { *; }
+-keep class io.julius.chow.domain.model.** { *; }
+-keep class io.julius.chow.model.** { *; }

@@ -19,16 +19,16 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
     // Room local storage dependencies
-    api "androidx.room:room-runtime:2.2.0-alpha01"
-    kapt "androidx.room:room-compiler:2.2.0-alpha01"
-    api "androidx.room:room-rxjava2:2.2.0-alpha01"
+    api "androidx.room:room-runtime:2.2.0-alpha02"
+    kapt "androidx.room:room-compiler:2.2.0-alpha02"
+    api "androidx.room:room-rxjava2:2.2.0-alpha02"
 
     // Firebase dependencies
-    api 'com.google.firebase:firebase-auth:18.1.0'
+    api 'com.google.firebase:firebase-auth:19.0.0'
     implementation 'com.google.android.gms:play-services-auth:17.0.0'
-    implementation 'com.google.firebase:firebase-firestore:20.2.0'
-    implementation 'com.google.firebase:firebase-storage:18.1.1'
-    implementation 'com.google.firebase:firebase-core:17.0.1'
+    implementation 'com.google.firebase:firebase-firestore:21.0.0'
+    implementation 'com.google.firebase:firebase-storage:19.0.0'
+    implementation 'com.google.firebase:firebase-core:17.1.0'
 
     // RxKotlin
     implementation 'io.reactivex.rxjava2:rxkotlin:2.4.0-RC3'

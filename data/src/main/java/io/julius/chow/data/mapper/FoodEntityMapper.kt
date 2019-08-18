@@ -18,8 +18,8 @@ object FoodEntityMapper : Mapper<FoodEntity, FoodModel> {
             title = type.title,
             imageUrl = type.imageUrl,
             description = type.description,
+            category = type.category,
             restaurantId = type.restaurantId,
-            category = "TODO",
             price = type.price,
             rating = type.rating
         )
@@ -34,6 +34,7 @@ object FoodEntityMapper : Mapper<FoodEntity, FoodModel> {
             title = type.title,
             imageUrl = type.imageUrl,
             description = type.description,
+            category = type.category,
             restaurantId = type.restaurantId,
             price = type.price,
             rating = type.rating

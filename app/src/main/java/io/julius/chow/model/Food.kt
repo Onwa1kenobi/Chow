@@ -5,13 +5,14 @@ import android.os.Parcelable
 import java.util.*
 
 data class Food(
-    val id: String,
-    val title: String,
-    val imageUrl: String,
-    val description: String,
-    val restaurantId: String,
-    val price: Double,
-    val rating: Double
+    var id: String = "",
+    var title: String = "",
+    var imageUrl: String = "",
+    var description: String = "",
+    var category: String = "",
+    var restaurantId: String = "",
+    var price: Double = 0.0,
+    var rating: Double = 0.0
 ) : Parcelable {
 
     var displayPrice = String.format(Locale.getDefault(), "%s %.2f", "\u20A6", price)
@@ -24,6 +25,7 @@ data class Food(
             it.writeString(title)
             it.writeString(imageUrl)
             it.writeString(description)
+            it.writeString(category)
             it.writeString(restaurantId)
             it.writeDouble(price)
             it.writeDouble(rating)
@@ -35,6 +37,7 @@ data class Food(
         title = internal.readString(),
         imageUrl = internal.readString(),
         description = internal.readString(),
+        category = internal.readString(),
         restaurantId = internal.readString(),
         rating = internal.readDouble(),
         price = internal.readDouble()

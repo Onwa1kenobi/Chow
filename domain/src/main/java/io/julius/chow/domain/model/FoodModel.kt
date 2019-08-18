@@ -5,7 +5,8 @@ class FoodModel(
     val title: String,
     val imageUrl: String,
     val description: String,
-    val restaurantId: String,
+    var restaurantId: String,
+    val category: String,
     val price: Double,
     val rating: Double
 )

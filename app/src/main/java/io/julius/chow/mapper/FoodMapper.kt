@@ -18,6 +18,7 @@ object FoodMapper : Mapper<Food, FoodModel> {
             title = type.title,
             imageUrl = type.imageUrl,
             description = type.description,
+            category = type.category,
             restaurantId = type.restaurantId,
             price = type.price,
             rating = type.rating
@@ -33,6 +34,7 @@ object FoodMapper : Mapper<Food, FoodModel> {
             title = type.title,
             imageUrl = type.imageUrl,
             description = type.description,
+            category = type.category,
             restaurantId = type.restaurantId,
             price = type.price,
             rating = type.rating

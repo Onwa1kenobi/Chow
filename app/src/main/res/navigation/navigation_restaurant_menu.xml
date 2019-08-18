@@ -13,10 +13,36 @@
         <action
             android:id="@+id/action_menu_to_foodDetails"
             app:destination="@id/foodDetailsFragment" />
+        <action
+            android:id="@+id/action_menu_to_addFood"
+            app:destination="@id/addFoodFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/foodDetailsFragment"
         android:name="io.julius.chow.main.food.FoodDetailsFragment"
-        android:label="FoodDetailsFragment" />
+        android:label="FoodDetailsFragment">
+        <argument
+            android:name="food"
+            app:argType="io.julius.chow.model.Food" />
+        <argument
+            android:name="userType"
+            android:defaultValue="CUSTOMER"
+            app:argType="io.julius.chow.domain.model.UserType" />
+        <action
+            android:id="@+id/action_foodDetails_to_addFood"
+            app:destination="@id/addFoodFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/addFoodFragment"
+        android:name="io.julius.chow.main.food.AddFoodFragment"
+        android:label="fragment_add_food"
+        tools:layout="@layout/fragment_add_food">
+        <argument
+            android:name="food"
+            android:defaultValue="@null"
+            app:argType="io.julius.chow.model.Food"
+            app:nullable="true" />
+    </fragment>
 </navigation>

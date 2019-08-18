@@ -16,6 +16,10 @@
     <fragment android:id="@+id/foodDetailsFragment" android:name="io.julius.chow.main.food.FoodDetailsFragment"
               android:label="FoodDetailsFragment">
         <argument android:name="food" app:argType="io.julius.chow.model.Food"/>
+        <argument
+            android:name="userType"
+            android:defaultValue="CUSTOMER"
+            app:argType="io.julius.chow.domain.model.UserType" />
     </fragment>
 
     <activity

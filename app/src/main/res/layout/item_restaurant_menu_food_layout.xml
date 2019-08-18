@@ -71,7 +71,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/activity_horizontal_margin"
-                android:text="@{object.displayPrice}"
+                android:text="@{@string/naira_thousand_format(object.price)}"
                 android:textColor="@color/green"
                 android:textSize="@dimen/description_text_size"
                 android:textStyle="bold"

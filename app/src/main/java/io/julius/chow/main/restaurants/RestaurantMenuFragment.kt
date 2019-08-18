@@ -11,6 +11,7 @@ import io.julius.chow.base.BaseFragment
 import io.julius.chow.base.extension.observe
 import io.julius.chow.base.extension.viewModel
 import io.julius.chow.databinding.FragmentRestaurantMenuBinding
+import io.julius.chow.domain.model.UserType
 import io.julius.chow.main.food.FoodAdapter
 import io.julius.chow.main.food.FoodDetailsFragment
 import io.julius.chow.util.Event
@@ -38,7 +39,10 @@ class RestaurantMenuFragment : BaseFragment<FragmentRestaurantMenuBinding>() {
 
         foodAdapter.listener = { food, image ->
             // Put restaurant id in bundle to fetch restaurant in detail view
-            val bundle = bundleOf(FoodDetailsFragment.FOOD to food)
+            val bundle = bundleOf(
+                FoodDetailsFragment.FOOD to food,
+                FoodDetailsFragment.USER_TYPE to UserType.RESTAURANT
+            )
             // Put the restaurant image in an extra for shared element transition
             val extras = FragmentNavigatorExtras(
                 image!! to food.id
@@ -51,6 +55,10 @@ class RestaurantMenuFragment : BaseFragment<FragmentRestaurantMenuBinding>() {
         dataBinding.recyclerView.adapter = foodAdapter
 
         restaurantViewModel.getCurrentRestaurantMenu()
+
+        button_add_food.setOnClickListener {
+            findNavController().navigate(R.id.action_menu_to_addFood)
+        }
     }
 
     private fun viewStateResponse(event: Event<RestaurantViewContract>) {

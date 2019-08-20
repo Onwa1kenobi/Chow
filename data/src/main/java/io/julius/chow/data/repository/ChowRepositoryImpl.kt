@@ -34,6 +34,10 @@ class ChowRepositoryImpl @Inject constructor(
         return localDataSource.getCurrentLoggedAccount()
     }
 
+    override fun getCurrentLoggedAccountType(): Result<UserType> {
+        return localDataSource.getCurrentLoggedAccountType()
+    }
+
     override suspend fun authenticateUser(): Result<UserModel> {
         return remoteDataSource.authenticateUser()
     }

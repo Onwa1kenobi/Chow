@@ -5,6 +5,7 @@ import io.julius.chow.domain.Exception
 import io.julius.chow.domain.Result
 import io.julius.chow.domain.model.RestaurantModel
 import io.julius.chow.domain.model.UserModel
+import io.julius.chow.domain.model.UserType
 import io.reactivex.Flowable
 
 /**
@@ -31,11 +32,19 @@ interface DataSource {
     }
 
     /**
+     * Get the currently logged in account type.
+     * With default implementation since we only want to use this from LocalDataSource
+     */
+    fun getCurrentLoggedAccountType(): Result<UserType> {
+        return Result.Failure(Exception.NotImplementedException)
+    }
+
+    /**
      * Check if a user is currently logged in.
      * With default implementation since we only want to use this from RemoteDataSource
      */
     suspend fun authenticateUser(): Result<UserModel> {
-        return Result.Failure(Exception.Error)
+        return Result.Failure(Exception.NotImplementedException)
     }
 
     /**

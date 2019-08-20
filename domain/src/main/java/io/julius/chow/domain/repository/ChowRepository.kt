@@ -15,6 +15,8 @@ interface ChowRepository {
 
     fun getCurrentLoggedAccount(): Any?
 
+    fun getCurrentLoggedAccountType(): Result<UserType>
+
     suspend fun authenticateUser(): Result<UserModel>
 
     suspend fun getCurrentUser(): Flowable<Result<UserModel>>

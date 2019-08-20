@@ -4,8 +4,7 @@ import io.julius.chow.domain.Exception
 import io.julius.chow.domain.Result
 import io.julius.chow.domain.interactor.Interactor
 import io.julius.chow.domain.interactor.splash.UserPresentInteractor.Params
-import io.julius.chow.domain.interactor.splash.UserPresentInteractor.Params.ParamType.CHECK_USER_PRESENCE
-import io.julius.chow.domain.interactor.splash.UserPresentInteractor.Params.ParamType.CHECK_USER_TYPE
+import io.julius.chow.domain.interactor.splash.UserPresentInteractor.Params.ParamType.*
 import io.julius.chow.domain.repository.ChowRepository
 import javax.inject.Inject
 
@@ -23,6 +22,9 @@ class UserPresentInteractor @Inject constructor(private val chowRepository: Chow
                     Result.Failure(Exception.LocalDataNotFoundException)
                 }
             }
+            GET_CURRENT_ACCOUNT_TYPE -> {
+                chowRepository.getCurrentLoggedAccountType()
+            }
         }
     }
 
@@ -32,7 +34,8 @@ class UserPresentInteractor @Inject constructor(private val chowRepository: Chow
          */
         enum class ParamType {
             CHECK_USER_PRESENCE,
-            CHECK_USER_TYPE
+            CHECK_USER_TYPE,
+            GET_CURRENT_ACCOUNT_TYPE
         }
     }
 }

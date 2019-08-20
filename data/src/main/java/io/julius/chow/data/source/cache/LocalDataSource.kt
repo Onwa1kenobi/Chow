@@ -5,6 +5,7 @@ import io.julius.chow.data.model.*
 import io.julius.chow.data.source.DataSource
 import io.julius.chow.domain.Exception
 import io.julius.chow.domain.Result
+import io.julius.chow.domain.model.UserType
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
 import javax.inject.Inject
@@ -40,6 +41,14 @@ class LocalDataSource @Inject constructor(private val appDAO: AppDAO) : DataSour
         // NOTE: This elvis expression is not useless. Room would return null if there are no entries in a table.
         val currentUser: UserEntity? = appDAO.fetchCurrentUser()
         return currentUser ?: appDAO.fetchCurrentRestaurant()
+    }
+
+    override fun getCurrentLoggedAccountType(): Result<UserType> {
+        return when (getCurrentLoggedAccount()) {
+            is UserEntity -> Result.Success(UserType.CUSTOMER)
+            is RestaurantEntity -> Result.Success(UserType.RESTAURANT)
+            else -> Result.Failure(Exception.LocalDataNotFoundException)
+        }
     }
 
     override suspend fun getCurrentUser(): Flowable<Result<UserEntity>> {

@@ -11,10 +11,10 @@
         android:label="fragment_menu"
         tools:layout="@layout/fragment_restaurant_menu" />
 
-    <!--<fragment-->
-    <!--android:id="@+id/profileFragmentX"-->
-    <!--android:name="io.julius.chow.main.profile.ProfileFragment"-->
-    <!--android:label="fragment_profile"-->
-    <!--tools:layout="@layout/fragment_profile" />-->
+    <fragment
+        android:id="@+id/ordersFragment"
+        android:name="io.julius.chow.main.orders.OrdersFragment"
+        android:label="fragment_orders"
+        tools:layout="@layout/fragment_orders" />
 
 </navigation>

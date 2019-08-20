@@ -8,7 +8,9 @@ import io.julius.chow.domain.interactor.food.DeleteOrderInteractor
 import io.julius.chow.domain.interactor.food.GetOrdersInteractor
 import io.julius.chow.domain.interactor.food.PlaceOrderInteractor
 import io.julius.chow.domain.interactor.profile.GetUserInteractor
+import io.julius.chow.domain.interactor.splash.UserPresentInteractor
 import io.julius.chow.domain.model.UserModel
+import io.julius.chow.domain.model.UserType
 import io.julius.chow.mapper.OrderMapper
 import io.julius.chow.mapper.PlacedOrderMapper
 import io.julius.chow.mapper.UserMapper
@@ -16,6 +18,7 @@ import io.julius.chow.model.Order
 import io.julius.chow.model.PlacedOrder
 import io.julius.chow.model.User
 import io.julius.chow.util.Event
+import io.reactivex.disposables.CompositeDisposable
 import java.util.*
 import javax.inject.Inject
 
@@ -23,6 +26,7 @@ class OrderViewModel @Inject constructor(
     private val getOrdersInteractor: GetOrdersInteractor,
     private val deleteOrderInteractor: DeleteOrderInteractor,
     private val getUserInteractor: GetUserInteractor,
+    private val userPresentInteractor: UserPresentInteractor,
     private val placeOrderInteractor: PlaceOrderInteractor
 ) : ViewModel() {
 
@@ -38,6 +42,9 @@ class OrderViewModel @Inject constructor(
     // Current user variable to display user details
     val currentUser = MutableLiveData<User>()
 
+    // Current logged user account type variable to query appropriate orders endpoint
+    val currentAccountType = MutableLiveData<UserType?>()
+
     // variable for the total cost of orders
     val totalOrderCost: Double get() = subTotalOrderCost + tax + deliveryCharge
 
@@ -51,12 +58,14 @@ class OrderViewModel @Inject constructor(
     // More complex method could use address distance and stuff.
     val deliveryCharge: Double get() = (subTotalOrderCost * (5 / 100.0)) + 150
 
-    fun getOrders() {
+    private val disposable = CompositeDisposable()
+
+    fun getOrders(userType: UserType) {
         // Display progress bar
         orderViewContract.postValue(Event(OrderViewContract.ProgressDisplay(true)))
 
         getOrdersInteractor.execute(Interactor.None()) {
-            it.subscribe({ result ->
+            disposable.add(it.subscribe({ result ->
                 // Hide progress bar
                 orderViewContract.postValue(Event(OrderViewContract.ProgressDisplay(false)))
 
@@ -85,12 +94,26 @@ class OrderViewModel @Inject constructor(
                 orderViewContract.postValue(
                     Event(OrderViewContract.MessageDisplay(throwable.localizedMessage.toString()))
                 )
-            })
+            }))
         }
     }
 
     fun removeOrder(order: Order) {
         deleteOrderInteractor.execute(OrderMapper.mapToModel(order))
+    }
+
+    fun getCurrentAccountType() {
+        userPresentInteractor.execute(UserPresentInteractor.Params(UserPresentInteractor.Params.ParamType.GET_CURRENT_ACCOUNT_TYPE)) {
+            when (it) {
+                is Result.Success<*> -> {
+                    when (it.data) {
+                        is UserType -> currentAccountType.postValue(it.data as UserType)
+                        else -> currentAccountType.postValue(null)
+                    }
+                }
+                else -> currentAccountType.postValue(null)
+            }
+        }
     }
 
     fun getCurrentUser() {
@@ -123,5 +146,10 @@ class OrderViewModel @Inject constructor(
                 Event(OrderViewContract.MessageDisplay(it))
             )
         }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        disposable.dispose()
     }
 }

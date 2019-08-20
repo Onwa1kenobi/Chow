@@ -13,11 +13,11 @@ import io.julius.chow.base.BaseFragment
 import io.julius.chow.base.extension.observe
 import io.julius.chow.base.extension.viewModel
 import io.julius.chow.databinding.FragmentOrdersBinding
+import io.julius.chow.domain.model.UserType
 import io.julius.chow.main.food.FoodDetailsFragment.Companion.FOOD
 import io.julius.chow.model.Order
 import io.julius.chow.util.Event
 import kotlinx.android.synthetic.main.fragment_orders.*
-import kotlinx.android.synthetic.main.fragment_restaurants.progress_bar
 
 class OrdersFragment : BaseFragment<FragmentOrdersBinding>() {
 
@@ -40,7 +40,10 @@ class OrdersFragment : BaseFragment<FragmentOrdersBinding>() {
             // Subscription to LiveData in OrderViewModel
             observe(orderViewContract, ::viewStateResponse)
             observe(orders, ::updateOrders)
+            observe(currentAccountType, ::userTypeActions)
         }
+
+        orderViewModel.getCurrentAccountType()
 
         val transition = TransitionSet().setOrdering(TransitionSet.ORDERING_TOGETHER)
             .addTransition(ChangeBounds())
@@ -54,7 +57,6 @@ class OrdersFragment : BaseFragment<FragmentOrdersBinding>() {
     }
 
     override fun initialize(state: Bundle?) {
-
         // Prepare the restaurants adapter for item click listening
         orderAdapter.listener = { order, image ->
             if (image == null) {
@@ -74,32 +76,49 @@ class OrdersFragment : BaseFragment<FragmentOrdersBinding>() {
 
         // Set recycler view adapter to order adapter
         dataBinding.recyclerView.adapter = orderAdapter
+    }
 
-        // Make call to viewmodel to fetch orders
-        orderViewModel.getOrders()
+    private fun userTypeActions(userType: UserType?) {
+        when (userType) {
+            UserType.CUSTOMER -> {
+                // Make call to viewmodel to fetch orders
+                orderViewModel.getOrders(userType)
 
-        // Make call to viewmodel to fetch current user and keep a reference in case we need to check out
-        orderViewModel.getCurrentUser()
+                // Make call to viewmodel to fetch current user and keep a reference in case we need to check out
+                orderViewModel.getCurrentUser()
 
-        // Observe the total order cost from the adapter
-        orderAdapter.totalOrderCost.observe(this, Observer {
-            orderViewModel.subTotalOrderCost = it
+                // Observe the total order cost from the adapter
+                orderAdapter.totalOrderCost.observe(this, Observer {
+                    orderViewModel.subTotalOrderCost = it
 
-            label_total_cost.text = resources.getString(R.string.thousand_format, it)
+                    label_total_cost.text = resources.getString(R.string.thousand_format, it)
 
-            if (it > 0) {
-                button_check_out_order.setBackgroundColor(ContextCompat.getColor(context!!, R.color.colorAccent))
-                button_check_out_order.isClickable = true
-            } else {
-                button_check_out_order.setBackgroundColor(ContextCompat.getColor(context!!, R.color.gray))
-                button_check_out_order.isClickable = false
+                    if (it > 0) {
+                        button_check_out_order.setBackgroundColor(
+                            ContextCompat.getColor(
+                                context!!,
+                                R.color.colorAccent
+                            )
+                        )
+                        button_check_out_order.isClickable = true
+                    } else {
+                        button_check_out_order.setBackgroundColor(ContextCompat.getColor(context!!, R.color.gray))
+                        button_check_out_order.isClickable = false
+                    }
+                })
+
+                // Click listener for place order button
+                button_check_out_order.setOnClickListener {
+                    if (orderAdapter.totalOrderCost.value!! > 0) {
+                        ConfirmOrderFragment.newInstance(orderViewModel).show(fragmentManager!!, "")
+                    }
+                }
             }
-        })
+            UserType.RESTAURANT -> {
+                button_check_out_order.visibility = View.GONE
+                empty_feed_view_subtitle.visibility = View.GONE
 
-        // Click listener for place order button
-        button_check_out_order.setOnClickListener {
-            if (orderAdapter.totalOrderCost.value!! > 0) {
-                ConfirmOrderFragment.newInstance(orderViewModel).show(fragmentManager!!, "")
+                orderViewModel.getOrders(userType)
             }
         }
     }
@@ -109,7 +128,8 @@ class OrdersFragment : BaseFragment<FragmentOrdersBinding>() {
             when (data) {
                 is OrderViewContract.ProgressDisplay -> {
                     // Toggle progress bar visibility
-                    if (data.display) progress_bar.visibility = View.VISIBLE else progress_bar.visibility =
+                    if (data.display && orderAdapter.itemCount <= 0) progress_bar.visibility =
+                        View.VISIBLE else progress_bar.visibility =
                         View.INVISIBLE
                 }
 

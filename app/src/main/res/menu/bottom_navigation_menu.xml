@@ -5,7 +5,6 @@
           android:title="@string/restaurants"
           android:icon="@drawable/ic_restaurant_grey"/>
 
-
     <item
         android:id="@+id/navigation_menu"
         android:title="@string/menu"

@@ -2,6 +2,7 @@ package io.julius.chow.domain.repository
 
 import io.julius.chow.domain.Result
 import io.julius.chow.domain.model.FoodModel
+import io.julius.chow.domain.model.OrderModel
 import io.julius.chow.domain.model.RestaurantModel
 import io.reactivex.Flowable
 
@@ -27,4 +28,6 @@ interface RestaurantRepository {
     suspend fun fetchRestaurantMenu(restaurantId: String): Flowable<Result<List<FoodModel>>>
 
     suspend fun saveFood(foodModel: FoodModel): Result<Any>
+
+    suspend fun getOrders(restaurantId: String): Flowable<Result<List<OrderModel>>>
 }

@@ -137,6 +137,11 @@ interface DataSource {
     }
 
     /**
+     * Gets all the orders to be processed by the restaurant with id passed
+     */
+    suspend fun getRestaurantOrders(restaurantId: String): Flowable<Result<List<OrderEntity>>>
+
+    /**
      * Gets an order with the id passed
      * We don't want to implement this in our remote data source, so we give it an initialization and return null
      */
@@ -148,6 +153,13 @@ interface DataSource {
      * Saves an order to the local database
      */
     fun saveOrder(orderEntity: OrderEntity): Boolean {
+        return false
+    }
+
+    /**
+     * Saves a list of orders to the local database
+     */
+    fun saveOrders(orderEntity: List<OrderEntity>): Boolean {
         return false
     }
 

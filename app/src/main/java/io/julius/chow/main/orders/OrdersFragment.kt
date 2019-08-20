@@ -15,6 +15,7 @@ import io.julius.chow.base.extension.viewModel
 import io.julius.chow.databinding.FragmentOrdersBinding
 import io.julius.chow.domain.model.UserType
 import io.julius.chow.main.food.FoodDetailsFragment.Companion.FOOD
+import io.julius.chow.main.food.FoodDetailsFragment.Companion.USER_TYPE
 import io.julius.chow.model.Order
 import io.julius.chow.util.Event
 import kotlinx.android.synthetic.main.fragment_orders.*
@@ -57,23 +58,6 @@ class OrdersFragment : BaseFragment<FragmentOrdersBinding>() {
     }
 
     override fun initialize(state: Bundle?) {
-        // Prepare the restaurants adapter for item click listening
-        orderAdapter.listener = { order, image ->
-            if (image == null) {
-                // From our design, if the image is null, then the click operation was to remove the current order
-                orderViewModel.removeOrder(order)
-            } else {
-                // Put order food id in bundle to fetch food in detail view
-                val bundle = bundleOf(FOOD to order.food)
-                // Put the food image in an extra for shared element transition
-                val extras = FragmentNavigatorExtras(
-                    image to order.food.id
-                )
-                // Navigate to detail view
-                findNavController().navigate(R.id.action_orders_to_foodDetails, bundle, null, extras)
-            }
-        }
-
         // Set recycler view adapter to order adapter
         dataBinding.recyclerView.adapter = orderAdapter
     }
@@ -107,6 +91,23 @@ class OrdersFragment : BaseFragment<FragmentOrdersBinding>() {
                     }
                 })
 
+                // Prepare the restaurants adapter for item click listening
+                orderAdapter.listener = { order, image ->
+                    if (image == null) {
+                        // From our design, if the image is null, then the click operation was to remove the current order
+                        orderViewModel.removeOrder(order)
+                    } else {
+                        // Put order food id in bundle to fetch food in detail view
+                        val bundle = bundleOf(FOOD to order.food)
+                        // Put the food image in an extra for shared element transition
+                        val extras = FragmentNavigatorExtras(
+                            image to order.food.id
+                        )
+                        // Navigate to detail view
+                        findNavController().navigate(R.id.action_orders_to_foodDetails, bundle, null, extras)
+                    }
+                }
+
                 // Click listener for place order button
                 button_check_out_order.setOnClickListener {
                     if (orderAdapter.totalOrderCost.value!! > 0) {
@@ -119,6 +120,18 @@ class OrdersFragment : BaseFragment<FragmentOrdersBinding>() {
                 empty_feed_view_subtitle.visibility = View.GONE
 
                 orderViewModel.getOrders(userType)
+
+                orderAdapter.listener = { order, image ->
+                    val bundle = bundleOf(
+                        FOOD to order.food,
+                        USER_TYPE to UserType.RESTAURANT
+                    )
+                    val extras = FragmentNavigatorExtras(
+                        image!! to order.food.id
+                    )
+                    // Navigate to detail view
+                    findNavController().navigate(R.id.action_orders_to_foodDetails, bundle, null, extras)
+                }
             }
         }
     }

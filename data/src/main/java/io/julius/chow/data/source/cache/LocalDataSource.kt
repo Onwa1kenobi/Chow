@@ -174,6 +174,18 @@ class LocalDataSource @Inject constructor(private val appDAO: AppDAO) : DataSour
         }, BackpressureStrategy.LATEST)
     }
 
+    override suspend fun getRestaurantOrders(restaurantId: String): Flowable<Result<List<OrderEntity>>> {
+        return Flowable.create({
+            appDAO.getRestaurantOrders(restaurantId).distinctUntilChanged().subscribe { orders ->
+                if (orders == null) {
+                    it.onError(Exception.LocalDataNotFoundException)
+                } else {
+                    it.onNext(Result.Success(orders))
+                }
+            }
+        }, BackpressureStrategy.LATEST)
+    }
+
     override fun getOrder(id: String): OrderEntity? {
         return appDAO.getOrder(id)
     }

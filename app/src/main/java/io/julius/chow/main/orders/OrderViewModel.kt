@@ -3,7 +3,6 @@ package io.julius.chow.main.orders
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import io.julius.chow.domain.Result
-import io.julius.chow.domain.interactor.Interactor
 import io.julius.chow.domain.interactor.food.DeleteOrderInteractor
 import io.julius.chow.domain.interactor.food.GetOrdersInteractor
 import io.julius.chow.domain.interactor.food.PlaceOrderInteractor
@@ -64,7 +63,7 @@ class OrderViewModel @Inject constructor(
         // Display progress bar
         orderViewContract.postValue(Event(OrderViewContract.ProgressDisplay(true)))
 
-        getOrdersInteractor.execute(Interactor.None()) {
+        getOrdersInteractor.execute(userType) {
             disposable.add(it.subscribe({ result ->
                 // Hide progress bar
                 orderViewContract.postValue(Event(OrderViewContract.ProgressDisplay(false)))

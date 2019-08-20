@@ -64,6 +64,9 @@ interface AppDAO {
     @Query("SELECT * FROM Orders")
     fun getOrders(): Flowable<List<OrderEntity>>
 
+    @Query("SELECT * FROM Orders WHERE restaurantId = :restaurantId")
+    fun getRestaurantOrders(restaurantId: String): Flowable<List<OrderEntity>>
+
     @Query("SELECT * FROM Orders where id = :id")
     fun getOrder(id: String): OrderEntity
 

@@ -1,7 +1,6 @@
 package io.julius.chow.data.source.remote
 
 import android.net.Uri
-import android.util.Log
 import com.google.android.gms.tasks.Continuation
 import com.google.android.gms.tasks.Task
 import com.google.firebase.FirebaseException
@@ -14,10 +13,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.UploadTask
 import io.julius.chow.data.mapper.RestaurantEntityMapper
 import io.julius.chow.data.mapper.UserEntityMapper
-import io.julius.chow.data.model.FoodEntity
-import io.julius.chow.data.model.PlacedOrderEntity
-import io.julius.chow.data.model.RestaurantEntity
-import io.julius.chow.data.model.UserEntity
+import io.julius.chow.data.model.*
 import io.julius.chow.data.source.DataSource
 import io.julius.chow.domain.Exception
 import io.julius.chow.domain.Result
@@ -228,8 +224,6 @@ class RemoteDataSource @Inject constructor() : DataSource {
                         menu.add(foodEntity)
                     }
 
-                    Log.e("CHOW", "${result.size()}")
-
                     // return the menu
                     it.onNext(Result.Success(menu))
                 }
@@ -316,5 +310,36 @@ class RemoteDataSource @Inject constructor() : DataSource {
         } catch (e: FirebaseFirestoreException) {
             Result.Failure(Exception.RemoteDataException(e.localizedMessage))
         }
+    }
+
+    override suspend fun getRestaurantOrders(restaurantId: String): Flowable<Result<List<OrderEntity>>> {
+        return Flowable.create<Result<List<OrderEntity>>>({
+            db.collection("PlacedOrders")
+                .whereArrayContains("restaurantIds", restaurantId)
+                .get()
+                .addOnSuccessListener { result ->
+                    // Initialize list of orders to return
+                    val orders = mutableListOf<OrderEntity>()
+
+                    // Add each food to the list
+                    for (document in result) {
+                        val placedOrderEntity = document.toObject(PlacedOrderEntity::class.java)
+                        placedOrderEntity.orders.forEach { orderEntity ->
+                            if (orderEntity.restaurantId == restaurantId) {
+                                orders.add(orderEntity)
+                            }
+                        }
+                    }
+
+                    // return the menu
+                    it.onNext(Result.Success(orders))
+                }
+                .addOnFailureListener { exception ->
+                    // Return appropriate error message
+                    it.onError(Exception.RemoteDataException(exception.localizedMessage))
+                }
+        }, BackpressureStrategy.LATEST)
+            .subscribeOn(Schedulers.io())
+            .observeOn(Schedulers.io())
     }
 }

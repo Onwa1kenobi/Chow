@@ -16,6 +16,7 @@ import com.firebase.ui.auth.AuthUI
 import com.google.android.material.snackbar.Snackbar
 import io.julius.chow.R
 import io.julius.chow.base.extension.observe
+import io.julius.chow.domain.model.UserType
 import io.julius.chow.util.Event
 import kotlinx.android.synthetic.main.fragment_auth.*
 
@@ -26,7 +27,7 @@ import kotlinx.android.synthetic.main.fragment_auth.*
 class AuthFragment : Fragment(), View.OnClickListener {
 
     private lateinit var authViewModel: AuthViewModel
-    private var userCategory: UserCategory? = null
+    private var userCategory: UserType? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,7 +79,7 @@ class AuthFragment : Fragment(), View.OnClickListener {
                     }
 
                     is AuthViewContract.NavigateToSignUp -> {
-                        if (userCategory == Companion.UserCategory.CUSTOMER) {
+                        if (userCategory == UserType.CUSTOMER) {
                             Navigation.findNavController(activity!!, R.id.navigation_host_fragment)
                                 .navigate(R.id.action_signUpDetailsFragment)
                         } else {
@@ -89,7 +90,7 @@ class AuthFragment : Fragment(), View.OnClickListener {
 
                     is AuthViewContract.NavigateToHome -> {
                         // Navigate to the MainActivity and finish this current activity
-                        if (userCategory == Companion.UserCategory.CUSTOMER) {
+                        if (userCategory == UserType.CUSTOMER) {
                             Navigation.findNavController(activity!!, R.id.navigation_host_fragment)
                                 .navigate(R.id.action_authFragment_to_mainActivity)
                         } else {
@@ -109,14 +110,14 @@ class AuthFragment : Fragment(), View.OnClickListener {
                 avatar_customer.alpha = 1f
                 avatar_restaurant.alpha = 0.5f
 
-                userCategory = Companion.UserCategory.CUSTOMER
+                userCategory = UserType.CUSTOMER
             }
 
             R.id.avatar_restaurant -> {
                 avatar_restaurant.alpha = 1f
                 avatar_customer.alpha = 0.5f
 
-                userCategory = Companion.UserCategory.RESTAURANT
+                userCategory = UserType.RESTAURANT
             }
         }
     }
@@ -135,8 +136,8 @@ class AuthFragment : Fragment(), View.OnClickListener {
         when (requestCode) {
             RC_PHONE_SIGN_IN -> {
                 when (userCategory) {
-                    Companion.UserCategory.CUSTOMER -> authViewModel.authCurrentUser()
-                    Companion.UserCategory.RESTAURANT -> authViewModel.authCurrentRestaurant()
+                    UserType.CUSTOMER -> authViewModel.authCurrentUser()
+                    UserType.RESTAURANT -> authViewModel.authCurrentRestaurant()
                 }
             }
         }
@@ -162,9 +163,5 @@ class AuthFragment : Fragment(), View.OnClickListener {
 
     companion object {
         private const val RC_PHONE_SIGN_IN = 123
-
-        enum class UserCategory(category: String) {
-            RESTAURANT("restaurant"), CUSTOMER("customer")
-        }
     }
 }

@@ -15,6 +15,8 @@ interface ChowRepository {
 
     fun getCurrentLoggedAccount(): Any?
 
+    fun getCurrentLoggedAccountType(): Result<UserType>
+
     suspend fun signOut(): Result<Boolean>
 
     suspend fun authenticateUser(): Result<UserModel>

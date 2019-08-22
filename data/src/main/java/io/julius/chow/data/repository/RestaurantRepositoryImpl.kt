@@ -2,6 +2,7 @@ package io.julius.chow.data.repository
 
 import android.annotation.SuppressLint
 import io.julius.chow.data.mapper.FoodEntityMapper
+import io.julius.chow.data.mapper.OrderEntityMapper
 import io.julius.chow.data.mapper.RestaurantEntityMapper
 import io.julius.chow.data.source.DataSource
 import io.julius.chow.data.source.DataSourceQualifier
@@ -9,6 +10,7 @@ import io.julius.chow.data.source.Source
 import io.julius.chow.domain.Exception
 import io.julius.chow.domain.Result
 import io.julius.chow.domain.model.FoodModel
+import io.julius.chow.domain.model.OrderModel
 import io.julius.chow.domain.model.RestaurantModel
 import io.julius.chow.domain.repository.ChowRepository
 import io.julius.chow.domain.repository.RestaurantRepository
@@ -135,5 +137,37 @@ class RestaurantRepositoryImpl @Inject constructor(
         } else {
             saveStatus
         }
+    }
+
+    override suspend fun getOrders(restaurantId: String): Flowable<Result<List<OrderModel>>> {
+        // Fetch remote data and save to local storage
+        remoteDataSource.getRestaurantOrders(restaurantId).subscribe {
+            when (it) {
+                is Result.Success -> {
+                    it.data.forEach { orderEntity -> localDataSource.saveOrder(orderEntity) }
+                }
+
+                is Result.Failure -> {
+                    Result.Failure(Exception.LocalDataNotFoundException)
+                }
+            }
+        }
+
+        // Return local database result
+        return localDataSource.getRestaurantOrders(restaurantId)
+            .map {
+                when (it) {
+                    is Result.Success -> {
+                        // Map each data layer entity to a domain layer model
+                        val orders = it.data.map { orderEntity ->
+                            OrderEntityMapper.mapFromEntity(orderEntity)
+                        }
+                        Result.Success(orders)
+                    }
+                    is Result.Failure -> {
+                        Result.Failure(Exception.LocalDataNotFoundException)
+                    }
+                }
+            }
     }
 }

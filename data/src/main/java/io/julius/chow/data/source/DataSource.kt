@@ -5,6 +5,7 @@ import io.julius.chow.domain.Exception
 import io.julius.chow.domain.Result
 import io.julius.chow.domain.model.RestaurantModel
 import io.julius.chow.domain.model.UserModel
+import io.julius.chow.domain.model.UserType
 import io.reactivex.Flowable
 
 /**
@@ -31,11 +32,19 @@ interface DataSource {
     }
 
     /**
+     * Get the currently logged in account type.
+     * With default implementation since we only want to use this from LocalDataSource
+     */
+    fun getCurrentLoggedAccountType(): Result<UserType> {
+        return Result.Failure(Exception.NotImplementedException)
+    }
+
+    /**
      * Check if a user is currently logged in.
      * With default implementation since we only want to use this from RemoteDataSource
      */
     suspend fun authenticateUser(): Result<UserModel> {
-        return Result.Failure(Exception.Error)
+        return Result.Failure(Exception.NotImplementedException)
     }
 
     /**
@@ -135,6 +144,11 @@ interface DataSource {
     }
 
     /**
+     * Gets all the orders to be processed by the restaurant with id passed
+     */
+    suspend fun getRestaurantOrders(restaurantId: String): Flowable<Result<List<OrderEntity>>>
+
+    /**
      * Gets an order with the id passed
      * We don't want to implement this in our remote data source, so we give it an initialization and return null
      */
@@ -146,6 +160,13 @@ interface DataSource {
      * Saves an order to the local database
      */
     fun saveOrder(orderEntity: OrderEntity): Boolean {
+        return false
+    }
+
+    /**
+     * Saves a list of orders to the local database
+     */
+    fun saveOrders(orderEntity: List<OrderEntity>): Boolean {
         return false
     }
 

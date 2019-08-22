@@ -1,21 +1,22 @@
-package io.julius.chow.main.profile
+package io.julius.chow.main.restaurants
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import io.julius.chow.domain.Result
 import io.julius.chow.domain.interactor.Interactor
 import io.julius.chow.domain.interactor.auth.SignOutInteractor
-import io.julius.chow.domain.interactor.profile.GetUserInteractor
-import io.julius.chow.domain.model.UserModel
-import io.julius.chow.mapper.UserMapper
-import io.julius.chow.model.User
+import io.julius.chow.domain.interactor.restaurant.GetRestaurantInteractor
+import io.julius.chow.domain.model.RestaurantModel
+import io.julius.chow.main.profile.ProfileViewContract
+import io.julius.chow.mapper.RestaurantMapper
+import io.julius.chow.model.Restaurant
 import io.julius.chow.util.Event
 import io.reactivex.Flowable
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
-class ProfileViewModel @Inject constructor(
-    getUserInteractor: GetUserInteractor,
+class RestaurantProfileViewModel @Inject constructor(
+    getRestaurantInteractor: GetRestaurantInteractor,
     private val signOutInteractor: SignOutInteractor
 ) :
     ViewModel() {
@@ -23,8 +24,8 @@ class ProfileViewModel @Inject constructor(
     // LiveData object for view state interaction
     val profileViewContract: MutableLiveData<Event<ProfileViewContract>> = MutableLiveData()
 
-    // public LiveData variable to expose the user
-    val user = MutableLiveData<User>()
+    // public LiveData variable to expose the restaurant
+    val restaurant = MutableLiveData<Restaurant>()
 
     private val disposable = CompositeDisposable()
 
@@ -32,7 +33,7 @@ class ProfileViewModel @Inject constructor(
         // Display progress bar
         profileViewContract.postValue(Event(ProfileViewContract.ProgressDisplay(true)))
 
-        getUserInteractor.execute(true) {
+        getRestaurantInteractor.execute(true) {
             disposable.add((it as Flowable<*>).subscribe({ result ->
                 // Hide progress bar
                 profileViewContract.postValue(Event(ProfileViewContract.ProgressDisplay(false)))
@@ -40,7 +41,7 @@ class ProfileViewModel @Inject constructor(
                 when (result) {
                     is Result.Success<*> -> {
                         // Map to layer specific model and pass to view.
-                        user.postValue(UserMapper.mapFromModel(result.data as UserModel))
+                        restaurant.postValue(RestaurantMapper.mapFromModel(result.data as RestaurantModel))
                     }
 
                     is Result.Failure -> {

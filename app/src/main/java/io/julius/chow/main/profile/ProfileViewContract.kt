@@ -7,6 +7,9 @@ sealed class ProfileViewContract {
     // Contract class to display message to the user
     class MessageDisplay(val message: String) : ProfileViewContract()
 
-    // Contract class to navigate to the History
+    // Contract object to navigate to the History
     object NavigateToHistory : ProfileViewContract()
+
+    // Contract object to navigate to the auth activity
+    object NavigateToAuth : ProfileViewContract()
 }

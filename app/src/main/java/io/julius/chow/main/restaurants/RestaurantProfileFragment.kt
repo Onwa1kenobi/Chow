@@ -1,24 +1,24 @@
-package io.julius.chow.main.profile
+package io.julius.chow.main.restaurants
 
 
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import androidx.navigation.fragment.findNavController
 import io.julius.chow.R
 import io.julius.chow.auth.AuthActivity
 import io.julius.chow.base.BaseFragment
 import io.julius.chow.base.extension.observe
 import io.julius.chow.base.extension.viewModel
-import io.julius.chow.databinding.FragmentProfileBinding
+import io.julius.chow.databinding.FragmentRestaurantProfileBinding
+import io.julius.chow.main.profile.ProfileViewContract
 import io.julius.chow.util.Event
 
 
-class ProfileFragment : BaseFragment<FragmentProfileBinding>(), View.OnClickListener {
+class RestaurantProfileFragment : BaseFragment<FragmentRestaurantProfileBinding>(), View.OnClickListener {
 
-    override val contentResource = R.layout.fragment_profile
+    override val contentResource = R.layout.fragment_restaurant_profile
 
-    private lateinit var profileViewModel: ProfileViewModel
+    private lateinit var profileViewModel: RestaurantProfileViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,8 +28,8 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(), View.OnClickList
 
         //subscription to LiveData in RestaurantViewModel
         profileViewModel = viewModel(viewModelFactory) {
-            observe(user) {
-                dataBinding.user = it
+            observe(restaurant) {
+                dataBinding.restaurant = it
             }
             observe(profileViewContract, ::viewStateResponse)
         }
@@ -69,18 +69,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(), View.OnClickList
     override fun onClick(v: View?) {
         v?.let {
             when (v) {
-                dataBinding.buttonEditAddress -> {
-                    val action = ProfileFragmentDirections.actionProfileToAuthActivity()
-                    action.isEditMode = true
-
-                    // Navigate to the auth activity to edit user info
-                    findNavController().navigate(action)
-                }
-
-                dataBinding.buttonHistoryDetails -> {
-
-                }
-
                 dataBinding.buttonSignOut -> {
                     profileViewModel.signOut()
                 }

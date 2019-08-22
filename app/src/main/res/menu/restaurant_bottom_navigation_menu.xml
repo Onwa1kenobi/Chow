@@ -6,7 +6,9 @@
         android:icon="@drawable/ic_offer_grey"
         android:title="@string/menu" />
 
-    <!--<item android:id="@+id/navigation_profile"-->
-    <!--android:title="@string/profile"-->
-    <!--android:icon="@drawable/ic_person_grey"/>-->
+    <item
+        android:id="@+id/navigation_profile"
+        android:icon="@drawable/ic_person_grey"
+        android:title="@string/profile" />
+
 </menu>

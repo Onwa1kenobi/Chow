@@ -39,6 +39,13 @@ interface DataSource {
     }
 
     /**
+     * Signs out an active user
+     */
+    suspend fun signOut(): Result<Boolean> {
+        return Result.Failure(Exception.NotImplementedException)
+    }
+
+    /**
      * Fetch the current user from the local database
      */
     suspend fun getCurrentUser(): Flowable<Result<UserEntity>> {

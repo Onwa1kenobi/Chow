@@ -42,6 +42,10 @@ class ChowRepositoryImpl @Inject constructor(
         return remoteDataSource.authenticateUser()
     }
 
+    override suspend fun signOut(): Result<Boolean> {
+        return remoteDataSource.signOut()
+    }
+
     override suspend fun getCurrentUser(): Flowable<Result<UserModel>> {
         return localDataSource.getCurrentUser().map {
             when (it) {

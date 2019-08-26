@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="restaurant"
+            type="io.julius.chow.model.Restaurant" />
+
+        <variable
+            name="clickListener"
+            type="android.view.View.OnClickListener" />
+
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/coordinator_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".main.restaurants.RestaurantProfileFragment">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.coordinatorlayout.widget.CoordinatorLayout
+                    android:id="@+id/top_bar_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:foreground="@drawable/shade"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <io.julius.chow.util.CustomImageView
+                        android:id="@+id/image_restaurant_banner"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:adjustViewBounds="true"
+                        android:contentDescription="@string/content_desc_restaurant_image"
+                        android:scaleType="centerCrop"
+                        app:imageUrl="@{restaurant.imageUrl}"
+                        app:layout_collapseMode="parallax" />
+
+                </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/label_restaurant_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/activity_horizontal_margin"
+                    android:text="@{restaurant.name}"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/title_text_size"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/top_bar_layout"
+                    tools:text="Fibi's Smoothies" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/label_restaurant_location"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/activity_horizontal_margin"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:text="@{restaurant.location}"
+                    android:textColor="@android:color/darker_gray"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/label_restaurant_title"
+                    tools:text="Enugu" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/label_restaurant_description"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/activity_horizontal_margin"
+                    android:text="@{restaurant.description}"
+                    android:textSize="@dimen/description_text_size"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/label_restaurant_location"
+                    tools:text="Come and chow sharp cupcakes that will change your settings at a discount now. Stay sharp; lest you carry last." />
+
+                <View
+                    android:id="@+id/view_divider"
+                    android:layout_width="match_parent"
+                    android:layout_height="12dp"
+                    android:layout_marginTop="@dimen/activity_horizontal_margin"
+                    android:background="@color/gray"
+                    app:layout_constraintTop_toBottomOf="@id/label_restaurant_description" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/label_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/activity_horizontal_margin"
+                    android:text="@string/address"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/description_text_size"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/view_divider" />
+
+                <View
+                    android:id="@+id/sub_view_divider"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="@dimen/activity_horizontal_margin"
+                    android:background="@android:color/darker_gray"
+                    app:layout_constraintTop_toBottomOf="@id/label_address" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/label_restaurant_address"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="@dimen/activity_horizontal_margin"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_marginTop="@dimen/activity_horizontal_margin"
+                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:gravity="top"
+                    android:text="@{restaurant.address}"
+                    android:textSize="@dimen/description_text_size"
+                    app:layout_constraintBottom_toTopOf="@id/button_sign_out"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/sub_view_divider"
+                    tools:text="Come and chow sharp cupcakes that will change your settings at a discount now. Stay sharp; lest you carry last." />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/button_sign_out"
+                    style="@style/Widget.MaterialComponents.Button"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/activity_horizontal_margin"
+                    android:onClick="@{clickListener::onClick}"
+                    android:text="@string/sign_out"
+                    app:backgroundTint="@color/colorAccent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintWidth_percent="0.5" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</layout>

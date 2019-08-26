@@ -23,7 +23,8 @@ class RestaurantMainActivity : AppCompatActivity() {
 
         val navGraphIds = listOf(
             R.navigation.navigation_restaurant_menu,
-            R.navigation.navigation_orders
+            R.navigation.navigation_orders,
+            R.navigation.navigation_restaurant_profile
         )
 
         // Setup the bottom navigation view with a list of navigation graphs

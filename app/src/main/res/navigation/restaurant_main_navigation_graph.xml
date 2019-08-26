@@ -17,4 +17,10 @@
         android:label="fragment_orders"
         tools:layout="@layout/fragment_orders" />
 
+    <fragment
+        android:id="@+id/restaurantProfileFragment"
+        android:name="io.julius.chow.main.restaurants.RestaurantProfileFragment"
+        android:label="fragment_restaurant_profile"
+        tools:layout="@layout/fragment_restaurant_profile" />
+
 </navigation>

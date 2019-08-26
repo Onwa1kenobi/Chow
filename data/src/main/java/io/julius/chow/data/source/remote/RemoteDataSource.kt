@@ -136,6 +136,11 @@ class RemoteDataSource @Inject constructor() : DataSource {
         }
     }
 
+    override suspend fun signOut(): Result<Boolean> {
+        FirebaseAuth.getInstance().signOut()
+        return Result.Success(true)
+    }
+
     override suspend fun fetchRestaurants(): Flowable<Result<List<RestaurantEntity>>> =
         Flowable.create<Result<List<RestaurantEntity>>>({
             db.collection("Restaurants").get()

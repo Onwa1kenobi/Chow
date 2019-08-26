@@ -88,4 +88,5 @@
     <string name="food_name_hint">Food Name</string>
     <string name="price_hint">Price (\u20A6)</string>
     <string name="save">Save</string>
+    <string name="sign_out">Sign Out</string>
 </resources>

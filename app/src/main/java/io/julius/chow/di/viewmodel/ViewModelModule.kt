@@ -12,6 +12,7 @@ import io.julius.chow.main.menu.MenuViewModel
 import io.julius.chow.main.orders.OrderViewModel
 import io.julius.chow.main.profile.ProfileViewModel
 import io.julius.chow.main.restaurants.RestaurantDetailsViewModel
+import io.julius.chow.main.restaurants.RestaurantProfileViewModel
 import io.julius.chow.main.restaurants.RestaurantViewModel
 import io.julius.chow.splash.SplashViewModel
 
@@ -49,6 +50,11 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(ProfileViewModel::class)
     abstract fun bindsProfileViewModel(profileViewModel: ProfileViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(RestaurantProfileViewModel::class)
+    abstract fun bindsRestaurantProfileViewModel(restaurantProfileViewModel: RestaurantProfileViewModel): ViewModel
 
     @Binds
     @IntoMap

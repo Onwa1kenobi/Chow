@@ -10,4 +10,10 @@
         android:id="@+id/navigation_orders"
         android:icon="@drawable/ic_order_grey"
         android:title="@string/orders" />
+
+    <item
+        android:id="@+id/navigation_profile"
+        android:icon="@drawable/ic_person_grey"
+        android:title="@string/profile" />
+
 </menu>

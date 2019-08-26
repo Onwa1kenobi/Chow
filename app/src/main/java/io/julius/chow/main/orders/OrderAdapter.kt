@@ -6,9 +6,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.DiffUtil
 import io.julius.chow.R
 import io.julius.chow.base.BaseAdapter
+import io.julius.chow.domain.model.UserType
 import io.julius.chow.model.Order
 
-class OrderAdapter(private val lifecycleOwner: OrdersFragment) : BaseAdapter<Order>() {
+class OrderAdapter(
+    private val lifecycleOwner: OrdersFragment,
+    var userType: UserType = UserType.CUSTOMER
+) : BaseAdapter<Order>() {
 
     private var orders: MutableList<Order> = ArrayList()
 
@@ -42,7 +46,10 @@ class OrderAdapter(private val lifecycleOwner: OrdersFragment) : BaseAdapter<Ord
     }
 
     override fun getLayoutIdForPosition(position: Int): Int {
-        return R.layout.item_order_layout
+        return when (userType) {
+            UserType.CUSTOMER -> R.layout.item_order_layout
+            UserType.RESTAURANT -> R.layout.item_restaurant_order_layout
+        }
     }
 
     override fun getItemCount(): Int {

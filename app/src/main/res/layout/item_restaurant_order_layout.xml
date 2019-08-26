@@ -12,21 +12,6 @@
         android:onClick="@{() -> adapter.onItemClick(object, imageFood)}"
         android:padding="@dimen/activity_horizontal_margin">
 
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/activity_half_margin"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:clickable="true"
-            android:focusable="true"
-            android:onClick="@{() -> adapter.onRemoveOrder(object)}"
-            android:padding="@dimen/activity_half_margin"
-            android:src="@drawable/ic_delete"
-            android:tint="@color/gray"
-            app:layout_constraintBottom_toBottomOf="@id/button_increment"
-            app:layout_constraintStart_toEndOf="@id/image_food"
-            app:layout_constraintTop_toTopOf="@id/button_increment" />
-
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/image_food"
             android:layout_width="60dp"
@@ -56,23 +41,6 @@
             tools:rating="3.5" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/label_food_title"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/activity_horizontal_margin"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:layout_marginEnd="@dimen/activity_horizontal_margin"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:text="@{object.food.title}"
-            android:textColor="@android:color/black"
-            android:textSize="@dimen/description_text_size"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@id/label_food_price"
-            app:layout_constraintStart_toEndOf="@id/image_food"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Fibi's Smoothies" />
-
-        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/label_food_description"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -88,6 +56,23 @@
             app:layout_constraintStart_toEndOf="@id/image_food"
             app:layout_constraintTop_toBottomOf="@id/label_food_title"
             tools:text="Come and chow sharp cupcakes that will change your settings at a discount now. Stay sharp; lest you carry last." />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/label_food_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:text="@{object.food.title}"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/description_text_size"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@id/label_food_price"
+            app:layout_constraintStart_toEndOf="@id/image_food"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Fibi's Smoothies" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/label_currency"
@@ -122,46 +107,6 @@
             tools:text="12.99" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/button_decrement"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/text_margin"
-            android:background="@drawable/text_border_background"
-            android:clickable="true"
-            android:drawableStart="@drawable/ic_remove"
-            android:drawableLeft="@drawable/ic_remove"
-            android:enabled="@{object.liveQuantity > 1}"
-            android:focusable="true"
-            android:foreground="?attr/selectableItemBackground"
-            android:gravity="center"
-            android:onClick="@{() -> adapter.decrementOrderQuantity(object)}"
-            android:padding="@dimen/text_half_margin"
-            app:drawableTint="@android:color/black"
-            app:layout_constraintEnd_toStartOf="@id/button_increment"
-            app:layout_constraintTop_toBottomOf="@id/rating_bar_food" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/button_increment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/text_margin"
-            android:layout_marginEnd="@dimen/activity_horizontal_margin"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:background="@drawable/text_border_background"
-            android:clickable="true"
-            android:drawableStart="@drawable/ic_add"
-            android:drawableLeft="@drawable/ic_add"
-            android:enabled="@{object.liveQuantity != 50}"
-            android:focusable="true"
-            android:foreground="?attr/selectableItemBackground"
-            android:gravity="center"
-            android:onClick="@{() -> adapter.incrementOrderQuantity(object)}"
-            android:padding="@dimen/text_half_margin"
-            app:drawableTint="@android:color/black"
-            app:layout_constraintEnd_toStartOf="@id/label_quantity"
-            app:layout_constraintTop_toBottomOf="@id/rating_bar_food" />
-
-        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/label_quantity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -181,9 +126,9 @@
             android:textColor="@color/colorAccent"
             android:textSize="@dimen/title_text_size"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@id/button_increment"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/button_increment"
+            app:layout_constraintTop_toBottomOf="@id/rating_bar_food"
             tools:text="99" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -86,7 +86,12 @@ class OrdersFragment : BaseFragment<FragmentOrdersBinding>() {
                         )
                         button_check_out_order.isClickable = true
                     } else {
-                        button_check_out_order.setBackgroundColor(ContextCompat.getColor(context!!, R.color.gray))
+                        button_check_out_order.setBackgroundColor(
+                            ContextCompat.getColor(
+                                context!!,
+                                R.color.gray
+                            )
+                        )
                         button_check_out_order.isClickable = false
                     }
                 })
@@ -104,7 +109,12 @@ class OrdersFragment : BaseFragment<FragmentOrdersBinding>() {
                             image to order.food.id
                         )
                         // Navigate to detail view
-                        findNavController().navigate(R.id.action_orders_to_foodDetails, bundle, null, extras)
+                        findNavController().navigate(
+                            R.id.action_orders_to_foodDetails,
+                            bundle,
+                            null,
+                            extras
+                        )
                     }
                 }
 
@@ -119,6 +129,9 @@ class OrdersFragment : BaseFragment<FragmentOrdersBinding>() {
                 button_check_out_order.visibility = View.GONE
                 empty_feed_view_subtitle.visibility = View.GONE
 
+                // Update the userType on the adapter
+                orderAdapter.userType = userType
+
                 orderViewModel.getOrders(userType)
 
                 orderAdapter.listener = { order, image ->
@@ -130,7 +143,12 @@ class OrdersFragment : BaseFragment<FragmentOrdersBinding>() {
                         image!! to order.food.id
                     )
                     // Navigate to detail view
-                    findNavController().navigate(R.id.action_orders_to_foodDetails, bundle, null, extras)
+                    findNavController().navigate(
+                        R.id.action_orders_to_foodDetails,
+                        bundle,
+                        null,
+                        extras
+                    )
                 }
             }
         }
@@ -142,8 +160,8 @@ class OrdersFragment : BaseFragment<FragmentOrdersBinding>() {
                 is OrderViewContract.ProgressDisplay -> {
                     // Toggle progress bar visibility
                     if (data.display && orderAdapter.itemCount <= 0) progress_bar.visibility =
-                        View.VISIBLE else progress_bar.visibility =
-                        View.INVISIBLE
+                        View.VISIBLE
+                    else progress_bar.visibility = View.INVISIBLE
                 }
 
                 is OrderViewContract.MessageDisplay -> {

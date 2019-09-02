@@ -65,6 +65,9 @@ class OrdersFragment : BaseFragment<FragmentOrdersBinding>() {
     private fun userTypeActions(userType: UserType?) {
         when (userType) {
             UserType.CUSTOMER -> {
+                // Hide the category selector group
+                category_toggle_group.visibility = View.GONE
+
                 // Make call to viewmodel to fetch orders
                 orderViewModel.getOrders(userType)
 
@@ -128,6 +131,9 @@ class OrdersFragment : BaseFragment<FragmentOrdersBinding>() {
             UserType.RESTAURANT -> {
                 button_check_out_order.visibility = View.GONE
                 empty_feed_view_subtitle.visibility = View.GONE
+
+                // Display the category selector group
+                category_toggle_group.visibility = View.VISIBLE
 
                 // Update the userType on the adapter
                 orderAdapter.userType = userType

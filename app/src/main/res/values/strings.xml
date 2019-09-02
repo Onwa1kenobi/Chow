@@ -89,4 +89,6 @@
     <string name="price_hint">Price (\u20A6)</string>
     <string name="save">Save</string>
     <string name="sign_out">Sign Out</string>
+    <string name="active">Active</string>
+    <string name="processed">Processed</string>
 </resources>

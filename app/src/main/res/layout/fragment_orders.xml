@@ -25,6 +25,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:fillViewport="true"
+                android:background="@android:color/white"
                 app:layout_constraintBottom_toTopOf="@id/button_check_out_order"
                 app:layout_constraintTop_toTopOf="parent">
 
@@ -54,9 +55,40 @@
                         android:layout_marginBottom="@dimen/activity_horizontal_margin"
                         android:orientation="vertical"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        app:layout_constraintTop_toBottomOf="@id/label_title"
+                        app:layout_constraintTop_toBottomOf="@id/category_toggle_group"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:nestScroll="@{false}" />
+
+                    <com.google.android.material.button.MaterialButtonToggleGroup
+                        android:id="@+id/category_toggle_group"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/activity_double_margin"
+                        android:layout_marginLeft="@dimen/activity_double_margin"
+                        android:layout_marginTop="@dimen/activity_horizontal_margin"
+                        android:gravity="start"
+                        android:visibility="gone"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/label_title"
+                        app:singleSelection="true">
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/button_active_orders"
+                            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="true"
+                            android:text="@string/active" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/button_processed_orders"
+                            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/processed" />
+
+                    </com.google.android.material.button.MaterialButtonToggleGroup>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

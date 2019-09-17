@@ -9,5 +9,6 @@ class OrderModel(
     val price: Double,
     val rating: Double,
     var quantity: Int,
+    val status: OrderState,
     val inHistory: Boolean
 )

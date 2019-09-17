@@ -3,6 +3,7 @@ package io.julius.chow.data.model
 import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
+import io.julius.chow.domain.model.OrderState
 
 @Entity(tableName = "Orders")
 data class OrderEntity(val version: Int = 1) {
@@ -16,6 +17,7 @@ data class OrderEntity(val version: Int = 1) {
     var price: Double = 0.0
     var rating: Double = 0.0
     var quantity: Int = 1
+    var status: OrderState = OrderState.ACTIVE
     // Boolean variable to check if an order has been processed or not.
     var inHistory: Boolean = false
 
@@ -29,6 +31,7 @@ data class OrderEntity(val version: Int = 1) {
         price: Double,
         rating: Double,
         quantity: Int,
+        status: OrderState,
         inHistory: Boolean = false
     ) : this() {
         this.id = id
@@ -39,6 +42,7 @@ data class OrderEntity(val version: Int = 1) {
         this.price = price
         this.rating = rating
         this.quantity = quantity
+        this.status = status
         this.inHistory = inHistory
     }
 }

@@ -145,20 +145,13 @@
         app:layout_constraintStart_toStartOf="@id/button_phone_login"
         app:layout_constraintTop_toTopOf="@id/button_phone_login" />
 
-    <!--<androidx.appcompat.widget.LinearLayoutCompat-->
-    <!--android:id="@+id/bottom_container"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:orientation="vertical"-->
-    <!--android:paddingBottom="@dimen/activity_horizontal_margin"-->
-    <!--app:layout_constraintBottom_toBottomOf="parent">-->
-
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_phone_login"
         style="@style/PhoneLoginButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:enabled="false"
         android:paddingStart="@dimen/activity_horizontal_margin"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingEnd="@dimen/activity_horizontal_margin"
@@ -166,7 +159,8 @@
         android:textAllCaps="false"
         app:layout_constraintBottom_toTopOf="@id/terms_text"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout_center" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/terms_text"
@@ -178,7 +172,5 @@
         android:textColor="@android:color/secondary_text_dark"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent" />
-
-    <!--</androidx.appcompat.widget.LinearLayoutCompat>-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

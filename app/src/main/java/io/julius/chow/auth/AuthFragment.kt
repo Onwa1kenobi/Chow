@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
 import com.firebase.ui.auth.AuthUI
@@ -27,7 +28,7 @@ import kotlinx.android.synthetic.main.fragment_auth.*
 class AuthFragment : Fragment(), View.OnClickListener {
 
     private lateinit var authViewModel: AuthViewModel
-    private var userCategory: UserType? = null
+    private var userCategory: MutableLiveData<UserType> = MutableLiveData()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,15 +51,20 @@ class AuthFragment : Fragment(), View.OnClickListener {
         avatar_customer.setOnClickListener(this)
 
         button_phone_login.setOnClickListener {
-            if (userCategory == null) {
-                Snackbar.make(view, "Select an account type.", Snackbar.LENGTH_LONG).apply {
+            when (userCategory.value) {
+                UserType.CUSTOMER, UserType.RESTAURANT -> initiatePhoneAuth()
+                else -> Snackbar.make(view, "Select an account type.", Snackbar.LENGTH_LONG).apply {
                     this.view.setBackgroundColor(ContextCompat.getColor(context, R.color.colorAccent))
                     show()
                 }
-                return@setOnClickListener
             }
+        }
 
-            initiatePhoneAuth()
+        observe(userCategory) {
+            when (userCategory.value) {
+                UserType.CUSTOMER, UserType.RESTAURANT -> button_phone_login.isEnabled = true
+                else -> button_phone_login.isEnabled = false
+            }
         }
 
         observe(authViewModel.authContractData) {
@@ -79,7 +85,7 @@ class AuthFragment : Fragment(), View.OnClickListener {
                     }
 
                     is AuthViewContract.NavigateToSignUp -> {
-                        if (userCategory == UserType.CUSTOMER) {
+                        if (userCategory.value == UserType.CUSTOMER) {
                             Navigation.findNavController(activity!!, R.id.navigation_host_fragment)
                                 .navigate(R.id.action_signUpDetailsFragment)
                         } else {
@@ -90,7 +96,7 @@ class AuthFragment : Fragment(), View.OnClickListener {
 
                     is AuthViewContract.NavigateToHome -> {
                         // Navigate to the MainActivity and finish this current activity
-                        if (userCategory == UserType.CUSTOMER) {
+                        if (userCategory.value == UserType.CUSTOMER) {
                             Navigation.findNavController(activity!!, R.id.navigation_host_fragment)
                                 .navigate(R.id.action_authFragment_to_mainActivity)
                         } else {
@@ -109,15 +115,13 @@ class AuthFragment : Fragment(), View.OnClickListener {
             R.id.avatar_customer -> {
                 avatar_customer.alpha = 1f
                 avatar_restaurant.alpha = 0.5f
-
-                userCategory = UserType.CUSTOMER
+                userCategory.value = UserType.CUSTOMER
             }
 
             R.id.avatar_restaurant -> {
                 avatar_restaurant.alpha = 1f
                 avatar_customer.alpha = 0.5f
-
-                userCategory = UserType.RESTAURANT
+                userCategory.value = UserType.RESTAURANT
             }
         }
     }
@@ -135,7 +139,7 @@ class AuthFragment : Fragment(), View.OnClickListener {
 
         when (requestCode) {
             RC_PHONE_SIGN_IN -> {
-                when (userCategory) {
+                when (userCategory.value) {
                     UserType.CUSTOMER -> authViewModel.authCurrentUser()
                     UserType.RESTAURANT -> authViewModel.authCurrentRestaurant()
                 }

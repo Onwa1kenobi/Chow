@@ -1,5 +1,6 @@
 package io.julius.chow.main.orders
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
@@ -7,12 +8,17 @@ import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.transition.*
+import com.google.android.material.button.MaterialButton
+import com.google.android.material.snackbar.BaseTransientBottomBar
+import com.google.android.material.snackbar.Snackbar
 import io.julius.chow.R
 import io.julius.chow.base.BaseFragment
 import io.julius.chow.base.extension.observe
 import io.julius.chow.base.extension.viewModel
 import io.julius.chow.databinding.FragmentOrdersBinding
+import io.julius.chow.domain.model.OrderState
 import io.julius.chow.domain.model.UserType
 import io.julius.chow.main.food.FoodDetailsFragment.Companion.FOOD
 import io.julius.chow.main.food.FoodDetailsFragment.Companion.USER_TYPE
@@ -128,16 +134,101 @@ class OrdersFragment : BaseFragment<FragmentOrdersBinding>() {
                     }
                 }
             }
+
             UserType.RESTAURANT -> {
                 button_check_out_order.visibility = View.GONE
                 empty_feed_view_subtitle.visibility = View.GONE
 
                 // Display the category selector group
                 category_toggle_group.visibility = View.VISIBLE
+                button_active_orders.isChecked = true
+                button_active_orders.setOnClickListener {
+                    (it as MaterialButton).isChecked = true
+                    orderViewModel.filterOrders(OrderState.ACTIVE)
+                }
+                button_processed_orders.setOnClickListener {
+                    (it as MaterialButton).isChecked = true
+                    orderViewModel.filterOrders(OrderState.PROCESSED)
+                }
+
+                val orderSwipeController =
+                    OrderSwipeController(object : OrderSwipeController.Actions {
+                        override fun onOrderProcessed(position: Int) {
+                            val processedOrder = orderAdapter.getOrder(position)
+                            orderAdapter.removeOrder(position)
+                            // Display snack bar with Undo option
+                            Snackbar.make(view!!, "Order processed.", Snackbar.LENGTH_LONG).apply {
+                                this.view.setBackgroundColor(
+                                    ContextCompat.getColor(
+                                        context,
+                                        R.color.colorAccent
+                                    )
+                                )
+                                this.setAction("UNDO") {
+                                    orderAdapter.restoreOrder(processedOrder, position)
+                                }
+                                setActionTextColor(Color.YELLOW)
+                                addCallback(object :
+                                    BaseTransientBottomBar.BaseCallback<Snackbar>() {
+                                    override fun onDismissed(
+                                        transientBottomBar: Snackbar?,
+                                        event: Int
+                                    ) {
+                                        if (event == Snackbar.Callback.DISMISS_EVENT_TIMEOUT
+                                            || event == Snackbar.Callback.DISMISS_EVENT_CONSECUTIVE
+                                        ) {
+                                            // Snackbar closed on its own or new Snackbar is shown, we can update the database
+                                            processedOrder.status = OrderState.PROCESSED
+                                            orderViewModel.updateOrder(processedOrder)
+                                        }
+                                    }
+                                })
+                                show()
+                            }
+                        }
+
+                        override fun onOrderRejected(position: Int) {
+                            val rejectedOrder = orderAdapter.getOrder(position)
+                            orderAdapter.removeOrder(position)
+                            // Display snack bar with Undo option
+                            Snackbar.make(view!!, "Order rejected.", Snackbar.LENGTH_LONG).apply {
+                                this.view.setBackgroundColor(
+                                    ContextCompat.getColor(
+                                        context,
+                                        R.color.colorAccent
+                                    )
+                                )
+                                this.setAction("UNDO") {
+                                    orderAdapter.restoreOrder(rejectedOrder, position)
+                                }
+                                setActionTextColor(Color.YELLOW)
+                                addCallback(object :
+                                    BaseTransientBottomBar.BaseCallback<Snackbar>() {
+                                    override fun onDismissed(
+                                        transientBottomBar: Snackbar?,
+                                        event: Int
+                                    ) {
+                                        if (event == Snackbar.Callback.DISMISS_EVENT_TIMEOUT
+                                            || event == Snackbar.Callback.DISMISS_EVENT_CONSECUTIVE
+                                        ) {
+                                            // Snackbar closed on its own or new Snackbar is shown, we can update the database
+                                            rejectedOrder.status = OrderState.REJECTED
+                                            orderViewModel.updateOrder(rejectedOrder)
+                                        }
+                                    }
+                                })
+                                show()
+                            }
+                        }
+                    })
+
+                val itemTouchDelegate = ItemTouchHelper(orderSwipeController)
+                itemTouchDelegate.attachToRecyclerView(recycler_view)
 
                 // Update the userType on the adapter
                 orderAdapter.userType = userType
 
+                orderViewModel.orderStatus = OrderState.ACTIVE
                 orderViewModel.getOrders(userType)
 
                 orderAdapter.listener = { order, image ->

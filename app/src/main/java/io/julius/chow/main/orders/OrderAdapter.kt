@@ -61,6 +61,22 @@ class OrderAdapter(
         listener(order, image)
     }
 
+    fun getOrder(position: Int): Order {
+        return this.orders[position]
+    }
+
+    fun restoreOrder(order: Order, position: Int) {
+        this.orders.add(position, order)
+        // notify item added by position
+        notifyItemInserted(position)
+    }
+
+    fun removeOrder(position: Int) {
+        this.orders.removeAt(position)
+        notifyItemRemoved(position)
+        notifyItemRangeChanged(position, this.orders.size)
+    }
+
     fun onRemoveOrder(order: Order) {
         listener(order, null)
     }

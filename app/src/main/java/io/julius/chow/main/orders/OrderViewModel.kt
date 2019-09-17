@@ -6,8 +6,10 @@ import io.julius.chow.domain.Result
 import io.julius.chow.domain.interactor.food.DeleteOrderInteractor
 import io.julius.chow.domain.interactor.food.GetOrdersInteractor
 import io.julius.chow.domain.interactor.food.PlaceOrderInteractor
+import io.julius.chow.domain.interactor.food.SaveOrderInteractor
 import io.julius.chow.domain.interactor.profile.GetUserInteractor
 import io.julius.chow.domain.interactor.splash.UserPresentInteractor
+import io.julius.chow.domain.model.OrderState
 import io.julius.chow.domain.model.UserModel
 import io.julius.chow.domain.model.UserType
 import io.julius.chow.mapper.OrderMapper
@@ -26,7 +28,8 @@ class OrderViewModel @Inject constructor(
     private val deleteOrderInteractor: DeleteOrderInteractor,
     private val getUserInteractor: GetUserInteractor,
     private val userPresentInteractor: UserPresentInteractor,
-    private val placeOrderInteractor: PlaceOrderInteractor
+    private val placeOrderInteractor: PlaceOrderInteractor,
+    private val saveOrderInteractor: SaveOrderInteractor
 ) : ViewModel() {
 
     // LiveData object for view state interaction
@@ -35,8 +38,12 @@ class OrderViewModel @Inject constructor(
     // LiveData object for order confirmation view state interaction
     val orderConfirmationViewContract: MutableLiveData<Event<OrderViewContract>> = MutableLiveData()
 
-    // public LiveData variable to expose returned list of orders
+    // Public LiveData variable to expose returned list of orders
     val orders = MutableLiveData<List<Order>>()
+    private var completeOrderList = listOf<Order>()
+
+    // Restaurant order status filter
+    var orderStatus = OrderState.ACTIVE
 
     // Current user variable to display user details
     val currentUser = MutableLiveData<User>()
@@ -75,7 +82,8 @@ class OrderViewModel @Inject constructor(
                             OrderMapper.mapFromModel(orderModel)
                         }
 
-                        orders.postValue(response)
+                        completeOrderList = response
+                        filterOrders(orderStatus)
                     }
 
                     is Result.Failure -> {
@@ -145,6 +153,14 @@ class OrderViewModel @Inject constructor(
                 Event(OrderViewContract.MessageDisplay(it))
             )
         }
+    }
+
+    fun filterOrders(filter: OrderState) {
+        orders.postValue(completeOrderList.filter { it.status == filter })
+    }
+
+    fun updateOrder(order: Order) {
+        saveOrderInteractor.execute(OrderMapper.mapToModel(order))
     }
 
     override fun onCleared() {

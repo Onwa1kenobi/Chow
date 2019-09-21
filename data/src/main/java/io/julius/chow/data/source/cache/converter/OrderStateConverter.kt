@@ -7,7 +7,7 @@ import java.util.*
 class OrderStateConverter {
     @TypeConverter
     fun fromString(value: String?): OrderState? {
-        return value?.let { OrderState.valueOf(it.toLowerCase(Locale.getDefault())) }
+        return value?.let { OrderState.valueOf(it.toUpperCase(Locale.getDefault())) }
     }
 
     @TypeConverter

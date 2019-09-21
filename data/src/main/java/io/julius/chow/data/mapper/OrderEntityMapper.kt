@@ -2,6 +2,7 @@ package io.julius.chow.data.mapper
 
 import io.julius.chow.data.model.OrderEntity
 import io.julius.chow.domain.model.OrderModel
+import io.julius.chow.domain.model.OrderState
 
 /**
  * Map a [OrderEntity] to and from a [OrderModel] instance when data is moving between
@@ -22,7 +23,7 @@ object OrderEntityMapper : Mapper<OrderEntity, OrderModel> {
             price = type.price,
             rating = type.rating,
             quantity = type.quantity,
-            status = type.status,
+            status = type.status.value,
             inHistory = type.inHistory
         )
     }
@@ -40,7 +41,7 @@ object OrderEntityMapper : Mapper<OrderEntity, OrderModel> {
             price = type.price,
             rating = type.rating,
             quantity = type.quantity,
-            status = type.status,
+            status = OrderState.getOrderState(type.status),
             inHistory = type.inHistory
         )
     }

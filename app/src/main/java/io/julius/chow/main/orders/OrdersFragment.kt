@@ -139,18 +139,6 @@ class OrdersFragment : BaseFragment<FragmentOrdersBinding>() {
                 button_check_out_order.visibility = View.GONE
                 empty_feed_view_subtitle.visibility = View.GONE
 
-                // Display the category selector group
-                category_toggle_group.visibility = View.VISIBLE
-                button_active_orders.isChecked = true
-                button_active_orders.setOnClickListener {
-                    (it as MaterialButton).isChecked = true
-                    orderViewModel.filterOrders(OrderState.ACTIVE)
-                }
-                button_processed_orders.setOnClickListener {
-                    (it as MaterialButton).isChecked = true
-                    orderViewModel.filterOrders(OrderState.PROCESSED)
-                }
-
                 val orderSwipeController =
                     OrderSwipeController(object : OrderSwipeController.Actions {
                         override fun onOrderProcessed(position: Int) {
@@ -224,6 +212,21 @@ class OrdersFragment : BaseFragment<FragmentOrdersBinding>() {
 
                 val itemTouchDelegate = ItemTouchHelper(orderSwipeController)
                 itemTouchDelegate.attachToRecyclerView(recycler_view)
+
+
+                // Display the category selector group
+                category_toggle_group.visibility = View.VISIBLE
+                button_active_orders.isChecked = true
+                button_active_orders.setOnClickListener {
+                    (it as MaterialButton).isChecked = true
+                    orderViewModel.filterOrders(OrderState.ACTIVE)
+                    orderSwipeController.itemSwipeEnabled = true
+                }
+                button_processed_orders.setOnClickListener {
+                    (it as MaterialButton).isChecked = true
+                    orderViewModel.filterOrders(OrderState.PROCESSED)
+                    orderSwipeController.itemSwipeEnabled = false
+                }
 
                 // Update the userType on the adapter
                 orderAdapter.userType = userType

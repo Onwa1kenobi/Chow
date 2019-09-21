@@ -4,7 +4,6 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.RectF
-import android.os.Build
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -67,14 +66,7 @@ class OrderSwipeController(private val actionListener: Actions) :
                     itemView.bottom.toFloat()
                 )
                 c.drawRect(background, p)
-                icon = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    itemView.context.resources.getDrawable(
-                        R.drawable.ic_done,
-                        itemView.context.theme
-                    ).toBitmap()
-                } else {
-                    itemView.context.resources.getDrawable(R.drawable.ic_done).toBitmap()
-                }
+                icon = ContextCompat.getDrawable(itemView.context, R.drawable.ic_done)!!.toBitmap()
                 val iconDest = RectF(
                     itemView.left.toFloat() + width,
                     itemView.top.toFloat() + width,
@@ -91,14 +83,10 @@ class OrderSwipeController(private val actionListener: Actions) :
                     itemView.bottom.toFloat()
                 )
                 c.drawRect(background, p)
-                icon = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    itemView.context.resources.getDrawable(
-                        R.drawable.ic_delete_white,
-                        itemView.context.theme
-                    ).toBitmap()
-                } else {
-                    itemView.context.resources.getDrawable(R.drawable.ic_delete_white).toBitmap()
-                }
+                icon = ContextCompat.getDrawable(
+                    itemView.context,
+                    R.drawable.ic_delete_white
+                )!!.toBitmap()
                 val iconDest = RectF(
                     itemView.right.toFloat() - 2 * width,
                     itemView.top.toFloat() + width,

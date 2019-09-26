@@ -9,7 +9,7 @@ import io.julius.chow.domain.model.FoodModel
  */
 object FoodEntityMapper : Mapper<FoodEntity, FoodModel> {
 
-    /**TODO
+    /**
      * Map an instance of a [FoodModel] to a [FoodEntity] model
      */
     override fun mapToEntity(type: FoodModel): FoodEntity {

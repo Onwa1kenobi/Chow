@@ -25,6 +25,9 @@ jobs:
             - ~/.gradle
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
       - run:
+          name: Decode Google Services Json
+          command: echo $GOOGLE_SERVICE_JSON | base64 -d > .app/google-services.json
+      - run:
           name: Run App Module Unit Tests
           command: ./gradlew :app:testDebugUnitTest
       - store_artifacts:

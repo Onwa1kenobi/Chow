@@ -68,7 +68,7 @@ play {
     serviceAccountCredentials = file("chow-play-services.json")
     track = "beta"
     userFraction = 1
-    releaseStatus = "completed"
+    releaseStatus = "draft"
     resolutionStrategy = "ignore"
 }
 

@@ -5,6 +5,9 @@
 version: 2
 jobs:
   build:
+    branches:
+      only:
+        - master # List of branches for CI to build. { - /feature-.*/ to use regex }
     working_directory: ~/code
     docker:
       - image: circleci/android:api-28-alpha
@@ -18,15 +21,22 @@ jobs:
           name: Chmod permissions # if permission for Gradlew Dependencies fail, use this.
           command: sudo chmod +x ./gradlew
       - run:
+          name: Decode Google and Play Store Services Json
+          command: |
+            echo $GOOGLE_SERVICE_JSON | base64 -d > app/google-services.json
+            echo $PLAYSTORE_SERVICE_JSON | base64 -d > app/chow-play-services.json
+            echo $KEY_STORE_JKS | base64 -d > app/chow_key_store.jks
+      - run:
+          name: Approve SDK Licenses
+          # Captures SIGPIPE 141 error but still allow repeating "y" to accept all licenses
+          command: yes | sdkmanager --licenses || if [ $? -ne '141' ]; then exit $?; fi;
+      - run:
           name: Download Dependencies
           command: ./gradlew androidDependencies
       - save_cache:
           paths:
             - ~/.gradle
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
-      - run:
-          name: Decode Google Services Json
-          command: echo $GOOGLE_SERVICE_JSON | base64 -d > app/google-services.json
       - run:
           name: Run App Module Unit Tests
           command: ./gradlew :app:testDebugUnitTest
@@ -51,5 +61,12 @@ jobs:
       - run:
           name: Run Lint Test
           command: ./gradlew lint
+      - run:
+          name: Assemble Bundles
+          command: ./gradlew clean bundleRelease
+      - run:
+          name: Publish Application Bundle to Play Store
+          command: ./gradlew publishReleaseBundle
       - store_artifacts:
           path: app/build/reports
+          destination: reports

@@ -67,9 +67,7 @@ jobs:
       - image: circleci/android:api-28-alpha
     working_directory: ~/code
     steps:
-      - run:
-          name: Chmod permissions # if permission for Gradlew Dependencies fail, use this.
-          command: sudo chmod +x ./gradlew
+      - checkout
       - run:
           name: Assemble Bundles
           command: ./gradlew clean bundleRelease

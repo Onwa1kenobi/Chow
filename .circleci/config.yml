@@ -82,11 +82,6 @@ workflows:
   build-deploy:
     jobs:
       - build:
-          filters:
-            branches:
-              ignore:
-                - develop
-                - /feat-.*/
       - deploy-prod:
           requires:
             - build

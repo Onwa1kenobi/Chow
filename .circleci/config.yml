@@ -68,25 +68,20 @@ jobs:
     working_directory: ~/code
     steps:
       - run:
+          name: Chmod permissions # if permission for Gradlew Dependencies fail, use this.
+          command: sudo chmod +x ./gradlew
+      - run:
           name: Assemble Bundles
           command: ./gradlew clean bundleRelease
       - run:
           name: Publish Application Bundle to Play Store
           command: ./gradlew publishReleaseBundle
-      - run:
-          name: Deploy if tests pass and branch is Master
-          command: ansible-playbook site.yml -i production
 
 workflows:
   version: 2
   build-deploy:
     jobs:
       - build:
-          filters:
-            branches:
-              ignore:
-                - develop
-                - /feat-.*/
       - deploy-prod:
           requires:
             - build

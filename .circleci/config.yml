@@ -57,6 +57,8 @@ jobs:
           destination: reports
 
   deploy-prod:
+    docker:
+      - image: circleci/android:api-28-alpha
     working_directory: ~/code
     steps:
       - checkout

@@ -36,14 +36,14 @@ data class Restaurant(
     }
 
     constructor(internal: Parcel) : this(
-        id = internal.readString(),
-        name = internal.readString(),
-        imageUrl = internal.readString(),
-        phoneNumber = internal.readString(),
-        description = internal.readString(),
-        address = internal.readString(),
-        emailAddress = internal.readString(),
-        location = internal.readString(),
+        id = internal.readString().orEmpty(),
+        name = internal.readString().orEmpty(),
+        imageUrl = internal.readString().orEmpty(),
+        phoneNumber = internal.readString().orEmpty(),
+        description = internal.readString().orEmpty(),
+        address = internal.readString().orEmpty(),
+        emailAddress = internal.readString().orEmpty(),
+        location = internal.readString().orEmpty(),
         locationLongitude = internal.readDouble(),
         locationLatitude = internal.readDouble(),
         profileComplete = internal.readInt() == 1

@@ -33,12 +33,12 @@ data class Food(
     }
 
     constructor(internal: Parcel) : this(
-        id = internal.readString(),
-        title = internal.readString(),
-        imageUrl = internal.readString(),
-        description = internal.readString(),
-        category = internal.readString(),
-        restaurantId = internal.readString(),
+        id = internal.readString().orEmpty(),
+        title = internal.readString().orEmpty(),
+        imageUrl = internal.readString().orEmpty(),
+        description = internal.readString().orEmpty(),
+        category = internal.readString().orEmpty(),
+        restaurantId = internal.readString().orEmpty(),
         rating = internal.readDouble(),
         price = internal.readDouble()
     )

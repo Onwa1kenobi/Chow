@@ -53,13 +53,10 @@ class SaveOrderInteractorTest {
         Mockito.`when`(mockChowRepository.saveOrder(Util.MockitoHelper.anyObject()))
             .thenReturn(false)
 
-        var message = ""
-
         saveOrderInteractor.execute(orderModel) {
-            message = it
+            val message = it
+            assert(message == "Failed to add order, try again")
         }
-
-        assert(message == "Failed to add order, try again")
     }
 
     @Test
@@ -74,13 +71,10 @@ class SaveOrderInteractorTest {
         Mockito.`when`(mockChowRepository.saveOrder(Util.MockitoHelper.anyObject()))
             .thenReturn(true)
 
-        var message = ""
-
         saveOrderInteractor.execute(orderModel) {
-            message = it
+            val message = it
+            assert(message == "Order was added successfully")
         }
-
-        assert(message == "Order was added successfully")
     }
 
     @Test
@@ -95,13 +89,10 @@ class SaveOrderInteractorTest {
         Mockito.`when`(mockChowRepository.saveOrder(Util.MockitoHelper.anyObject()))
             .thenReturn(false)
 
-        var message = ""
-
         saveOrderInteractor.execute(orderModel) {
-            message = it
+            val message = it
+            assert(message == "Failed to update order, try again")
         }
-
-        assert(message == "Failed to update order, try again")
     }
 
     @Test
@@ -116,12 +107,9 @@ class SaveOrderInteractorTest {
         Mockito.`when`(mockChowRepository.saveOrder(Util.MockitoHelper.anyObject()))
             .thenReturn(true)
 
-        var message = ""
-
         saveOrderInteractor.execute(orderModel) {
-            message = it
+            val message = it
+            assert(message == "Order was updated successfully")
         }
-
-        assert(message == "Order was updated successfully")
     }
 }

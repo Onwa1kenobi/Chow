@@ -46,17 +46,13 @@ class RestaurantAuthInteractorTest {
         `when`(mockRestaurantRepository.authenticateRestaurant())
             .thenReturn(Result.Success(restaurantModel))
 
-        var result: Result<Any>? = null
-
         restaurantAuthInteractor.execute(RestaurantAuthInteractor.Params()) {
-            result = it
+            val result = it
+            assert(result is Result.Success)
         }
 
         verify(mockRestaurantRepository).authenticateRestaurant()
         verify(mockRestaurantRepository).saveRestaurantLocally(restaurantModel)
-
-
-        assert(result is Result.Success)
     }
 
     @Test
@@ -69,17 +65,13 @@ class RestaurantAuthInteractorTest {
         `when`(mockRestaurantRepository.authenticateRestaurant())
             .thenReturn(Result.Success(restaurantModel))
 
-        var result: Result<Any>? = null
-
         restaurantAuthInteractor.execute(RestaurantAuthInteractor.Params()) {
-            result = it
+            val result = it
+            assert(result is Result.Success)
         }
 
         verify(mockRestaurantRepository).authenticateRestaurant()
         verify(mockRestaurantRepository, times(0)).saveRestaurantLocally(restaurantModel)
-
-
-        assert(result is Result.Success)
     }
 
     @Test
@@ -87,13 +79,10 @@ class RestaurantAuthInteractorTest {
         `when`(mockRestaurantRepository.authenticateRestaurant())
             .thenReturn(Result.Failure(NotImplementedException))
 
-        var result: Result<Any>? = null
-
         restaurantAuthInteractor.execute(RestaurantAuthInteractor.Params()) {
-            result = it
+            val result = it
+            assert(result is Result.Failure)
         }
-
-        assert(result is Result.Failure)
     }
 
     @Test
@@ -106,16 +95,13 @@ class RestaurantAuthInteractorTest {
         `when`(mockRestaurantRepository.saveRestaurant(Util.MockitoHelper.anyObject()))
             .thenReturn(Result.Failure(NotImplementedException))
 
-        var result: Result<Any>? = null
-
         restaurantAuthInteractor.execute(RestaurantAuthInteractor.Params(
             RestaurantAuthInteractor.Params.ParamType.UPDATE_RESTAURANT_INFO,
             restaurantModel
         )) {
-            result = it
+            val result = it
+            assert(result is Result.Failure)
         }
-
-        assert(result is Result.Failure)
     }
 
     @Test
@@ -128,16 +114,13 @@ class RestaurantAuthInteractorTest {
         `when`(mockRestaurantRepository.saveRestaurant(Util.MockitoHelper.anyObject()))
             .thenReturn(Result.Success(true))
 
-        var result: Result<Any>? = null
-
         restaurantAuthInteractor.execute(RestaurantAuthInteractor.Params(
             RestaurantAuthInteractor.Params.ParamType.UPDATE_RESTAURANT_INFO,
             restaurantModel
         )) {
-            result = it
+            val result = it
+            assert(result is Result.Success)
+            assert((result as Result.Success).data == true)
         }
-
-        assert(result is Result.Success)
-        assert((result as Result.Success).data == true)
     }
 }

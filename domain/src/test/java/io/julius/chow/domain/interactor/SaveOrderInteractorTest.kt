@@ -4,7 +4,6 @@ import Util
 import io.julius.chow.domain.interactor.food.SaveOrderInteractor
 import io.julius.chow.domain.model.OrderModel
 import io.julius.chow.domain.model.OrderState
-import io.julius.chow.domain.model.RestaurantModel
 import io.julius.chow.domain.repository.ChowRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Before
@@ -30,11 +29,6 @@ class SaveOrderInteractorTest {
 
     private lateinit var saveOrderInteractor: SaveOrderInteractor
 
-    private val restaurantModel = RestaurantModel(
-        "101", "Cold Cafe", "", "", "Blah blah",
-        "", "", "", 0.0, 0.0, true
-    )
-
     @Before
     fun setUp() {
         MockitoAnnotations.openMocks(this)
@@ -53,10 +47,8 @@ class SaveOrderInteractorTest {
         Mockito.`when`(mockChowRepository.saveOrder(Util.MockitoHelper.anyObject()))
             .thenReturn(false)
 
-        saveOrderInteractor.execute(orderModel) {
-            val message = it
-            assert(message == "Failed to add order, try again")
-        }
+        val message = saveOrderInteractor.run(orderModel)
+        assert(message == "Failed to add order, try again")
     }
 
     @Test
@@ -71,10 +63,8 @@ class SaveOrderInteractorTest {
         Mockito.`when`(mockChowRepository.saveOrder(Util.MockitoHelper.anyObject()))
             .thenReturn(true)
 
-        saveOrderInteractor.execute(orderModel) {
-            val message = it
-            assert(message == "Order was added successfully")
-        }
+        val message = saveOrderInteractor.run(orderModel)
+        assert(message == "Order was added successfully")
     }
 
     @Test
@@ -89,10 +79,8 @@ class SaveOrderInteractorTest {
         Mockito.`when`(mockChowRepository.saveOrder(Util.MockitoHelper.anyObject()))
             .thenReturn(false)
 
-        saveOrderInteractor.execute(orderModel) {
-            val message = it
-            assert(message == "Failed to update order, try again")
-        }
+        val message = saveOrderInteractor.run(orderModel)
+        assert(message == "Failed to update order, try again")
     }
 
     @Test
@@ -107,9 +95,7 @@ class SaveOrderInteractorTest {
         Mockito.`when`(mockChowRepository.saveOrder(Util.MockitoHelper.anyObject()))
             .thenReturn(true)
 
-        saveOrderInteractor.execute(orderModel) {
-            val message = it
-            assert(message == "Order was updated successfully")
-        }
+        val message = saveOrderInteractor.run(orderModel)
+        assert(message == "Order was updated successfully")
     }
 }

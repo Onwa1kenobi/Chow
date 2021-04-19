@@ -1,5 +1,5 @@
 plugins {
-    id 'com.github.triplet.play' version '2.4.2'
+    id 'com.github.triplet.play' version '3.4.0'
 }
 
 apply plugin: 'com.android.application'
@@ -16,7 +16,7 @@ android {
         applicationId "io.julius.chow"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 4
+        versionCode 5
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

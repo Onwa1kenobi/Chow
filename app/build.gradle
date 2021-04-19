@@ -67,7 +67,7 @@ android {
 play {
     serviceAccountCredentials = file("chow-play-services.json")
     track = "beta"
-    userFraction = 1
+    userFraction = 1.0
     releaseStatus = "draft"
     resolutionStrategy = "ignore"
 }

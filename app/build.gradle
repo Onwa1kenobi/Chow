@@ -1,3 +1,6 @@
+import com.github.triplet.gradle.androidpublisher.ReleaseStatus
+import com.github.triplet.gradle.androidpublisher.ResolutionStrategy
+
 plugins {
     id 'com.github.triplet.play' version '3.4.0'
 }
@@ -66,10 +69,9 @@ android {
 
 play {
     serviceAccountCredentials = file("chow-play-services.json")
-    track = "beta"
-    userFraction = 1.0
-    releaseStatus = "draft"
-    resolutionStrategy = "ignore"
+    track.set("beta")
+    releaseStatus.set(ReleaseStatus.IN_PROGRESS)
+    resolutionStrategy.set(ResolutionStrategy.IGNORE)
 }
 
 dependencies {
